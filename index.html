@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>包装工具箱 - 专业包装行业聚合工具网站</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Helvetica Neue', 'Arial', 'sans-serif';
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #1e3a8a, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .tool-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header / Navigation -->
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <svg class="w-8 h-8 text-blue-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>
+                <h1 class="text-2xl font-bold text-gray-800">包装工具箱</h1>
+            </div>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#toolbox" class="text-gray-600 hover:text-blue-600 transition-colors">核心工具</a>
+                <a href="#resources" class="text-gray-600 hover:text-blue-600 transition-colors">资源库</a>
+                <a href="#suppliers" class="text-gray-600 hover:text-blue-600 transition-colors">供应商</a>
+            </nav>
+            <button class="hidden md:block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+                联系我们
+            </button>
+            <button class="md:hidden text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12 md:py-20">
+
+        <!-- Hero Section -->
+        <section class="text-center mb-20">
+            <h2 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
+                一个<span class="gradient-text">小而精</span>的在线包装实用工具集
+            </h2>
+            <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-600">
+                我们专注于解决包装设计、生产和物流中的具体问题。即用即走，快速、准确地完成您的每一项任务。
+            </p>
+            <div class="mt-8">
+                <a href="#toolbox" class="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg">
+                    开始使用工具
+                </a>
+            </div>
+        </section>
+
+        <!-- Core Toolbox Section -->
+        <section id="toolbox" class="mb-20">
+            <h3 class="text-3xl font-bold text-center text-gray-800 mb-2">核心功能模块 · 工具箱</h3>
+            <p class="text-center text-gray-500 mb-12">网站的心脏，我们不求多，但求精。</p>
+            
+            <!-- Priority 1 Tools -->
+            <div class="mb-12">
+                <h4 class="text-xl font-semibold text-gray-700 mb-6 border-l-4 border-blue-500 pl-4">第一优先级：核心计算器 (高频 & 刚需)</h4>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Tool Card: Logistics Cost Calculator -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all tool-card">
+                        <div>
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-blue-100 p-3 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg></div>
+                                <h5 class="text-lg font-bold text-gray-800">物流成本计算器</h5>
+                            </div>
+                            <p class="mt-4 text-gray-600">输入包裹尺寸，自动计算体积重并估算运费。电商卖家与仓储人员必备。</p>
+                        </div>
+                        <a href="#" class="mt-6 block w-full text-center bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">使用工具</a>
+                    </div>
+                    <!-- Tool Card: Paper Usage Calculator -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all tool-card">
+                        <div>
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-blue-100 p-3 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg></div>
+                                <h5 class="text-lg font-bold text-gray-800">纸张用量与成本计算器</h5>
+                            </div>
+                            <p class="mt-4 text-gray-600">选择盒型输入尺寸，智能计算开纸方案与单张成本，精准核算报价。</p>
+                        </div>
+                        <a href="#" class="mt-6 block w-full text-center bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">使用工具</a>
+                    </div>
+                    <!-- Tool Card: Pallet Planner -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all tool-card">
+                        <div>
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-blue-100 p-3 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg></div>
+                                <h5 class="text-lg font-bold text-gray-800">托盘堆码规划器</h5>
+                            </div>
+                            <p class="mt-4 text-gray-600">可视化展示最佳堆码方案，计算托盘可堆放数量，优化仓储空间。</p>
+                        </div>
+                        <a href="#" class="mt-6 block w-full text-center bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">使用工具</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Priority 2 Tools -->
+            <div class="mb-12">
+                <h4 class="text-xl font-semibold text-gray-700 mb-6 border-l-4 border-green-500 pl-4">第二优先级：设计与生产辅助工具</h4>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Tool Card -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all tool-card">
+                        <div>
+                            <h5 class="text-md font-bold text-gray-800">盒型刀线模板库</h5>
+                            <p class="mt-2 text-sm text-gray-600">提供常用盒型标准刀线图下载，极大降低结构设计门槛。</p>
+                        </div>
+                        <a href="#" class="mt-4 block w-full text-center bg-gray-200 text-gray-800 py-2 rounded-lg hover:bg-gray-300 transition-colors">查看模板库</a>
+                    </div>
+                     <!-- Tool Card -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all tool-card">
+                        <div>
+                            <h5 class="text-md font-bold text-gray-800">条码/二维码生成器</h5>
+                            <p class="mt-2 text-sm text-gray-600">一键生成符合印刷标准的条形码或二维码矢量图。</p>
+                        </div>
+                        <a href="#" class="mt-4 block w-full text-center bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition-colors">使用工具</a>
+                    </div>
+                     <!-- Tool Card -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all tool-card">
+                        <div>
+                            <h5 class="text-md font-bold text-gray-800">色彩模式转换器</h5>
+                            <p class="mt-2 text-sm text-gray-600">在RGB、CMYK和PANTONE色值之间进行快速查询和转换。</p>
+                        </div>
+                        <a href="#" class="mt-4 block w-full text-center bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition-colors">使用工具</a>
+                    </div>
+                     <!-- Tool Card -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all tool-card">
+                        <div>
+                            <h5 class="text-md font-bold text-gray-800">单位换算工具</h5>
+                            <p class="mt-2 text-sm text-gray-600">覆盖长度、重量、克重等包装行业常用单位的快速互换。</p>
+                        </div>
+                        <a href="#" class="mt-4 block w-full text-center bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition-colors">使用工具</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Priority 3 Tools -->
+            <div>
+                <h4 class="text-xl font-semibold text-gray-700 mb-6 border-l-4 border-yellow-500 pl-4">第三优先级：印前处理辅助工具</h4>
+                <div class="grid md:grid-cols-2 gap-8">
+                     <!-- Tool Card -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all tool-card">
+                        <div>
+                            <h5 class="text-md font-bold text-gray-800">分辨率 (DPI) 计算器</h5>
+                            <p class="mt-2 text-sm text-gray-600">检查图像是否达到300 DPI印刷标准，避免后期返工。</p>
+                        </div>
+                        <a href="#" class="mt-4 block w-full text-center bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition-colors">使用工具</a>
+                    </div>
+                     <!-- Tool Card -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all tool-card">
+                        <div>
+                            <h5 class="text-md font-bold text-gray-800">PDF 印前检查清单</h5>
+                            <p class="mt-2 text-sm text-gray-600">交互式清单引导您规避常见印刷错误，减少沟通成本。</p>
+                        </div>
+                        <a href="#" class="mt-4 block w-full text-center bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition-colors">查看清单</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resources Section -->
+        <section id="resources" class="mb-20 bg-white p-8 md:p-12 rounded-2xl border border-gray-200">
+             <h3 class="text-3xl font-bold text-center text-gray-800 mb-2">增值信息模块 · 资源库</h3>
+             <p class="text-center text-gray-500 mb-12">作为工具箱的知识延伸，帮助您更好地理解和决策。</p>
+             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Resource Card -->
+                <a href="#" class="block bg-gray-50 p-6 rounded-xl hover:bg-gray-100 hover:shadow-md transition-all">
+                    <h5 class="font-bold text-gray-800">材料速查手册</h5>
+                    <p class="mt-2 text-gray-600">图文并茂，快速了解白卡纸、牛皮纸、瓦楞纸等常用材料的特性与成本。</p>
+                </a>
+                 <!-- Resource Card -->
+                <a href="#" class="block bg-gray-50 p-6 rounded-xl hover:bg-gray-100 hover:shadow-md transition-all">
+                    <h5 class="font-bold text-gray-800">工艺速查手册</h5>
+                    <p class="mt-2 text-gray-600">直观了解烫金、UV、击凸等后道工艺的效果、优缺点及成本概览。</p>
+                </a>
+                 <!-- Resource Card -->
+                <a href="#" class="block bg-gray-50 p-6 rounded-xl hover:bg-gray-100 hover:shadow-md transition-all">
+                    <h5 class="font-bold text-gray-800">行业关键资讯</h5>
+                    <p class="mt-2 text-gray-600">每周精选纸价波动、环保新规等摘要，让您在用工具时洞悉行业大事。</p>
+                </a>
+             </div>
+        </section>
+        
+        <!-- Suppliers Section -->
+        <section id="suppliers" class="text-center">
+            <h3 class="text-3xl font-bold text-center text-gray-800 mb-2">优质供应商名录</h3>
+            <p class="text-center text-gray-500 mb-12">一个经过筛选和认证的优质供应商展示平台，助您找到可靠伙伴。</p>
+            
+            <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl border border-gray-200 shadow-sm">
+                <div class="flex flex-col md:flex-row gap-4 mb-6">
+                    <select class="w-full md:w-1/2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white">
+                        <option>按服务类型筛选 (如: 纸盒定制)</option>
+                    </select>
+                    <select class="w-full md:w-1/2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white">
+                        <option>按地区筛选 (如: 华东地区)</option>
+                    </select>
+                </div>
+                <div class="h-40 bg-gray-50 rounded-lg flex items-center justify-center mb-8">
+                     <p class="text-sm text-gray-500">认证供应商将在此优先展示...</p>
+                </div>
+                <a href="#" class="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-all transform hover:scale-105 shadow-lg">
+                    申请成为认证供应商
+                </a>
+            </div>
+        </section>
+
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-20">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <h4 class="text-lg font-bold mb-4">关于包装工具箱</h4>
+                    <p class="text-gray-400">
+                        我们致力于为全球包装行业从业者提供最简洁、最高效的在线工具与资源，让包装变得更简单。
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">快速链接</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#toolbox" class="text-gray-400 hover:text-white">核心工具</a></li>
+                        <li><a href="#resources" class="text-gray-400 hover:text-white">资源库</a></li>
+                        <li><a href="#suppliers" class="text-gray-400 hover:text-white">供应商名录</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">保持联系</h4>
+                    <p class="text-gray-400 mb-4">订阅我们的资讯，获取最新的行业动态与工具更新。</p>
+                    <div class="flex">
+                        <input type="email" placeholder="您的邮箱" class="w-full rounded-l-lg p-2 text-gray-800 focus:outline-none">
+                        <button class="bg-blue-600 text-white px-4 rounded-r-lg hover:bg-blue-700">订阅</button>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-gray-700 pt-8 text-center text-gray-500">
+                <p>&copy; 2025 包装工具箱. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
+
