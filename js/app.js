@@ -134,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         sidebarHTML += '</ul>';
 
-        // Find the title div and insert the new list after it
         const titleDiv = navContainer.querySelector('.font-bold');
         if(titleDiv) {
             titleDiv.insertAdjacentHTML('afterend', sidebarHTML);
@@ -155,18 +154,22 @@ document.addEventListener('DOMContentLoaded', function() {
             const navLinks = quickNav.querySelectorAll('a');
             const sections = document.querySelectorAll('section[id], h4[id], div.tool-card[id]');
             const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const id = entry.target.getAttribute('id');
-                        navLinks.forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href') === `#${id}`) {
-                                link.classList.add('active');
-                            }
-                        });
+                let activeId = null;
+                // Find the last intersecting element that's in view
+                const intersectingEntries = entries.filter(e => e.isIntersecting);
+                if (intersectingEntries.length > 0) {
+                    activeId = intersectingEntries[intersectingEntries.length - 1].target.getAttribute('id');
+                }
+
+                navLinks.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href === `#${activeId}`) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
                     }
                 });
-            }, { rootMargin: '-40% 0px -60% 0px', threshold: 0 });
+            }, { rootMargin: '-30% 0px -65% 0px', threshold: 0.1 });
             sections.forEach(section => observer.observe(section));
         }
 
@@ -304,6 +307,5 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial Render
     renderToolCards();
     renderSidebar();
-    // Initialize all event listeners after content is rendered
     initEventListeners();
 });
