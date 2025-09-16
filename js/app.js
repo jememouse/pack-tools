@@ -155,7 +155,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const sections = document.querySelectorAll('section[id], h4[id], div.tool-card[id]');
             const observer = new IntersectionObserver(entries => {
                 let activeId = null;
-                // Find the last intersecting element that's in view
                 const intersectingEntries = entries.filter(e => e.isIntersecting);
                 if (intersectingEntries.length > 0) {
                     activeId = intersectingEntries[intersectingEntries.length - 1].target.getAttribute('id');
