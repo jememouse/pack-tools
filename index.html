@@ -4,7 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>包装工具箱 - 专业包装行业聚合工具网站</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="一个为包装行业从业者打造的在线工具箱，提供物流成本计算、纸张用量核算、托盘堆码规划、刀线模板库等一系列实用工具与资源。">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="包装工具箱 - 专业包装行业聚合工具网站">
+    <meta property="og:description" content="一个为包装行业从业者打造的在线工具箱，提供物流成本计算、纸张用量核算、托盘堆码规划、刀线模板库等一系列实用工具与资源。">
+
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <script>
+      tailwind.config = {
+        content: ["./index.html"],
+      }
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -33,7 +45,7 @@
                 </svg>
                 <h1 class="text-2xl font-bold text-gray-800">包装工具箱</h1>
             </div>
-            <nav class="hidden md:flex items-center space-x-8">
+            <nav id="mobile-menu" class="hidden md:flex items-center space-x-8">
                 <a href="#toolbox" class="text-gray-600 hover:text-blue-600 transition-colors">核心工具</a>
                 <a href="#resources" class="text-gray-600 hover:text-blue-600 transition-colors">资源库</a>
                 <a href="#suppliers" class="text-gray-600 hover:text-blue-600 transition-colors">供应商</a>
@@ -41,7 +53,7 @@
             <button class="hidden md:block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
                 联系我们
             </button>
-            <button class="md:hidden text-gray-600">
+            <button id="mobile-menu-button" class="md:hidden text-gray-600">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                 </svg>
@@ -74,40 +86,8 @@
             <!-- Priority 1 Tools -->
             <div class="mb-12">
                 <h4 class="text-xl font-semibold text-gray-700 mb-6 border-l-4 border-blue-500 pl-4">第一优先级：核心计算器 (高频 & 刚需)</h4>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Tool Card: Logistics Cost Calculator -->
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all tool-card">
-                        <div>
-                            <div class="flex items-center space-x-4">
-                                <div class="bg-blue-100 p-3 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg></div>
-                                <h5 class="text-lg font-bold text-gray-800">物流成本计算器</h5>
-                            </div>
-                            <p class="mt-4 text-gray-600">输入包裹尺寸，自动计算体积重并估算运费。电商卖家与仓储人员必备。</p>
-                        </div>
-                        <a href="#" class="mt-6 block w-full text-center bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">使用工具</a>
-                    </div>
-                    <!-- Tool Card: Paper Usage Calculator -->
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all tool-card">
-                        <div>
-                            <div class="flex items-center space-x-4">
-                                <div class="bg-blue-100 p-3 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg></div>
-                                <h5 class="text-lg font-bold text-gray-800">纸张用量与成本计算器</h5>
-                            </div>
-                            <p class="mt-4 text-gray-600">选择盒型输入尺寸，智能计算开纸方案与单张成本，精准核算报价。</p>
-                        </div>
-                        <a href="#" class="mt-6 block w-full text-center bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">使用工具</a>
-                    </div>
-                    <!-- Tool Card: Pallet Planner -->
-                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all tool-card">
-                        <div>
-                            <div class="flex items-center space-x-4">
-                                <div class="bg-blue-100 p-3 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg></div>
-                                <h5 class="text-lg font-bold text-gray-800">托盘堆码规划器</h5>
-                            </div>
-                            <p class="mt-4 text-gray-600">可视化展示最佳堆码方案，计算托盘可堆放数量，优化仓储空间。</p>
-                        </div>
-                        <a href="#" class="mt-6 block w-full text-center bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">使用工具</a>
-                    </div>
+                <div id="priority-1-tools" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Tool cards will be injected here by JavaScript -->
                 </div>
             </div>
 
@@ -255,6 +235,7 @@
         </div>
     </footer>
 
+    <script src="js/app.js"></script>
 </body>
 </html>
 
