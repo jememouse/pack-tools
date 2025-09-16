@@ -152,7 +152,7 @@
                             <h5 class="text-md font-bold text-gray-800">单位换算工具</h5>
                             <p class="mt-2 text-sm text-gray-600">覆盖长度、重量、克重等包装行业常用单位的快速互换。</p>
                         </div>
-                        <a href="#" class="mt-4 block w-full text-center py-2 rounded-lg border border-gray-300 text-gray-600 font-semibold hover:bg-gray-100 hover:border-gray-400 transition-all">使用工具</a>
+                        <a href="#" data-tool-id="unit-converter" class="mt-4 block w-full text-center py-2 rounded-lg border border-gray-300 text-gray-600 font-semibold hover:bg-gray-100 hover:border-gray-400 transition-all">使用工具</a>
                     </div>
                 </div>
             </div>
@@ -167,7 +167,7 @@
                             <h5 class="text-md font-bold text-gray-800">分辨率 (DPI) 计算器</h5>
                             <p class="mt-2 text-sm text-gray-600">检查图像是否达到300 DPI印刷标准，避免后期返工。</p>
                         </div>
-                        <a href="#" class="mt-4 block w-full text-center font-semibold text-gray-500 hover:text-blue-600 transition-colors">使用工具</a>
+                        <a href="#" data-tool-id="dpi-calculator" class="mt-4 block w-full text-center font-semibold text-gray-500 hover:text-blue-600 transition-colors">使用工具</a>
                     </div>
                      <!-- Tool Card -->
                     <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all tool-card">
@@ -304,6 +304,84 @@
         </div>
     </div>
 
+    <!-- DPI Calculator Modal -->
+    <div id="dpi-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-lg relative">
+            <!-- Close Button -->
+            <button id="close-dpi-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">分辨率 (DPI) 计算器</h3>
+            <p class="text-sm text-gray-500 mb-4">输入任意两项来计算第三项。将要计算的字段留空。</p>
+
+            <div class="space-y-4">
+                <div>
+                    <label for="dpi-pixels" class="block text-sm font-medium text-gray-700">像素尺寸 (长或宽)</label>
+                    <input type="number" id="dpi-pixels" placeholder="例如: 1200" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label for="dpi-dpi" class="block text-sm font-medium text-gray-700">分辨率 (DPI)</label>
+                    <input type="number" id="dpi-dpi" placeholder="例如: 300" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label for="dpi-cm" class="block text-sm font-medium text-gray-700">物理尺寸 (cm)</label>
+                    <input type="number" id="dpi-cm" placeholder="例如: 10.16" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <button id="calculate-dpi-btn" class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition-colors font-semibold">计算</button>
+            </div>
+            <div id="dpi-result" class="mt-6 p-4 bg-gray-50 rounded-lg text-gray-700 min-h-[50px]">
+                <!-- Results will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Unit Converter Modal -->
+    <div id="unit-converter-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-lg relative">
+            <!-- Close Button -->
+            <button id="close-unit-converter-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">单位换算工具</h3>
+
+            <div class="space-y-4">
+                <div>
+                    <label for="unit-category" class="block text-sm font-medium text-gray-700">换算类型</label>
+                    <select id="unit-category" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <option value="length">长度 (Length)</option>
+                        <option value="weight">重量 (Weight)</option>
+                        <option value="gsm">克重 (GSM)</option>
+                    </select>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex-1">
+                        <label for="unit-from" class="block text-sm font-medium text-gray-700">从</label>
+                        <select id="unit-from" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></select>
+                    </div>
+                    <div class="flex-shrink-0 pt-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </div>
+                    <div class="flex-1">
+                        <label for="unit-to" class="block text-sm font-medium text-gray-700">到</label>
+                        <select id="unit-to" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></select>
+                    </div>
+                </div>
+                 <div>
+                    <label for="unit-input" class="block text-sm font-medium text-gray-700">输入数值</label>
+                    <input type="number" id="unit-input" placeholder="输入要换算的值" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+            </div>
+            <div id="unit-result" class="mt-6 p-4 bg-gray-50 rounded-lg text-gray-700 min-h-[50px] text-center">
+                 <p class="text-2xl font-bold text-blue-600">0.00</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 

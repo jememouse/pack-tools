@@ -113,4 +113,160 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
         });
     }
+
+    // --- DPI Calculator Modal Logic ---
+    const dpiModal = document.getElementById('dpi-modal');
+    const openDpiModalBtn = document.querySelector('[data-tool-id="dpi-calculator"]');
+    const closeDpiModalBtn = document.getElementById('close-dpi-modal-btn');
+    const calculateDpiBtn = document.getElementById('calculate-dpi-btn');
+
+    if (dpiModal && openDpiModalBtn && closeDpiModalBtn) {
+        openDpiModalBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            dpiModal.classList.remove('hidden');
+        });
+        closeDpiModalBtn.addEventListener('click', () => dpiModal.classList.add('hidden'));
+        dpiModal.addEventListener('click', (e) => {
+            if (e.target === dpiModal) {
+                dpiModal.classList.add('hidden');
+            }
+        });
+    }
+
+    if (calculateDpiBtn) {
+        calculateDpiBtn.addEventListener('click', () => {
+            const pixelsInput = document.getElementById('dpi-pixels');
+            const dpiInput = document.getElementById('dpi-dpi');
+            const cmInput = document.getElementById('dpi-cm');
+            const resultDiv = document.getElementById('dpi-result');
+
+            const pixels = parseFloat(pixelsInput.value);
+            const dpi = parseFloat(dpiInput.value);
+            const cm = parseFloat(cmInput.value);
+
+            const inchesToCm = 2.54;
+            let resultMessage = '';
+
+            // Check how many fields are filled
+            const filledFields = [pixels, dpi, cm].filter(v => !isNaN(v) && v > 0).length;
+
+            if (filledFields !== 2) {
+                resultMessage = '<p class="text-red-500">请输入任意两项有效数值以计算第三项。</p>';
+            } else if (!isNaN(pixels) && !isNaN(dpi)) {
+                // Calculate size in cm
+                const sizeInInches = pixels / dpi;
+                const sizeInCm = sizeInInches * inchesToCm;
+                cmInput.value = sizeInCm.toFixed(2);
+                resultMessage = `<p>计算出的物理尺寸为 <span class="font-bold text-blue-600">${sizeInCm.toFixed(2)} cm</span>。</p>`;
+            } else if (!isNaN(pixels) && !isNaN(cm)) {
+                // Calculate DPI
+                const sizeInInches = cm / inchesToCm;
+                const calculatedDpi = pixels / sizeInInches;
+                dpiInput.value = calculatedDpi.toFixed(0);
+                resultMessage = `<p>计算出的分辨率为 <span class="font-bold text-blue-600">${calculatedDpi.toFixed(0)} DPI</span>。</p>`;
+                 if (calculatedDpi < 300) {
+                    resultMessage += ' <span class="font-semibold text-yellow-600">注意: 低于300 DPI，可能不适合高质量印刷。</span>';
+                } else {
+                     resultMessage += ' <span class="font-semibold text-green-600">Great! 满足300 DPI印刷标准。</span>';
+                }
+            } else if (!isNaN(dpi) && !isNaN(cm)) {
+                // Calculate pixels
+                const sizeInInches = cm / inchesToCm;
+                const calculatedPixels = dpi * sizeInInches;
+                pixelsInput.value = calculatedPixels.toFixed(0);
+                resultMessage = `<p>计算出的像素尺寸为 <span class="font-bold text-blue-600">${calculatedPixels.toFixed(0)} pixels</span>。</p>`;
+            }
+
+            resultDiv.innerHTML = resultMessage;
+        });
+    }
+
+    // --- Unit Converter Modal Logic ---
+    const unitConverterModal = document.getElementById('unit-converter-modal');
+    const openUnitConverterBtn = document.querySelector('[data-tool-id="unit-converter"]');
+    const closeUnitConverterBtn = document.getElementById('close-unit-converter-modal-btn');
+
+    if (unitConverterModal && openUnitConverterBtn && closeUnitConverterBtn) {
+        openUnitConverterBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            unitConverterModal.classList.remove('hidden');
+        });
+        closeUnitConverterBtn.addEventListener('click', () => unitConverterModal.classList.add('hidden'));
+        unitConverterModal.addEventListener('click', (e) => {
+            if (e.target === unitConverterModal) {
+                unitConverterModal.classList.add('hidden');
+            }
+        });
+    }
+
+    const units = {
+        length: {
+            '厘米 (cm)': 1,
+            '米 (m)': 100,
+            '英寸 (in)': 2.54,
+            '英尺 (ft)': 30.48,
+            '毫米 (mm)': 0.1,
+        },
+        weight: {
+            '克 (g)': 1,
+            '千克 (kg)': 1000,
+            '磅 (lb)': 453.592,
+            '盎司 (oz)': 28.3495,
+        },
+        gsm: {
+            '克/平方米 (g/m²)': 1,
+            '磅 (lb/ream)': 1.48, // Based on a standard ream size, simplified
+        }
+    };
+
+    const categorySelect = document.getElementById('unit-category');
+    const fromSelect = document.getElementById('unit-from');
+    const toSelect = document.getElementById('unit-to');
+    const inputField = document.getElementById('unit-input');
+    const resultDiv = document.getElementById('unit-result').querySelector('p');
+
+    function populateUnits() {
+        const category = categorySelect.value;
+        const unitOptions = Object.keys(units[category]);
+
+        fromSelect.innerHTML = '';
+        toSelect.innerHTML = '';
+
+        unitOptions.forEach(unit => {
+            fromSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
+            toSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
+        });
+        toSelect.selectedIndex = 1; // Select a different default unit
+        convert();
+    }
+
+    function convert() {
+        const category = categorySelect.value;
+        const fromUnit = fromSelect.value;
+        const toUnit = toSelect.value;
+        const inputValue = parseFloat(inputField.value) || 0;
+
+        if (isNaN(inputValue)) {
+            resultDiv.textContent = '0.00';
+            return;
+        }
+
+        const fromFactor = units[category][fromUnit];
+        const toFactor = units[category][toUnit];
+
+        const valueInBaseUnit = inputValue * fromFactor;
+        const result = valueInBaseUnit / toFactor;
+
+        resultDiv.textContent = result.toFixed(3);
+    }
+
+    if (categorySelect && fromSelect && toSelect && inputField) {
+        categorySelect.addEventListener('change', populateUnits);
+        fromSelect.addEventListener('change', convert);
+        toSelect.addEventListener('change', convert);
+        inputField.addEventListener('input', convert);
+
+        // Initial population
+        populateUnits();
+    }
 });
