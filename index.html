@@ -49,15 +49,31 @@
         <div class="font-bold text-lg text-gray-800 mb-8">导航</div>
         <ul class="space-y-2">
             <li>
-                <a href="#toolbox" class="block py-2 px-3 rounded-md font-semibold text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-colors">核心工具</a>
-                <ul class="ml-4 mt-1 space-y-1 border-l border-gray-200">
-                    <li><a href="#priority-1-heading" class="block py-1 px-3 text-sm text-gray-500 hover:text-blue-600 transition-colors">第一优先级</a></li>
-                    <li><a href="#priority-2-heading" class="block py-1 px-3 text-sm text-gray-500 hover:text-blue-600 transition-colors">第二优先级</a></li>
-                    <li><a href="#priority-3-heading" class="block py-1 px-3 text-sm text-gray-500 hover:text-blue-600 transition-colors">第三优先级</a></li>
+                <a href="#toolbox" data-toggle="sub-menu" class="flex items-center justify-between w-full py-2 px-3 rounded-md font-semibold text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-all duration-200">
+                    <span class="flex items-center space-x-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+                        <span>核心工具</span>
+                    </span>
+                    <svg class="w-4 h-4 transition-transform transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                </a>
+                <ul id="sub-menu" class="ml-4 mt-1 space-y-1 border-l border-gray-200 hidden">
+                    <li><a href="#priority-1-heading" class="block py-1 px-3 text-sm text-gray-500 hover:text-blue-600 transition-all duration-200">第一优先级</a></li>
+                    <li><a href="#priority-2-heading" class="block py-1 px-3 text-sm text-gray-500 hover:text-blue-600 transition-all duration-200">第二优先级</a></li>
+                    <li><a href="#priority-3-heading" class="block py-1 px-3 text-sm text-gray-500 hover:text-blue-600 transition-all duration-200">第三优先级</a></li>
                 </ul>
             </li>
-            <li><a href="#resources" class="block py-2 px-3 rounded-md font-semibold text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-colors">资源库</a></li>
-            <li><a href="#suppliers" class="block py-2 px-3 rounded-md font-semibold text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-colors">供应商</a></li>
+            <li>
+                <a href="#resources" class="flex items-center space-x-3 py-2 px-3 rounded-md font-semibold text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-all duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
+                    <span>资源库</span>
+                </a>
+            </li>
+            <li>
+                <a href="#suppliers" class="flex items-center space-x-3 py-2 px-3 rounded-md font-semibold text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-all duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    <span>供应商</span>
+                </a>
+            </li>
         </ul>
     </nav>
 
@@ -99,7 +115,7 @@
                 我们专注于解决包装设计、生产和物流中的具体问题。即用即走，快速、准确地完成您的每一项任务。
             </p>
             <div class="mt-8">
-                <a href="#toolbox" class="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg">
+                <a href="#toolbox" class="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-blue-400/40">
                     开始使用工具
                 </a>
             </div>
@@ -221,7 +237,7 @@
                 <div class="h-40 bg-gray-50 rounded-lg flex items-center justify-center mb-8">
                      <p class="text-sm text-gray-500">认证供应商将在此优先展示...</p>
                 </div>
-                <a href="#" class="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-all transform hover:scale-105 shadow-lg">
+                <a href="#" class="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-all duration-200 transform hover:scale-105 shadow-lg">
                     申请成为认证供应商
                 </a>
             </div>

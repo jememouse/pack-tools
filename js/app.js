@@ -269,4 +269,16 @@ document.addEventListener('DOMContentLoaded', function() {
         // Initial population
         populateUnits();
     }
+
+    // --- Collapsible Sidebar Menu ---
+    const subMenuToggle = document.querySelector('[data-toggle="sub-menu"]');
+    if (subMenuToggle) {
+        const subMenu = document.getElementById('sub-menu');
+        const icon = subMenuToggle.querySelector('svg');
+        subMenuToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            subMenu.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        });
+    }
 });
