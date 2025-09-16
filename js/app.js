@@ -9,10 +9,36 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Dynamic tool rendering
-    const priority1ToolsContainer = document.getElementById('priority-1-tools');
+    // Quick nav active state highlighting
+    const quickNav = document.getElementById('quick-nav');
+    if (quickNav) {
+        const navLinks = quickNav.querySelectorAll('a');
+        const sections = document.querySelectorAll('section[id], h4[id]');
 
-    const priority1Tools = [
+        const observerOptions = {
+            rootMargin: '-50% 0px -50% 0px', // Trigger when the section is in the middle of the viewport
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const activeLink = quickNav.querySelector(`a[href="#${id}"]`);
+
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    if (activeLink) {
+                        activeLink.classList.add('active');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    }
+});
         {
             title: '物流成本计算器',
             description: '输入包裹尺寸，自动计算体积重并估算运费。电商卖家与仓储人员必备。',
