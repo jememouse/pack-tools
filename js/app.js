@@ -14,6 +14,7 @@ const toolsData = {
             { id: 'barcode-generator', title: '条码/二维码生成器', description: '一键生成符合印刷标准的条形码或二维码矢量图。', styleType: 'secondary', href: '#' },
             { id: 'color-converter', title: '色彩模式转换器', description: '在RGB、CMYK和PANTONE色值之间进行快速查询和转换。', styleType: 'secondary', href: '#' },
             { id: 'unit-converter', title: '单位换算工具', description: '覆盖长度、重量、克重等包装行业常用单位的快速互换。', styleType: 'secondary', href: '#' },
+            { id: 'line-length-calculator', title: '线长计算器', description: '根据卷材外径、卷芯内径和材料厚度，计算卷材总长度。', styleType: 'secondary', href: '#' },
         ]
     },
     prepressAids: {
@@ -162,6 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Re-add all modal setups except the one we moved to its own page.
         setupModal('dpi-calculator', 'dpi-modal', 'close-dpi-modal-btn');
         setupModal('unit-converter', 'unit-converter-modal', 'close-unit-converter-modal-btn');
+        setupModal('line-length-calculator', 'line-length-calculator-modal', 'close-line-length-modal-btn');
 
         // Note: Logistics calculator logic is in its own file.
         // Other calculator logic remains here.
@@ -238,6 +240,34 @@ document.addEventListener('DOMContentLoaded', function() {
             unitInputField.addEventListener('input', convertUnits);
             populateUnits();
         }
+
+        // Line Length Calculator
+        const lineLengthInputs = ['roll-outer-diameter', 'roll-core-diameter', 'material-thickness'];
+        const lineLengthResultDiv = document.getElementById('line-length-result').querySelector('p');
+
+        const calculateLineLength = () => {
+            const R = parseFloat(document.getElementById('roll-outer-diameter').value) / 2 || 0;
+            const r = parseFloat(document.getElementById('roll-core-diameter').value) / 2 || 0;
+            const t = parseFloat(document.getElementById('material-thickness').value) / 1000 || 0; // convert μm to mm
+
+            if (R <= 0 || r <= 0 || t <= 0 || R <= r) {
+                lineLengthResultDiv.textContent = '0.00 米';
+                return;
+            }
+
+            const area = Math.PI * (Math.pow(R, 2) - Math.pow(r, 2));
+            const lengthInMm = area / t;
+            const lengthInM = lengthInMm / 1000;
+
+            lineLengthResultDiv.textContent = `${lengthInM.toFixed(2)} 米`;
+        };
+
+        lineLengthInputs.forEach(id => {
+            const inputEl = document.getElementById(id);
+            if (inputEl) {
+                inputEl.addEventListener('input', calculateLineLength);
+            }
+        });
     };
 
     renderToolCards();
