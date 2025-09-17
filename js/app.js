@@ -1,17 +1,14 @@
 const toolsData = {
     toolbox: [
-        // Priority 1
-        { id: 'logistics-cost-calculator', title: '物流成本计算器', description: '输入包裹尺寸，自动计算体积重并估算运费。电商卖家与仓储人员必备。', styleType: 'primary' },
-        { id: 'paper-usage-calculator', title: '纸张用量与成本计算器', description: '选择盒型输入尺寸，智能计算开纸方案与单张成本，精准核算报价。', styleType: 'primary' },
-        { id: 'pallet-planner', title: '托盘堆码规划器', description: '可视化展示最佳堆码方案，计算托盘可堆放数量，优化仓储空间。', styleType: 'primary' },
-        // Priority 2
-        { id: 'dieline-library', title: '盒型刀线模板库', description: '提供常用盒型标准刀线图下载，极大降低结构设计门槛。', styleType: 'tertiary' },
-        { id: 'barcode-generator', title: '条码/二维码生成器', description: '一键生成符合印刷标准的条形码或二维码矢量图。', styleType: 'secondary' },
-        { id: 'color-converter', title: '色彩模式转换器', description: '在RGB、CMYK和PANTONE色值之间进行快速查询和转换。', styleType: 'secondary' },
-        { id: 'unit-converter', title: '单位换算工具', description: '覆盖长度、重量、克重等包装行业常用单位的快速互换。', styleType: 'secondary' },
-        // Priority 3
-        { id: 'dpi-calculator', title: '分辨率 (DPI) 计算器', description: '检查图像是否达到300 DPI印刷标准，避免后期返工。', styleType: 'tertiary' },
-        { id: 'pdf-checklist', title: 'PDF 印前检查清单', description: '交互式清单引导您规避常见印刷错误，减少沟通成本。', styleType: 'tertiary' }
+        { id: 'logistics-cost-calculator', title: '物流成本计算器', description: '输入包裹尺寸，自动计算体积重并估算运费。电商卖家与仓储人员必备。', styleType: 'primary', href: 'tools/logistics-calculator.html' },
+        { id: 'paper-usage-calculator', title: '纸张用量与成本计算器', description: '选择盒型输入尺寸，智能计算开纸方案与单张成本，精准核算报价。', styleType: 'primary', href: '#' },
+        { id: 'pallet-planner', title: '托盘堆码规划器', description: '可视化展示最佳堆码方案，计算托盘可堆放数量，优化仓储空间。', styleType: 'primary', href: '#' },
+        { id: 'dieline-library', title: '盒型刀线模板库', description: '提供常用盒型标准刀线图下载，极大降低结构设计门槛。', styleType: 'tertiary', href: '#' },
+        { id: 'barcode-generator', title: '条码/二维码生成器', description: '一键生成符合印刷标准的条形码或二维码矢量图。', styleType: 'secondary', href: '#' },
+        { id: 'color-converter', title: '色彩模式转换器', description: '在RGB、CMYK和PANTONE色值之间进行快速查询和转换。', styleType: 'secondary', href: '#' },
+        { id: 'unit-converter', title: '单位换算工具', description: '覆盖长度、重量、克重等包装行业常用单位的快速互换。', styleType: 'secondary', href: '#' },
+        { id: 'dpi-calculator', title: '分辨率 (DPI) 计算器', description: '检查图像是否达到300 DPI印刷标准，避免后期返工。', styleType: 'tertiary', href: '#' },
+        { id: 'pdf-checklist', title: 'PDF 印前检查清单', description: '交互式清单引导您规避常见印刷错误，减少沟通成本。', styleType: 'tertiary', href: '#' }
     ]
 };
 
@@ -38,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <h5 class="text-md font-bold text-gray-800">${tool.title}</h5>
                     <p class="mt-2 text-sm text-gray-600">${tool.description}</p>
                 </div>
-                <a href="#" data-tool-id="${tool.id}" class="mt-4 block w-full text-center transition-all duration-200 ${buttonClasses[tool.styleType] || buttonClasses.secondary}">
+                <a href="${tool.href}" data-tool-id="${tool.id}" class="mt-4 block w-full text-center transition-all duration-200 ${buttonClasses[tool.styleType] || buttonClasses.secondary}">
                     ${getButtonText(tool)}
                 </a>
             </div>
@@ -60,21 +57,21 @@ document.addEventListener('DOMContentLoaded', function() {
             if (link.id === 'toolbox') {
                 sidebarHTML += `
                     <li>
-                        <a href="#toolbox" data-toggle="sub-menu" class="flex items-center justify-between w-full py-2 px-3 rounded-md font-semibold text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-all duration-200">
+                        <a href="/index.html#toolbox" data-toggle="sub-menu" class="flex items-center justify-between w-full py-2 px-3 rounded-md font-semibold text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-all duration-200">
                             <span class="flex items-center space-x-3">${link.icon}<span>${link.title}</span></span>
                             <svg class="w-4 h-4 transition-transform transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
                         </a>
                         <ul id="sub-menu" class="ml-4 mt-1 space-y-1 border-l border-gray-200 hidden">`;
 
                 toolsData.toolbox.forEach(tool => {
-                    sidebarHTML += `<li><a href="#${tool.id}" class="block py-1 px-3 text-sm text-gray-500 hover:text-blue-600 transition-all duration-200">${tool.title}</a></li>`;
+                    sidebarHTML += `<li><a href="${tool.href}" class="block py-1 px-3 text-sm text-gray-500 hover:text-blue-600 transition-all duration-200">${tool.title}</a></li>`;
                 });
 
                 sidebarHTML += `</ul></li>`;
             } else {
                  sidebarHTML += `
                     <li>
-                        <a href="#${link.id}" class="flex items-center space-x-3 py-2 px-3 rounded-md font-semibold text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-all duration-200">
+                        <a href="/index.html#${link.id}" class="flex items-center space-x-3 py-2 px-3 rounded-md font-semibold text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-all duration-200">
                             ${link.icon}<span>${link.title}</span>
                         </a>
                     </li>`;
@@ -109,12 +106,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 navLinks.forEach(link => {
-                    const href = link.getAttribute('href');
-                    if (href === `#${activeId}`) {
-                        link.classList.add('active');
-                    } else {
-                        link.classList.remove('active');
-                    }
+                    // For multi-page, we only highlight based on current page, not scroll position
+                    // This logic would need to be re-thought for a multi-page site.
+                    // For now, we remove the active class logic.
+                    link.classList.remove('active');
                 });
             }, { rootMargin: '-30% 0px -65% 0px', threshold: 0.1 });
             sections.forEach(section => observer.observe(section));
@@ -132,47 +127,25 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Modal Open/Close Logic
+        // Modal Open/Close Logic (for tools that still use modals)
         const setupModal = (toolId, modalId, closeBtnId) => {
             const modal = document.getElementById(modalId);
             const openBtn = document.querySelector(`[data-tool-id="${toolId}"]`);
             const closeBtn = document.getElementById(closeBtnId);
             if(modal && openBtn && closeBtn) {
-                openBtn.addEventListener('click', (e) => { e.preventDefault(); modal.classList.remove('hidden'); });
-                closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
-                modal.addEventListener('click', e => { if(e.target === modal) modal.classList.add('hidden'); });
+                // Check if the link is not to a new page
+                if (openBtn.getAttribute('href') === '#') {
+                    openBtn.addEventListener('click', (e) => { e.preventDefault(); modal.classList.remove('hidden'); });
+                    closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+                    modal.addEventListener('click', e => { if(e.target === modal) modal.classList.add('hidden'); });
+                }
             }
         };
-        setupModal('logistics-cost-calculator', 'logistics-modal', 'close-modal-btn');
         setupModal('dpi-calculator', 'dpi-modal', 'close-dpi-modal-btn');
         setupModal('unit-converter', 'unit-converter-modal', 'close-unit-converter-modal-btn');
 
-        // Logistics Calculator
-        const calculateLogisticsBtn = document.getElementById('modal-calculate-btn');
-        if (calculateLogisticsBtn) {
-            calculateLogisticsBtn.addEventListener('click', () => {
-                const length = parseFloat(document.getElementById('modal-length').value) || 0;
-                const width = parseFloat(document.getElementById('modal-width').value) || 0;
-                const height = parseFloat(document.getElementById('modal-height').value) || 0;
-                const weight = parseFloat(document.getElementById('modal-weight').value) || 0;
-                const resultDiv = document.getElementById('modal-result');
-                if (length <= 0 || width <= 0 || height <= 0 || weight <= 0) {
-                    resultDiv.innerHTML = '<p class="text-red-500">请输入所有有效的尺寸和重量值。</p>';
-                    return;
-                }
-                const volumetricWeight = (length * width * height) / 5000;
-                const chargeableWeight = Math.max(weight, volumetricWeight);
-                const rate = 8;
-                const estimatedCost = chargeableWeight * rate;
-                resultDiv.innerHTML = `
-                    <h4 class="font-bold mb-2">计算结果:</h4>
-                    <p>体积重: <span class="font-semibold text-blue-600">${volumetricWeight.toFixed(2)} kg</span></p>
-                    <p>实际重量: <span class="font-semibold">${weight.toFixed(2)} kg</span></p>
-                    <p class="mt-2 text-lg">计费重量: <span class="font-bold text-red-600">${chargeableWeight.toFixed(2)} kg</span></p>
-                    <p class="mt-1 text-lg">预估费用: <span class="font-bold text-red-600">¥ ${estimatedCost.toFixed(2)}</span> (费率: ${rate}元/kg)</p>
-                `;
-            });
-        }
+        // Note: Logistics calculator logic is now in its own file.
+        // Other calculator logic remains here for now.
 
         // DPI Calculator
         const calculateDpiBtn = document.getElementById('calculate-dpi-btn');
