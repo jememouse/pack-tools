@@ -17,6 +17,7 @@ const toolsData = {
             { id: 'line-length-calculator', title: '线长计算器', description: '根据卷材外径、卷芯内径和材料厚度，计算卷材总长度。', styleType: 'secondary', href: '/tools/line-length-calculator.html' },
             { id: 'gsm-converter', title: '克重与厚度换算', description: '根据常见纸张类型，在克重(gsm)和厚度(mm)之间进行估算。', styleType: 'secondary', href: '/tools/gsm-converter.html' },
             { id: 'copy-generator', title: '包装文案灵感生成器', description: '为您的包装寻找一句话灵感。', styleType: 'tertiary', href: '/tools/copy-generator.html' },
+            { id: 'delta-e-explainer', title: '颜色差异(ΔE)解释器', description: '直观地理解Delta E数值在印刷颜色管理中的实际意义。', styleType: 'tertiary', href: '/tools/delta-e-explainer.html' },
         ]
     },
     prepressAids: {
@@ -37,6 +38,13 @@ const toolsData = {
         title: '生产管理',
         tools: [
             { id: 'lead-time-estimator', title: '生产周期估算器', description: '根据订单数量和工艺复杂度，估算大致的生产所需天数。', styleType: 'secondary', href: '/tools/lead-time-estimator.html' },
+            { id: 'dieline-cost-estimator', title: '刀版成本估算器', description: '根据刀线和压痕线的总长度，估算一次性刀版费用。', styleType: 'secondary', href: '/tools/dieline-cost-estimator.html' },
+        ]
+    },
+    qualityControl: {
+        title: '质量控制',
+        tools: [
+            { id: 'drop-test-reference', title: '包装跌落测试高度参考', description: '根据包装重量，查询ISTA标准建议的测试跌落高度。', styleType: 'secondary', href: '/tools/drop-test-reference.html' },
         ]
     }
 };
