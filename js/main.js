@@ -26,6 +26,15 @@ const toolsData = {
     }
 };
 
+const resourcesData = {
+    title: '资源库',
+    items: [
+        { id: 'material-manual', title: '材料速查手册', description: '图文并茂，快速了解白卡纸、牛皮纸、瓦楞纸等常用材料的特性与成本。', href: '/resources/material-manual.html' },
+        { id: 'process-manual', title: '工艺速查手册', description: '直观了解烫金、UV、击凸等后道工艺的效果、优缺点及成本概览。', href: '/resources/process-manual.html' },
+        { id: 'industry-news', title: '行业关键资讯', description: '每周精选纸价波动、环保新规等摘要，让您在用工具时洞悉行业大事。', href: '/resources/industry-news.html' },
+    ]
+};
+
 document.addEventListener('DOMContentLoaded', function() {
     const renderSidebar = () => {
         const navContainer = document.getElementById('quick-nav');
@@ -43,11 +52,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (link.id === 'toolbox') {
                 sidebarHTML += `
                     <li>
-                        <a href="${linkHref}" data-toggle="sub-menu" class="flex items-center justify-between w-full py-2 px-3 rounded-md font-semibold text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-all duration-200">
+                        <a href="${linkHref}" data-toggle="sub-menu-tools" class="flex items-center justify-between w-full py-2 px-3 rounded-md font-semibold text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-all duration-200">
                             <span class="flex items-center space-x-3">${link.icon}<span>${link.title}</span></span>
                             <svg class="w-4 h-4 transition-transform transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
                         </a>
-                        <ul id="sub-menu" class="ml-4 mt-1 space-y-1 border-l border-gray-200 hidden">`;
+                        <ul id="sub-menu-tools" class="ml-4 mt-1 space-y-1 border-l border-gray-200 hidden">`;
 
                 for (const categoryKey in toolsData) {
                     const category = toolsData[categoryKey];
@@ -60,6 +69,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     sidebarHTML += `</ul></li>`;
                 }
 
+                sidebarHTML += `</ul></li>`;
+            } else if (link.id === 'resources') {
+                sidebarHTML += `
+                    <li>
+                        <a href="${linkHref}" data-toggle="sub-menu-resources" class="flex items-center justify-between w-full py-2 px-3 rounded-md font-semibold text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-all duration-200">
+                            <span class="flex items-center space-x-3">${link.icon}<span>${link.title}</span></span>
+                             <svg class="w-4 h-4 transition-transform transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                        </a>
+                        <ul id="sub-menu-resources" class="ml-4 mt-1 space-y-1 border-l border-gray-200 hidden">`;
+                resourcesData.items.forEach(item => {
+                    sidebarHTML += `<li><a href="${item.href}" class="block py-1 px-3 text-sm text-gray-500 hover:text-blue-600 transition-all duration-200">${item.title}</a></li>`;
+                });
                 sidebarHTML += `</ul></li>`;
             } else {
                  sidebarHTML += `
@@ -85,16 +106,23 @@ document.addEventListener('DOMContentLoaded', function() {
             menuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
         }
 
-        const subMenuToggle = document.querySelector('[data-toggle="sub-menu"]');
-        if (subMenuToggle) {
-            const subMenu = document.getElementById('sub-menu');
-            const icon = subMenuToggle.querySelector('svg:last-child');
-            subMenuToggle.addEventListener('click', (e) => {
-                e.preventDefault();
-                subMenu.classList.toggle('hidden');
-                icon.classList.toggle('rotate-180');
-            });
-        }
+        const setupCollapsibleMenu = (toggleAttr, subMenuId) => {
+            const toggleButton = document.querySelector(`[data-toggle="${toggleAttr}"]`);
+            if (toggleButton) {
+                const subMenu = document.getElementById(subMenuId);
+                const icon = toggleButton.querySelector('svg:last-child');
+                if (subMenu && icon) {
+                    toggleButton.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        subMenu.classList.toggle('hidden');
+                        icon.classList.toggle('rotate-180');
+                    });
+                }
+            }
+        };
+
+        setupCollapsibleMenu('sub-menu-tools', 'sub-menu-tools');
+        setupCollapsibleMenu('sub-menu-resources', 'sub-menu-resources');
     };
 
     renderSidebar();
