@@ -15,6 +15,8 @@ const toolsData = {
             { id: 'color-converter', title: '色彩模式转换器', description: '在RGB、CMYK和PANTONE色值之间进行快速查询和转换。', styleType: 'secondary', href: '#' },
             { id: 'unit-converter', title: '单位换算工具', description: '覆盖长度、重量、克重等包装行业常用单位的快速互换。', styleType: 'secondary', href: '#' },
             { id: 'line-length-calculator', title: '线长计算器', description: '根据卷材外径、卷芯内径和材料厚度，计算卷材总长度。', styleType: 'secondary', href: '/tools/line-length-calculator.html' },
+            { id: 'gsm-converter', title: '克重与厚度换算', description: '根据常见纸张类型，在克重(gsm)和厚度(mm)之间进行估算。', styleType: 'secondary', href: '/tools/gsm-converter.html' },
+            { id: 'copy-generator', title: '包装文案灵感生成器', description: '为您的包装寻找一句话灵感。', styleType: 'tertiary', href: '/tools/copy-generator.html' },
         ]
     },
     prepressAids: {
@@ -28,6 +30,7 @@ const toolsData = {
         title: '仓储与物流',
         tools: [
             { id: 'rop-calculator', title: '安全库存与再订货点计算器', description: '通过科学计算，助您在不牺牲安全性的前提下，最大化降低库存成本。', styleType: 'secondary', href: '/tools/rop-calculator.html' },
+            { id: 'box-packing-calculator', title: '拼箱数量计算器', description: '估算一个大箱子最多能装下多少个小内盒。', styleType: 'secondary', href: '/tools/box-packing-calculator.html' },
         ]
     },
     productionManagement: {
