@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本对比工具 - 在线工具集</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/diff-match-patch/diff_match_patch.js"></script>
+    <style>
+        .diff-container { display: flex; gap: 10px; }
+        .diff-container textarea { min-height: 250px; }
+        #diff-output { border: 1px solid #ccc; padding: 10px; min-height: 100px; border-radius: 4px; margin-top: 10px; line-height: 1.6; }
+        #diff-output del { background-color: #ffebe9; text-decoration: none; }
+        #diff-output ins { background-color: #e6ffed; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tool" id="text-diff-tool">
+            <h2>4. 文本对比工具 (Text Diff Checker)</h2>
+            <div class="diff-container">
+                <textarea id="diff-input-1" placeholder="在此处粘贴原始文本..."></textarea>
+                <textarea id="diff-input-2" placeholder="在此处粘贴修改后的文本..."></textarea>
+            </div>
+            <button id="btn-run-diff" style="margin-top: 10px;">生成对比</button>
+            <h3 style="margin-bottom: 5px; margin-top: 20px;">对比结果:</h3>
+            <div id="diff-output"></div>
+        </div>
+        <a href="../index.html" class="home-link">返回主菜单</a>
+    </div>
+
+    <script>
+        const btnRunDiff = document.getElementById('btn-run-diff');
+        btnRunDiff.addEventListener('click', () => {
+            const text1 = document.getElementById('diff-input-1').value;
+            const text2 = document.getElementById('diff-input-2').value;
+            const diffOutput = document.getElementById('diff-output');
+
+            try {
+                const dmp = new diff_match_patch();
+                const diff = dmp.diff_main(text1, text2);
+                dmp.diff_cleanupSemantic(diff);
+
+                const display = dmp.diff_prettyHtml(diff);
+                diffOutput.innerHTML = display;
+            } catch (e) {
+                diffOutput.innerHTML = "生成对比时发生错误: " + e.message;
+            }
+        });
+    </script>
+</body>
+</html>
