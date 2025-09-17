@@ -4,24 +4,17 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     const renderToolCards = () => {
-        const container = document.getElementById('toolbox-grid');
-        if (!container) return;
-
         const buttonClasses = {
             primary: 'bg-blue-600 text-white hover:bg-blue-700 py-2 rounded-lg',
             secondary: 'border border-gray-300 text-gray-600 hover:bg-gray-100 hover:border-gray-400 py-2 rounded-lg font-semibold',
             tertiary: 'font-semibold text-gray-500 hover:text-blue-600'
         };
+        const getButtonText = (tool) => (['dieline-library', 'pdf-checklist'].includes(tool.id) ? '查看模板库' : '使用工具');
 
-        const getButtonText = (tool) => {
-            if (['dieline-library', 'pdf-checklist'].includes(tool.id)) return '查看模板库';
-            return '使用工具';
-        };
-
-        let allToolsHTML = '';
         for (const categoryKey in toolsData) {
-            toolsData[categoryKey].tools.forEach(tool => {
-                allToolsHTML += `
+            const container = document.getElementById(`${categoryKey}-tools`);
+            if (container) {
+                container.innerHTML = toolsData[categoryKey].tools.map(tool => `
                     <div id="${tool.id}" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all tool-card">
                         <div>
                             <h5 class="text-md font-bold text-gray-800">${tool.title}</h5>
@@ -31,10 +24,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             ${getButtonText(tool)}
                         </a>
                     </div>
-                `;
-            });
+                `).join('');
+            }
         }
-        container.innerHTML = allToolsHTML;
     };
 
     const initHomepageEventListeners = () => {
@@ -45,15 +37,18 @@ document.addEventListener('DOMContentLoaded', function() {
             const sections = document.querySelectorAll('section[id], h4[id]');
             const observer = new IntersectionObserver(entries => {
                 const visibleSections = entries.filter(e => e.isIntersecting).map(e => e.target.id);
-                navLinks.forEach(link => {
-                    const linkHref = link.getAttribute('href');
-                    const targetId = linkHref.substring(linkHref.indexOf('#') + 1);
-                    if (visibleSections.includes(targetId)) {
-                        link.classList.add('active');
-                    } else {
-                        link.classList.remove('active');
-                    }
-                });
+                if (visibleSections.length > 0) {
+                    const activeId = visibleSections[0];
+                    navLinks.forEach(link => {
+                        const linkHref = link.getAttribute('href');
+                        const targetId = linkHref.substring(linkHref.indexOf('#') + 1);
+                        if (targetId === activeId) {
+                            link.classList.add('active');
+                        } else {
+                            link.classList.remove('active');
+                        }
+                    });
+                }
             }, { rootMargin: '-40% 0px -55% 0px' });
             sections.forEach(section => {
                 if(section) observer.observe(section);
@@ -113,41 +108,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Unit Converter
         const unitCategorySelect = document.getElementById('unit-category');
-        const unitFromSelect = document.getElementById('unit-from');
-        const unitToSelect = document.getElementById('unit-to');
-        const unitInputField = document.getElementById('unit-input');
-        const unitResultDiv = document.getElementById('unit-result').querySelector('p');
-        const unitDefs = {
-            length: { '厘米 (cm)': 1, '米 (m)': 100, '英寸 (in)': 2.54, '英尺 (ft)': 30.48, '毫米 (mm)': 0.1 },
-            weight: { '克 (g)': 1, '千克 (kg)': 1000, '磅 (lb)': 453.592, '盎司 (oz)': 28.3495 },
-            gsm: { '克/平方米 (g/m²)': 1, '磅 (lb/ream)': 1.48 }
-        };
-        const populateUnits = () => {
-            const category = unitCategorySelect.value;
-            const options = Object.keys(unitDefs[category]);
-            unitFromSelect.innerHTML = options.map(o => `<option value="${o}">${o}</option>`).join('');
-            unitToSelect.innerHTML = options.map(o => `<option value="${o}">${o}</option>`).join('');
-            unitToSelect.selectedIndex = Math.min(1, options.length - 1);
-            convertUnits();
-        };
-        const convertUnits = () => {
-            const category = unitCategorySelect.value;
-            const fromUnit = unitFromSelect.value;
-            const toUnit = unitToSelect.value;
-            const inputValue = parseFloat(unitInputField.value) || 0;
-            if (isNaN(inputValue)) {
-                unitResultDiv.textContent = '0.00';
-                return;
-            }
-            const fromFactor = unitDefs[category][fromUnit];
-            const toFactor = unitDefs[category][toUnit];
-            const result = (inputValue * fromFactor) / toFactor;
-            unitResultDiv.textContent = result.toFixed(3);
-        };
         if (unitCategorySelect) {
+            const unitFromSelect = document.getElementById('unit-from');
+            const unitToSelect = document.getElementById('unit-to');
+            const unitInputField = document.getElementById('unit-input');
+            const unitResultDiv = document.getElementById('unit-result').querySelector('p');
+            const unitDefs = {
+                length: { '厘米 (cm)': 1, '米 (m)': 100, '英寸 (in)': 2.54, '英尺 (ft)': 30.48, '毫米 (mm)': 0.1 },
+                weight: { '克 (g)': 1, '千克 (kg)': 1000, '磅 (lb)': 453.592, '盎司 (oz)': 28.3495 },
+                gsm: { '克/平方米 (g/m²)': 1, '磅 (lb/ream)': 1.48 }
+            };
+            const populateUnits = () => {
+                const category = unitCategorySelect.value;
+                const options = Object.keys(unitDefs[category]);
+                unitFromSelect.innerHTML = options.map(o => `<option value="${o}">${o}</option>`).join('');
+                unitToSelect.innerHTML = options.map(o => `<option value="${o}">${o}</option>`).join('');
+                unitToSelect.selectedIndex = Math.min(1, options.length - 1);
+                convertUnits();
+            };
+            const convertUnits = () => {
+                const category = unitCategorySelect.value;
+                const fromUnit = fromSelect.value;
+                const toUnit = toSelect.value;
+                const inputValue = parseFloat(unitInputField.value) || 0;
+                if (isNaN(inputValue)) {
+                    unitResultDiv.textContent = '0.00';
+                    return;
+                }
+                const fromFactor = unitDefs[category][fromUnit];
+                const toFactor = unitDefs[category][toUnit];
+                const result = (inputValue * fromFactor) / toFactor;
+                unitResultDiv.textContent = result.toFixed(3);
+            };
             unitCategorySelect.addEventListener('change', populateUnits);
-            fromSelect.addEventListener('change', convertUnits);
-            toSelect.addEventListener('change', convertUnits);
+            unitFromSelect.addEventListener('change', convertUnits);
+            unitToSelect.addEventListener('change', convertUnits);
             unitInputField.addEventListener('input', convertUnits);
             populateUnits();
         }

@@ -1,5 +1,3 @@
-// This file contains shared data and logic for all pages.
-
 const toolsData = {
     coreCalculators: {
         title: '核心计算器',
@@ -41,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let sidebarHTML = '<ul class="space-y-2">';
         mainLinks.forEach(link => {
-            const linkHref = link.id === 'toolbox' ? '/index.html#toolbox' : `/index.html#${link.id}`;
+            const linkHref = `/index.html#${link.id}`;
             if (link.id === 'toolbox') {
                 sidebarHTML += `
                     <li>
@@ -81,14 +79,12 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     const initSharedEventListeners = () => {
-        // Mobile menu
         const menuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         if (menuButton && mobileMenu) {
             menuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
         }
 
-        // Collapsible Sidebar Menu
         const subMenuToggle = document.querySelector('[data-toggle="sub-menu"]');
         if (subMenuToggle) {
             const subMenu = document.getElementById('sub-menu');
