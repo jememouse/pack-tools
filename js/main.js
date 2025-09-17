@@ -21,18 +21,21 @@ const toolsData = {
         title: '印前处理辅助',
         tools: [
             { id: 'dpi-calculator', title: '分辨率 (DPI) 计算器', description: '检查图像是否达到300 DPI印刷标准，避免后期返工。', styleType: 'tertiary', href: '#' },
-            { id: 'pdf-checklist', title: 'PDF 印前检查清单', description: '交互式清单引导您规避常见印刷错误，减少沟通成本。', styleType: 'tertiary', href: '#' }
+            { id: 'pdf-checklist', title: 'PDF 印前检查清单', description: '交互式清单引导您规避常见印刷错误，减少沟通成本。', styleType: 'tertiary', href: '/tools/compliance-checklist.html' }
+        ]
+    },
+    warehousingLogistics: {
+        title: '仓储与物流',
+        tools: [
+            { id: 'rop-calculator', title: '安全库存与再订货点计算器', description: '通过科学计算，助您在不牺牲安全性的前提下，最大化降低库存成本。', styleType: 'secondary', href: '/tools/rop-calculator.html' },
+        ]
+    },
+    productionManagement: {
+        title: '生产管理',
+        tools: [
+            { id: 'lead-time-estimator', title: '生产周期估算器', description: '根据订单数量和工艺复杂度，估算大致的生产所需天数。', styleType: 'secondary', href: '/tools/lead-time-estimator.html' },
         ]
     }
-};
-
-const resourcesData = {
-    title: '资源库',
-    items: [
-        { id: 'material-manual', title: '材料速查手册', description: '图文并茂，快速了解白卡纸、牛皮纸、瓦楞纸等常用材料的特性与成本。', href: '/resources/material-manual.html' },
-        { id: 'process-manual', title: '工艺速查手册', description: '直观了解烫金、UV、击凸等后道工艺的效果、优缺点及成本概览。', href: '/resources/process-manual.html' },
-        { id: 'industry-news', title: '行业关键资讯', description: '每周精选纸价波动、环保新规等摘要，让您在用工具时洞悉行业大事。', href: '/resources/industry-news.html' },
-    ]
 };
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -69,18 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     sidebarHTML += `</ul></li>`;
                 }
 
-                sidebarHTML += `</ul></li>`;
-            } else if (link.id === 'resources') {
-                sidebarHTML += `
-                    <li>
-                        <a href="${linkHref}" data-toggle="sub-menu-resources" class="flex items-center justify-between w-full py-2 px-3 rounded-md font-semibold text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-all duration-200">
-                            <span class="flex items-center space-x-3">${link.icon}<span>${link.title}</span></span>
-                             <svg class="w-4 h-4 transition-transform transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
-                        </a>
-                        <ul id="sub-menu-resources" class="ml-4 mt-1 space-y-1 border-l border-gray-200 hidden">`;
-                resourcesData.items.forEach(item => {
-                    sidebarHTML += `<li><a href="${item.href}" class="block py-1 px-3 text-sm text-gray-500 hover:text-blue-600 transition-all duration-200">${item.title}</a></li>`;
-                });
                 sidebarHTML += `</ul></li>`;
             } else {
                  sidebarHTML += `
@@ -122,7 +113,6 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         setupCollapsibleMenu('sub-menu-tools', 'sub-menu-tools');
-        setupCollapsibleMenu('sub-menu-resources', 'sub-menu-resources');
     };
 
     renderSidebar();

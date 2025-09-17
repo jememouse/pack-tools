@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>工艺速查手册 - 包装工具箱</title>
-    <meta name="description" content="直观了解烫金、UV、击凸等后道工艺的效果、优缺点及成本概览。">
+    <title>生产周期估算器 - 包装工具箱</title>
+    <meta name="description" content="在线估算包装订单的生产周期。">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -37,24 +37,30 @@
         </header>
 
         <main class="container mx-auto px-6 py-12 md:py-20">
-            <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-4xl mx-auto">
+            <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-2xl mx-auto">
                 <div class="flex items-center mb-6">
                     <a href="/index.html" class="text-blue-600 hover:underline">&larr; 返回首页</a>
                 </div>
-                <h2 class="text-3xl font-bold text-gray-800 mb-2">工艺速查手册</h2>
-                <p class="text-gray-500 mb-8">直观了解烫金、UV、击凸等后道工艺的效果、优缺点及成本概览。</p>
-                <article class="prose lg:prose-xl max-w-none">
-                    <h3>烫金 / 烫银</h3>
-                    <p>利用热压转移的原理，将电化铝中的铝层转印到承印物表面以形成特殊的金属效果。</p>
-
-                    <h3>局部UV</h3>
-                    <p>通过紫外线干燥固化油墨的一种印刷工艺，能够在纸张表面形成一层亮丽的、有质感的凸起。</p>
-
-                    <h3>击凸 / 压凹</h3>
-                    <p>利用凹凸模具，在一定的压力作用下使印刷品产生塑性变形，从而对印刷品表面进行艺术加工。</p>
-
-                    <p><i>(此处为占位内容，待后续填充详细图文...)</i></p>
-                </article>
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">生产周期估算器</h2>
+                <p class="text-gray-500 mb-8">根据您的订单详情，估算生产所需的总天数。请注意，这只是一个基于行业平均水平的估算值。</p>
+                <div class="space-y-4">
+                    <div>
+                        <label for="order-quantity" class="block text-sm font-medium text-gray-700">订单数量</label>
+                        <input type="number" id="order-quantity" value="5000" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <fieldset>
+                        <legend class="text-sm font-medium text-gray-700">后道工艺 (可多选)</legend>
+                        <div class="mt-2 grid grid-cols-2 gap-4">
+                            <label class="flex items-center space-x-2 p-3 border rounded-md hover:bg-gray-50"><input type="checkbox" data-days="1" class="h-4 w-4 text-blue-600 border-gray-300 rounded"><span>覆膜</span></label>
+                            <label class="flex items-center space-x-2 p-3 border rounded-md hover:bg-gray-50"><input type="checkbox" data-days="2" class="h-4 w-4 text-blue-600 border-gray-300 rounded"><span>烫金/银</span></label>
+                            <label class="flex items-center space-x-2 p-3 border rounded-md hover:bg-gray-50"><input type="checkbox" data-days="2" class="h-4 w-4 text-blue-600 border-gray-300 rounded"><span>局部UV</span></label>
+                            <label class="flex items-center space-x-2 p-3 border rounded-md hover:bg-gray-50"><input type="checkbox" data-days="2" class="h-4 w-4 text-blue-600 border-gray-300 rounded"><span>击凸/压凹</span></label>
+                        </div>
+                    </fieldset>
+                </div>
+                <div id="result-container" class="mt-6 p-6 bg-gray-50 rounded-lg text-gray-700">
+                     <!-- Results will be displayed here -->
+                </div>
             </div>
         </main>
 
@@ -66,5 +72,6 @@
         </footer>
     </div>
     <script src="/js/main.js"></script>
+    <script src="lead-time-estimator.js"></script>
 </body>
 </html>

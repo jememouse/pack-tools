@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>行业关键资讯 - 包装工具箱</title>
-    <meta name="description" content="每周精选纸价波动、环保新规等摘要，让您在用工具时洞悉行业大事。">
+    <title>安全库存与再订货点计算器 - 包装工具箱</title>
+    <meta name="description" content="在线计算安全库存与再订货点(ROP)，优化库存成本。">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -37,21 +37,33 @@
         </header>
 
         <main class="container mx-auto px-6 py-12 md:py-20">
-            <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-4xl mx-auto">
+            <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-2xl mx-auto">
                 <div class="flex items-center mb-6">
                     <a href="/index.html" class="text-blue-600 hover:underline">&larr; 返回首页</a>
                 </div>
-                <h2 class="text-3xl font-bold text-gray-800 mb-2">行业关键资讯</h2>
-                <p class="text-gray-500 mb-8">每周精选纸价波动、环保新规等摘要，让您在用工具时洞悉行业大事。</p>
-                <article class="prose lg:prose-xl max-w-none">
-                    <h3>2025年第三季度纸价分析</h3>
-                    <p>受国际纸浆价格影响，本季度国内原纸价格预计将呈现小幅上涨趋势...</p>
-
-                    <h3>环保新规对包装行业的影响</h3>
-                    <p>新的可降解材料标准将于下月生效，相关企业需尽快调整生产线以符合规定...</p>
-
-                    <p><i>(此处为占位内容，待后续填充详细资讯...)</i></p>
-                </article>
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">安全库存与再订货点(ROP)计算器</h2>
+                <p class="text-gray-500 mb-8">通过输入消耗和到货周期，科学地计算出维持业务持续运营所需的最小库存水平。</p>
+                <div class="space-y-4">
+                    <div>
+                        <label for="avg-daily-usage" class="block text-sm font-medium text-gray-700">平均每日消耗量</label>
+                        <input type="number" id="avg-daily-usage" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label for="max-daily-usage" class="block text-sm font-medium text-gray-700">最大每日消耗量</label>
+                        <input type="number" id="max-daily-usage" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label for="avg-lead-time" class="block text-sm font-medium text-gray-700">平均到货周期 (天)</label>
+                        <input type="number" id="avg-lead-time" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label for="max-lead-time" class="block text-sm font-medium text-gray-700">最大到货周期 (天)</label>
+                        <input type="number" id="max-lead-time" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm">
+                    </div>
+                </div>
+                <div id="result-container" class="mt-6 p-6 bg-gray-50 rounded-lg text-gray-700">
+                    <!-- Results will be displayed here -->
+                </div>
             </div>
         </main>
 
@@ -63,5 +75,6 @@
         </footer>
     </div>
     <script src="/js/main.js"></script>
+    <script src="rop-calculator.js"></script>
 </body>
 </html>

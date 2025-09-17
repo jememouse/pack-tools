@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>材料速查手册 - 包装工具箱</title>
-    <meta name="description" content="图文并茂，快速了解白卡纸、牛皮纸、瓦楞纸等常用材料的特性与成本。">
+    <title>PDF 印前检查清单 - 包装工具箱</title>
+    <meta name="description" content="交互式清单，助您规避常见印刷错误。">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', 'Helvetica Neue', 'Arial', 'sans-serif'; }
+        .checklist-item.completed { text-decoration: line-through; color: #6b7280; }
     </style>
 </head>
 <body class="bg-gray-50 lg:flex">
@@ -37,24 +38,20 @@
         </header>
 
         <main class="container mx-auto px-6 py-12 md:py-20">
-            <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-4xl mx-auto">
+            <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-2xl mx-auto">
                 <div class="flex items-center mb-6">
                     <a href="/index.html" class="text-blue-600 hover:underline">&larr; 返回首页</a>
                 </div>
-                <h2 class="text-3xl font-bold text-gray-800 mb-2">材料速查手册</h2>
-                <p class="text-gray-500 mb-8">图文并茂，快速了解白卡纸、牛皮纸、瓦楞纸等常用材料的特性与成本。</p>
-                <article class="prose lg:prose-xl max-w-none">
-                    <h3>白卡纸</h3>
-                    <p>白卡纸是一种坚挺厚实、定量较大的纸。特点是：平滑度高、挺度好、色相纯净。常用于名片、证书、请柬、封皮、月份台历以及邮政明信片等。</p>
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">PDF 印前检查清单</h2>
+                <p class="text-gray-500 mb-8">在将文件发送给印刷厂之前，请逐项检查以确保万无一失。点击项目即可标记为完成。</p>
 
-                    <h3>牛皮纸</h3>
-                    <p>牛皮纸是坚韧耐水的包装用纸，呈棕黄色，用途很广，常用于制作纸袋、信封、作业本、唱片套、卷宗和砂纸等。</p>
+                <div class="space-y-3" id="checklist-container">
+                    <!-- Checklist items will be injected here -->
+                </div>
 
-                    <h3>瓦楞纸</h3>
-                    <p>瓦楞纸板是由面纸、里纸、芯纸和加工成波形瓦楞的瓦楞纸通过粘合而成。具有成本低、质量轻、加工易、强度大、印刷适应性样优良、储存搬运方便等优点，是快递包装的主要材料。</p>
-
-                    <p><i>(此处为占位内容，待后续填充详细图文...)</i></p>
-                </article>
+                 <div class="mt-8 text-right">
+                    <button id="reset-checklist-btn" class="text-sm text-gray-500 hover:text-red-600">重置清单</button>
+                </div>
             </div>
         </main>
 
@@ -66,5 +63,6 @@
         </footer>
     </div>
     <script src="/js/main.js"></script>
+    <script src="compliance-checklist.js"></script>
 </body>
 </html>
