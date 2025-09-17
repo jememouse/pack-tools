@@ -4,19 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>包装工具箱 - 专业包装行业聚合工具网站</title>
-    <meta name="description" content="一个为包装行业从业者打造的在线工具箱，提供物流成本计算、纸张用量核算、托盘堆码规划、刀线模板库等一系列实用工具与资源。">
-
-    <!-- Open Graph / Social Media -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="包装工具箱 - 专业包装行业聚合工具网站">
-    <meta property="og:description" content="一个为包装行业从业者打造的在线工具箱，提供物流成本计算、纸张用量核算、托盘堆码规划、刀线模板库等一系列实用工具与资源。">
-
-    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
-    <script>
-      tailwind.config = {
-        content: ["./index.html", "./tools/*.html"],
-      }
-    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -32,36 +20,20 @@
             flex-direction: column;
             justify-content: space-between;
         }
-        #quick-nav a.active {
-            background-color: #2563eb; /* bg-blue-600 */
-            color: white;
-        }
-        #quick-nav ul ul a.active {
-             background-color: #3b82f6; /* bg-blue-500 */
-             color: white;
-        }
     </style>
 </head>
-<body class="bg-gray-50 lg:flex">
+<body class="bg-gray-50">
 
-    <!-- Quick Nav Sidebar -->
-    <nav id="quick-nav" class="hidden lg:block lg:w-64 flex-shrink-0 h-screen lg:sticky top-0 overflow-y-auto bg-white border-r border-gray-200 p-6">
-        <div class="font-bold text-lg text-gray-800 mb-8">导航</div>
-        <!-- Navigation links will be injected here by JavaScript -->
-    </nav>
-
-    <!-- Main Content Wrapper -->
-    <div id="main-content-wrapper" class="flex-1 min-w-0">
-        <!-- Header / Navigation -->
-        <header class="bg-white/95 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-200/80">
-            <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+    <!-- Header / Navigation -->
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-200">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-2">
                 <svg class="w-8 h-8 text-blue-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
                 </svg>
                 <h1 class="text-2xl font-bold text-gray-800">包装工具箱</h1>
             </div>
-            <nav id="mobile-menu" class="hidden md:flex items-center space-x-8">
+            <nav class="hidden md:flex items-center space-x-8">
                 <a href="#toolbox" class="text-gray-600 hover:text-blue-600 transition-colors">核心工具</a>
                 <a href="#resources" class="text-gray-600 hover:text-blue-600 transition-colors">资源库</a>
                 <a href="#suppliers" class="text-gray-600 hover:text-blue-600 transition-colors">供应商</a>
@@ -69,7 +41,7 @@
             <button class="hidden md:block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
                 联系我们
             </button>
-            <button id="mobile-menu-button" class="md:hidden text-gray-600">
+            <button class="md:hidden text-gray-600">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                 </svg>
@@ -80,7 +52,7 @@
     <main class="container mx-auto px-6 py-12 md:py-20">
 
         <!-- Hero Section -->
-        <section class="text-center mb-12">
+        <section class="text-center mb-20">
             <h2 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
                 一个<span class="gradient-text">小而精</span>的在线包装实用工具集
             </h2>
@@ -88,60 +60,122 @@
                 我们专注于解决包装设计、生产和物流中的具体问题。即用即走，快速、准确地完成您的每一项任务。
             </p>
             <div class="mt-8">
-                <!-- CTA Button Removed as per user request -->
+                <a href="#toolbox" class="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg">
+                    开始使用工具
+                </a>
             </div>
         </section>
 
         <!-- Core Toolbox Section -->
-        <section id="toolbox" class="mb-12">
-            <div class="space-y-10">
-                <!-- Core Calculators -->
-                <div>
-                    <h4 id="core-calculators-heading" class="text-xl font-semibold text-gray-700 mb-6 border-l-4 border-blue-500 pl-4">核心计算器</h4>
-                    <div id="coreCalculators-tools" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <!-- Tools will be injected here -->
+        <section id="toolbox" class="mb-20">
+            <h3 class="text-3xl font-bold text-center text-gray-800 mb-2">核心功能模块 · 工具箱</h3>
+            <p class="text-center text-gray-500 mb-12">网站的心脏，我们不求多，但求精。</p>
+            
+            <!-- Priority 1 Tools -->
+            <div class="mb-12">
+                <h4 class="text-xl font-semibold text-gray-700 mb-6 border-l-4 border-blue-500 pl-4">第一优先级：核心计算器 (高频 & 刚需)</h4>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Tool Card: Logistics Cost Calculator -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all tool-card">
+                        <div>
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-blue-100 p-3 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg></div>
+                                <h5 class="text-lg font-bold text-gray-800">物流成本计算器</h5>
+                            </div>
+                            <p class="mt-4 text-gray-600">输入包裹尺寸，自动计算体积重并估算运费。电商卖家与仓储人员必备。</p>
+                        </div>
+                        <a href="#" class="mt-6 block w-full text-center bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">使用工具</a>
+                    </div>
+                    <!-- Tool Card: Paper Usage Calculator -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all tool-card">
+                        <div>
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-blue-100 p-3 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg></div>
+                                <h5 class="text-lg font-bold text-gray-800">纸张用量与成本计算器</h5>
+                            </div>
+                            <p class="mt-4 text-gray-600">选择盒型输入尺寸，智能计算开纸方案与单张成本，精准核算报价。</p>
+                        </div>
+                        <a href="#" class="mt-6 block w-full text-center bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">使用工具</a>
+                    </div>
+                    <!-- Tool Card: Pallet Planner -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all tool-card">
+                        <div>
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-blue-100 p-3 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg></div>
+                                <h5 class="text-lg font-bold text-gray-800">托盘堆码规划器</h5>
+                            </div>
+                            <p class="mt-4 text-gray-600">可视化展示最佳堆码方案，计算托盘可堆放数量，优化仓储空间。</p>
+                        </div>
+                        <a href="#" class="mt-6 block w-full text-center bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">使用工具</a>
                     </div>
                 </div>
-                <!-- Design Aids -->
-                <div>
-                    <h4 id="design-aids-heading" class="text-xl font-semibold text-gray-700 mb-6 border-l-4 border-green-500 pl-4">设计与生产辅助</h4>
-                    <div id="designAids-tools" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        <!-- Tools will be injected here -->
+            </div>
+
+            <!-- Priority 2 Tools -->
+            <div class="mb-12">
+                <h4 class="text-xl font-semibold text-gray-700 mb-6 border-l-4 border-green-500 pl-4">第二优先级：设计与生产辅助工具</h4>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Tool Card -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all tool-card">
+                        <div>
+                            <h5 class="text-md font-bold text-gray-800">盒型刀线模板库</h5>
+                            <p class="mt-2 text-sm text-gray-600">提供常用盒型标准刀线图下载，极大降低结构设计门槛。</p>
+                        </div>
+                        <a href="#" class="mt-4 block w-full text-center bg-gray-200 text-gray-800 py-2 rounded-lg hover:bg-gray-300 transition-colors">查看模板库</a>
+                    </div>
+                     <!-- Tool Card -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all tool-card">
+                        <div>
+                            <h5 class="text-md font-bold text-gray-800">条码/二维码生成器</h5>
+                            <p class="mt-2 text-sm text-gray-600">一键生成符合印刷标准的条形码或二维码矢量图。</p>
+                        </div>
+                        <a href="#" class="mt-4 block w-full text-center bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition-colors">使用工具</a>
+                    </div>
+                     <!-- Tool Card -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all tool-card">
+                        <div>
+                            <h5 class="text-md font-bold text-gray-800">色彩模式转换器</h5>
+                            <p class="mt-2 text-sm text-gray-600">在RGB、CMYK和PANTONE色值之间进行快速查询和转换。</p>
+                        </div>
+                        <a href="#" class="mt-4 block w-full text-center bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition-colors">使用工具</a>
+                    </div>
+                     <!-- Tool Card -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all tool-card">
+                        <div>
+                            <h5 class="text-md font-bold text-gray-800">单位换算工具</h5>
+                            <p class="mt-2 text-sm text-gray-600">覆盖长度、重量、克重等包装行业常用单位的快速互换。</p>
+                        </div>
+                        <a href="#" class="mt-4 block w-full text-center bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition-colors">使用工具</a>
                     </div>
                 </div>
-                <!-- Pre-press Aids -->
-                <div>
-                    <h4 id="prepress-aids-heading" class="text-xl font-semibold text-gray-700 mb-6 border-l-4 border-yellow-500 pl-4">印前处理辅助</h4>
-                    <div id="prepressAids-tools" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        <!-- Tools will be injected here -->
+            </div>
+            
+            <!-- Priority 3 Tools -->
+            <div>
+                <h4 class="text-xl font-semibold text-gray-700 mb-6 border-l-4 border-yellow-500 pl-4">第三优先级：印前处理辅助工具</h4>
+                <div class="grid md:grid-cols-2 gap-8">
+                     <!-- Tool Card -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all tool-card">
+                        <div>
+                            <h5 class="text-md font-bold text-gray-800">分辨率 (DPI) 计算器</h5>
+                            <p class="mt-2 text-sm text-gray-600">检查图像是否达到300 DPI印刷标准，避免后期返工。</p>
+                        </div>
+                        <a href="#" class="mt-4 block w-full text-center bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition-colors">使用工具</a>
                     </div>
-                </div>
-                <!-- Warehousing & Logistics -->
-                <div>
-                    <h4 id="warehousing-logistics-heading" class="text-xl font-semibold text-gray-700 mb-6 border-l-4 border-purple-500 pl-4">仓储与物流</h4>
-                    <div id="warehousingLogistics-tools" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        <!-- Tools will be injected here -->
-                    </div>
-                </div>
-                <!-- Production Management -->
-                <div>
-                    <h4 id="production-management-heading" class="text-xl font-semibold text-gray-700 mb-6 border-l-4 border-red-500 pl-4">生产管理</h4>
-                    <div id="productionManagement-tools" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        <!-- Tools will be injected here -->
-                    </div>
-                </div>
-                <!-- Quality Control -->
-                <div>
-                    <h4 id="quality-control-heading" class="text-xl font-semibold text-gray-700 mb-6 border-l-4 border-indigo-500 pl-4">质量控制</h4>
-                    <div id="qualityControl-tools" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        <!-- Tools will be injected here -->
+                     <!-- Tool Card -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all tool-card">
+                        <div>
+                            <h5 class="text-md font-bold text-gray-800">PDF 印前检查清单</h5>
+                            <p class="mt-2 text-sm text-gray-600">交互式清单引导您规避常见印刷错误，减少沟通成本。</p>
+                        </div>
+                        <a href="#" class="mt-4 block w-full text-center bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition-colors">查看清单</a>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Resources Section -->
-        <section id="resources" class="mb-12 bg-white p-8 md:p-12 rounded-2xl border border-gray-200">
+        <section id="resources" class="mb-20 bg-white p-8 md:p-12 rounded-2xl border border-gray-200">
              <h3 class="text-3xl font-bold text-center text-gray-800 mb-2">增值信息模块 · 资源库</h3>
              <p class="text-center text-gray-500 mb-12">作为工具箱的知识延伸，帮助您更好地理解和决策。</p>
              <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -180,7 +214,7 @@
                 <div class="h-40 bg-gray-50 rounded-lg flex items-center justify-center mb-8">
                      <p class="text-sm text-gray-500">认证供应商将在此优先展示...</p>
                 </div>
-                <a href="#" class="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-all duration-200 transform hover:scale-105 shadow-lg">
+                <a href="#" class="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-all transform hover:scale-105 shadow-lg">
                     申请成为认证供应商
                 </a>
             </div>
@@ -221,127 +255,6 @@
         </div>
     </footer>
 
-    <script src="/js/main.js"></script>
-    <script src="/js/app.js"></script>
-    </div> <!-- End Main Content Wrapper -->
-
-    <!-- Logistics Calculator Modal -->
-    <div id="logistics-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
-        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-lg relative">
-            <!-- Close Button -->
-            <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-
-            <h3 class="text-2xl font-bold text-gray-800 mb-6">物流成本计算器</h3>
-
-            <div class="space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                        <label for="modal-length" class="block text-sm font-medium text-gray-700">长度 (cm)</label>
-                        <input type="number" id="modal-length" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                    <div>
-                        <label for="modal-width" class="block text-sm font-medium text-gray-700">宽度 (cm)</label>
-                        <input type="number" id="modal-width" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                    <div>
-                        <label for="modal-height" class="block text-sm font-medium text-gray-700">高度 (cm)</label>
-                        <input type="number" id="modal-height" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                </div>
-                <div>
-                    <label for="modal-weight" class="block text-sm font-medium text-gray-700">实际重量 (kg)</label>
-                    <input type="number" id="modal-weight" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                </div>
-                <button id="modal-calculate-btn" class="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition-colors font-semibold">计算</button>
-            </div>
-            <div id="modal-result" class="mt-6 p-4 bg-gray-50 rounded-lg text-gray-700 min-h-[50px]">
-                <!-- Results will be displayed here -->
-            </div>
-        </div>
-    </div>
-
-    <!-- DPI Calculator Modal -->
-    <div id="dpi-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
-        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-lg relative">
-            <!-- Close Button -->
-            <button id="close-dpi-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-
-            <h3 class="text-2xl font-bold text-gray-800 mb-6">分辨率 (DPI) 计算器</h3>
-            <p class="text-sm text-gray-500 mb-4">输入任意两项来计算第三项。将要计算的字段留空。</p>
-
-            <div class="space-y-4">
-                <div>
-                    <label for="dpi-pixels" class="block text-sm font-medium text-gray-700">像素尺寸 (长或宽)</label>
-                    <input type="number" id="dpi-pixels" placeholder="例如: 1200" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                </div>
-                <div>
-                    <label for="dpi-dpi" class="block text-sm font-medium text-gray-700">分辨率 (DPI)</label>
-                    <input type="number" id="dpi-dpi" placeholder="例如: 300" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                </div>
-                <div>
-                    <label for="dpi-cm" class="block text-sm font-medium text-gray-700">物理尺寸 (cm)</label>
-                    <input type="number" id="dpi-cm" placeholder="例如: 10.16" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                </div>
-                <button id="calculate-dpi-btn" class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition-colors font-semibold">计算</button>
-            </div>
-            <div id="dpi-result" class="mt-6 p-4 bg-gray-50 rounded-lg text-gray-700 min-h-[50px]">
-                <!-- Results will be displayed here -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Unit Converter Modal -->
-    <div id="unit-converter-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
-        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-lg relative">
-            <!-- Close Button -->
-            <button id="close-unit-converter-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-
-            <h3 class="text-2xl font-bold text-gray-800 mb-6">单位换算工具</h3>
-
-            <div class="space-y-4">
-                <div>
-                    <label for="unit-category" class="block text-sm font-medium text-gray-700">换算类型</label>
-                    <select id="unit-category" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                        <option value="length">长度 (Length)</option>
-                        <option value="weight">重量 (Weight)</option>
-                        <option value="gsm">克重 (GSM)</option>
-                    </select>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <div class="flex-1">
-                        <label for="unit-from" class="block text-sm font-medium text-gray-700">从</label>
-                        <select id="unit-from" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></select>
-                    </div>
-                    <div class="flex-shrink-0 pt-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                    </div>
-                    <div class="flex-1">
-                        <label for="unit-to" class="block text-sm font-medium text-gray-700">到</label>
-                        <select id="unit-to" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></select>
-                    </div>
-                </div>
-                 <div>
-                    <label for="unit-input" class="block text-sm font-medium text-gray-700">输入数值</label>
-                    <input type="number" id="unit-input" placeholder="输入要换算的值" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                </div>
-            </div>
-            <div id="unit-result" class="mt-6 p-4 bg-gray-50 rounded-lg text-gray-700 min-h-[50px] text-center">
-                 <p class="text-2xl font-bold text-blue-600">0.00</p>
-            </div>
-        </div>
-    </div>
 </body>
 </html>
 
