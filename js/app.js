@@ -4,44 +4,13 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     const renderToolCards = () => {
-        const container = document.getElementById('toolbox-grid');
-        if (!container) return;
-
         const buttonClasses = {
             primary: 'bg-blue-600 text-white hover:bg-blue-700 py-2 rounded-lg',
             secondary: 'border border-gray-300 text-gray-600 hover:bg-gray-100 hover:border-gray-400 py-2 rounded-lg font-semibold',
             tertiary: 'font-semibold text-gray-500 hover:text-blue-600'
         };
+        const getButtonText = (tool) => (['dieline-library', 'pdf-checklist'].includes(tool.id) ? '查看模板库' : '使用工具');
 
-        const getButtonText = (tool) => {
-            if (['dieline-library', 'pdf-checklist'].includes(tool.id)) return '查看模板库';
-            return '使用工具';
-        };
-
-        let allToolsHTML = '';
-        for (const categoryKey in toolsData) {
-            const categoryData = toolsData[categoryKey];
-            if (categoryData && categoryData.tools) {
-                categoryData.tools.forEach(tool => {
-                    allToolsHTML += `
-                        <div id="${tool.id}" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all tool-card">
-                            <div>
-                                <h5 class="text-md font-bold text-gray-800">${tool.title}</h5>
-                                <p class="mt-2 text-sm text-gray-600">${tool.description}</p>
-                            </div>
-                            <a href="${tool.href || '#'}" data-tool-id="${tool.id}" class="mt-4 block w-full text-center transition-all duration-200 ${buttonClasses[tool.styleType] || buttonClasses.secondary}">
-                                ${getButtonText(tool)}
-                            </a>
-                        </div>
-                    `;
-                });
-            }
-        }
-        // This is the error. It's rendering all cards into a single container.
-        // It should be rendering them into their respective category containers.
-        // But for debugging, let's see if this itself causes the crash.
-        // No, the bug is that I am trying to render into a container that does not exist.
-        // Let's fix the renderToolCards function to be correct.
         for (const categoryKey in toolsData) {
             const container = document.getElementById(`${categoryKey}-tools`);
             if (container) {
@@ -172,8 +141,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 unitResultDiv.textContent = result.toFixed(3);
             };
             unitCategorySelect.addEventListener('change', populateUnits);
-            unitFromSelect.addEventListener('change', convertUnits);
-            unitToSelect.addEventListener('change', convertUnits);
+            fromSelect.addEventListener('change', convertUnits);
+            toSelect.addEventListener('change', convertUnits);
             unitInputField.addEventListener('input', convertUnits);
             populateUnits();
         }
