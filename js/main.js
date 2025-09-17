@@ -12,19 +12,30 @@ const toolsData = {
         tools: [
             { id: 'dieline-library', title: '盒型刀线模板库', description: '提供常用盒型标准刀线图下载，极大降低结构设计门槛。', styleType: 'tertiary', href: '#' },
             { id: 'barcode-generator', title: '条码/二维码生成器', description: '一键生成符合印刷标准的条形码或二维码矢量图。', styleType: 'secondary', href: '/tools/barcode-generator.html' },
+            { id: 'qrcode-generator', title: '二维码生成器', description: '根据文本或链接生成二维码。', styleType: 'secondary', href: '/tools/qrcode-generator.html' },
             { id: 'color-converter', title: '色彩模式转换器', description: '在RGB、CMYK和PANTONE色值之间进行快速查询和转换。', styleType: 'secondary', href: '#' },
             { id: 'unit-converter', title: '单位换算工具', description: '覆盖长度、重量、克重等包装行业常用单位的快速互换。', styleType: 'secondary', href: '#' },
+            { id: 'unit-converter-general', title: '通用单位换算器', description: '在各种通用单位之间进行转换。', styleType: 'secondary', href: '/tools/unit-converter.html' },
             { id: 'line-length-calculator', title: '线长计算器', description: '根据卷材外径、卷芯内径和材料厚度，计算卷材总长度。', styleType: 'secondary', href: '/tools/line-length-calculator.html' },
             { id: 'gsm-converter', title: '克重与厚度换算', description: '根据常见纸张类型，在克重(gsm)和厚度(mm)之间进行估算。', styleType: 'secondary', href: '/tools/gsm-converter.html' },
             { id: 'copy-generator', title: '包装文案灵感生成器', description: '为您的包装寻找一句话灵感。', styleType: 'tertiary', href: '/tools/copy-generator.html' },
+            { id: 'word-counter', title: '字数统计', description: '统计文本的字符数和单词数。', styleType: 'tertiary', href: '/tools/word-counter.html' },
+            { id: 'case-converter', title: '大小写转换', description: '一键转换文本的大小写格式。', styleType: 'tertiary', href: '/tools/case-converter.html' },
+            { id: 'text-diff', title: '文本对比工具', description: '高亮显示两段文本之间的差异。', styleType: 'tertiary', href: '/tools/text-diff.html' },
             { id: 'delta-e-explainer', title: '颜色差异(ΔE)解释器', description: '直观地理解Delta E数值在印刷颜色管理中的实际意义。', styleType: 'tertiary', href: '/tools/delta-e-explainer.html' },
+            { id: 'json-formatter', title: 'JSON 格式化', description: '美化和校验 JSON 数据。', styleType: 'tertiary', href: '/tools/json-formatter.html' },
+            { id: 'url-encoder', title: 'URL 编码/解码', description: '编码或解码 URL 中的特殊字符。', styleType: 'tertiary', href: '/tools/url-encoder.html' },
+            { id: 'base64-encoder', title: 'Base64 编码/解码', description: '对文本进行 Base64 编码或解码。', styleType: 'tertiary', href: '/tools/base64-encoder.html' },
+            { id: 'timezone-converter', title: '时区转换器', description: '在不同时区之间转换时间。', styleType: 'tertiary', href: '/tools/timezone-converter.html' },
         ]
     },
     prepressAids: {
         title: '印前处理辅助',
         tools: [
             { id: 'dpi-calculator', title: '分辨率 (DPI) 计算器', description: '检查图像是否达到300 DPI印刷标准，避免后期返工。', styleType: 'tertiary', href: '#' },
-            { id: 'pdf-checklist', title: 'PDF 印前检查清单', description: '交互式清单引导您规避常见印刷错误，减少沟通成本。', styleType: 'tertiary', href: '/tools/compliance-checklist.html' }
+            { id: 'pdf-checklist', title: 'PDF 印前检查清单', description: '交互式清单引导您规避常见印刷错误，减少沟通成本。', styleType: 'tertiary', href: '/tools/compliance-checklist.html' },
+            { id: 'image-converter', title: '图片格式转换', description: '转换图片的格式，如 PNG, JPG, WebP。', styleType: 'tertiary', href: '/tools/image-converter.html' },
+            { id: 'image-cropper', title: '图片缩放与裁剪', description: '可视化地裁剪和缩放图片。', styleType: 'tertiary', href: '/tools/image-cropper.html' },
         ]
     },
     warehousingLogistics: {

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二维码生成器 - 在线工具集</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="tool" id="qrcode-generator-tool">
+            <h2>5. 二维码生成器 (QR Code Generator)</h2>
+            <textarea id="qrcode-input" placeholder="输入文本或网址以生成二维码..." style="min-height: 80px;"></textarea>
+            <button id="btn-generate-qrcode" style="margin-top: 10px;">生成二维码</button>
+            <div id="qrcode-output" style="margin-top: 20px; padding: 10px; display: none; background: white; border: 1px solid #ddd;"></div>
+        </div>
+        <a href="../index.html" class="home-link">返回主菜单</a>
+    </div>
+
+    <script>
+        const btnGenerateQRCode = document.getElementById('btn-generate-qrcode');
+        const qrCodeOutput = document.getElementById('qrcode-output');
+        const qrCodeInput = document.getElementById('qrcode-input');
+        let qrcode = null;
+
+        btnGenerateQRCode.addEventListener('click', () => {
+            const text = qrCodeInput.value.trim();
+            if (!text) {
+                alert('请输入文本或网址！');
+                qrCodeInput.focus();
+                return;
+            }
+
+            qrCodeOutput.innerHTML = '';
+
+            try {
+                if (!qrcode) {
+                    qrcode = new QRCode(qrCodeOutput, {
+                        text: text,
+                        width: 150,
+                        height: 150,
+                        colorDark : "#000000",
+                        colorLight : "#ffffff",
+                        correctLevel : QRCode.CorrectLevel.H
+                    });
+                } else {
+                    qrcode.makeCode(text);
+                }
+                qrCodeOutput.style.display = 'inline-block';
+            } catch (e) {
+                alert("生成二维码时发生错误: " + e.message);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON 格式化 - 在线工具集</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="tool" id="json-formatter-tool">
+            <h2>3. JSON 格式化与校验 (JSON Formatter)</h2>
+            <textarea id="json-input" placeholder="在此处粘贴您的 JSON 字符串..."></textarea>
+            <button id="btn-format-json" style="margin-top:10px;">格式化 JSON</button>
+            <div id="json-error" style="color: red; margin-top: 10px; font-weight: bold;"></div>
+            <pre style="background-color: #f8f9fa; border: 1px solid #dee2e6; padding: 15px; border-radius: 4px; white-space: pre-wrap; word-wrap: break-word; margin-top: 10px; min-height: 150px;"><code id="json-output"></code></pre>
+        </div>
+        <a href="../index.html" class="home-link">返回主菜单</a>
+    </div>
+
+    <script>
+        const jsonInput = document.getElementById('json-input');
+        const btnFormatJson = document.getElementById('btn-format-json');
+        const jsonOutput = document.getElementById('json-output');
+        const jsonError = document.getElementById('json-error');
+
+        btnFormatJson.addEventListener('click', () => {
+            jsonError.textContent = '';
+            jsonOutput.textContent = '';
+            const inputText = jsonInput.value.trim();
+            if (!inputText) {
+                jsonError.textContent = '输入不能为空。';
+                return;
+            }
+            try {
+                const jsonObj = JSON.parse(inputText);
+                jsonOutput.textContent = JSON.stringify(jsonObj, null, 2);
+            } catch (e) {
+                jsonError.textContent = 'JSON 格式无效: ' + e.message;
+            }
+        });
+    </script>
+</body>
+</html>
