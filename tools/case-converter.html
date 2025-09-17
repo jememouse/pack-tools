@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大小写转换 - 在线工具集</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="tool" id="case-converter-tool">
+            <h2>2. 大小写转换 (Case Converter)</h2>
+            <textarea id="case-converter-input" placeholder="在这里粘贴或输入文本..."></textarea>
+            <div class="controls" style="margin-top: 10px;">
+                <button id="btn-uppercase">转换为大写 (UPPERCASE)</button>
+                <button id="btn-lowercase">转换为小写 (lowercase)</button>
+                <button id="btn-sentencecase">句首大写 (Sentence case)</button>
+                <button id="btn-titlecase">标题大写 (Title Case)</button>
+            </div>
+        </div>
+        <a href="../index.html" class="home-link">返回主菜单</a>
+    </div>
+
+    <script>
+        const caseConverterInput = document.getElementById('case-converter-input');
+
+        document.getElementById('btn-uppercase').addEventListener('click', () => {
+            caseConverterInput.value = caseConverterInput.value.toUpperCase();
+        });
+        document.getElementById('btn-lowercase').addEventListener('click', () => {
+            caseConverterInput.value = caseConverterInput.value.toLowerCase();
+        });
+        document.getElementById('btn-sentencecase').addEventListener('click', () => {
+            const text = caseConverterInput.value.toLowerCase();
+            if (text.length > 0) {
+                caseConverterInput.value = text.replace(/(^\s*\w|[.!?]\s*\w)/g, c => c.toUpperCase());
+            }
+        });
+        document.getElementById('btn-titlecase').addEventListener('click', () => {
+            const text = caseConverterInput.value.toLowerCase();
+            caseConverterInput.value = text.replace(/\b\w/g, c => c.toUpperCase());
+        });
+    </script>
+</body>
+</html>

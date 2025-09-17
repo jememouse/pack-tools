@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片缩放与裁剪 - 在线工具集</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <style>
+        a.download-link {
+            display: inline-block; padding: 8px 15px; font-size: 0.9rem;
+            border: 1px solid #28a745; background-color: #28a745;
+            color: white; border-radius: 4px; text-decoration: none;
+            margin-top: 5px; transition: background-color 0.2s;
+        }
+        a.download-link:hover { background-color: #218838; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tool" id="image-cropper-tool">
+            <h2>7. 图片缩放与裁剪 (Image Resizer & Cropper)</h2>
+            <p>上传图片后，拖动选框进行裁剪，或在下方输入尺寸后应用并下载。</p>
+            <input type="file" id="cropper-input" accept="image/*">
+            <div id="cropper-container" style="margin-top: 15px;">
+                <img id="cropper-image" style="display: none; max-width: 100%;">
+            </div>
+            <div id="cropper-controls" style="display: none; margin-top: 15px;">
+                <label for="resize-width">宽度 (px):</label>
+                <input type="number" id="resize-width" placeholder="可选">
+                <label for="resize-height" style="margin-left: 10px;">高度 (px):</label>
+                <input type="number" id="resize-height" placeholder="可选">
+                <button id="btn-crop-download" style="margin-left: 10px;">应用并下载</button>
+            </div>
+            <div id="cropper-output" style="margin-top: 20px;"></div>
+        </div>
+        <a href="../index.html" class="home-link">返回主菜单</a>
+    </div>
+
+    <script>
+        const cropperInput = document.getElementById('cropper-input');
+        const cropperImage = document.getElementById('cropper-image');
+        const cropperControls = document.getElementById('cropper-controls');
+        const cropperOutput = document.getElementById('cropper-output');
+        const btnCropDownload = document.getElementById('btn-crop-download');
+        let cropper = null;
+
+        cropperInput.addEventListener('change', (e) => {
+            const files = e.target.files;
+            if (files && files.length > 0) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    cropperImage.src = event.target.result;
+                    cropperImage.style.display = 'block';
+                    cropperControls.style.display = 'block';
+                    cropperOutput.innerHTML = '';
+
+                    if (cropper) {
+                        cropper.destroy();
+                    }
+                    cropper = new Cropper(cropperImage, {
+                        viewMode: 1,
+                        background: false,
+                        responsive: true,
+                        autoCropArea: 0.8,
+                    });
+                };
+                reader.readAsDataURL(files[0]);
+            }
+        });
+
+        btnCropDownload.addEventListener('click', () => {
+            if (!cropper) {
+                alert('请先上传一张图片。');
+                return;
+            }
+            const resizeWidth = document.getElementById('resize-width').value;
+            const resizeHeight = document.getElementById('resize-height').value;
+
+            const canvasOptions = {};
+            if (resizeWidth) canvasOptions.width = parseInt(resizeWidth, 10);
+            if (resizeHeight) canvasOptions.height = parseInt(resizeHeight, 10);
+
+            const croppedCanvas = cropper.getCroppedCanvas(canvasOptions);
+
+            croppedCanvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                const originalFilename = cropperInput.files[0].name.substring(0, cropperInput.files[0].name.lastIndexOf('.'));
+                const newFilename = `${originalFilename}_cropped.png`;
+                cropperOutput.innerHTML = `<p>处理成功！</p><a href="${url}" download="${newFilename}" class="download-link">下载 ${newFilename}</a>`;
+            });
+        });
+    </script>
+</body>
+</html>

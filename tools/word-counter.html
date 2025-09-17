@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>字数统计 - 在线工具集</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="tool" id="word-counter-tool">
+            <h2>1. 字数统计 (Character & Word Counter)</h2>
+            <textarea id="word-counter-input" placeholder="在这里粘贴或输入文本..."></textarea>
+            <div class="result" style="margin-top: 10px; font-weight: bold;">
+                <span>字符数: <span id="char-count">0</span></span> |
+                <span>单词数: <span id="word-count">0</span></span>
+            </div>
+        </div>
+        <a href="../index.html" class="home-link">返回主菜单</a>
+    </div>
+
+    <script>
+        const wordCounterInput = document.getElementById('word-counter-input');
+        const charCountSpan = document.getElementById('char-count');
+        const wordCountSpan = document.getElementById('word-count');
+
+        wordCounterInput.addEventListener('input', () => {
+            const text = wordCounterInput.value;
+
+            charCountSpan.textContent = text.length;
+
+            const words = text.trim().match(/\S+/g);
+            wordCountSpan.textContent = words ? words.length : 0;
+        });
+    </script>
+</body>
+</html>
