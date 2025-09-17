@@ -1,63 +1,29 @@
 const toolsData = {
-    priority1: [
-        {
-            id: 'logistics-cost-calculator',
-            title: '物流成本计算器',
-            description: '输入包裹尺寸，自动计算体积重并估算运费。电商卖家与仓储人员必备。',
-        },
-        {
-            id: 'paper-usage-calculator',
-            title: '纸张用量与成本计算器',
-            description: '选择盒型输入尺寸，智能计算开纸方案与单张成本，精准核算报价。',
-        },
-        {
-            id: 'pallet-planner',
-            title: '托盘堆码规划器',
-            description: '可视化展示最佳堆码方案，计算托盘可堆放数量，优化仓储空间。',
-        }
-    ],
-    priority2: [
-        {
-            id: 'dieline-library',
-            title: '盒型刀线模板库',
-            description: '提供常用盒型标准刀线图下载，极大降低结构设计门槛。',
-        },
-        {
-            id: 'barcode-generator',
-            title: '条码/二维码生成器',
-            description: '一键生成符合印刷标准的条形码或二维码矢量图。',
-        },
-        {
-            id: 'color-converter',
-            title: '色彩模式转换器',
-            description: '在RGB、CMYK和PANTONE色值之间进行快速查询和转换。',
-        },
-        {
-            id: 'unit-converter',
-            title: '单位换算工具',
-            description: '覆盖长度、重量、克重等包装行业常用单位的快速互换。',
-        }
-    ],
-    priority3: [
-        {
-            id: 'dpi-calculator',
-            title: '分辨率 (DPI) 计算器',
-            description: '检查图像是否达到300 DPI印刷标准，避免后期返工。',
-        },
-        {
-            id: 'pdf-checklist',
-            title: 'PDF 印前检查清单',
-            description: '交互式清单引导您规避常见印刷错误，减少沟通成本。',
-        }
+    toolbox: [
+        // Priority 1
+        { id: 'logistics-cost-calculator', title: '物流成本计算器', description: '输入包裹尺寸，自动计算体积重并估算运费。电商卖家与仓储人员必备。', styleType: 'primary' },
+        { id: 'paper-usage-calculator', title: '纸张用量与成本计算器', description: '选择盒型输入尺寸，智能计算开纸方案与单张成本，精准核算报价。', styleType: 'primary' },
+        { id: 'pallet-planner', title: '托盘堆码规划器', description: '可视化展示最佳堆码方案，计算托盘可堆放数量，优化仓储空间。', styleType: 'primary' },
+        // Priority 2
+        { id: 'dieline-library', title: '盒型刀线模板库', description: '提供常用盒型标准刀线图下载，极大降低结构设计门槛。', styleType: 'tertiary' },
+        { id: 'barcode-generator', title: '条码/二维码生成器', description: '一键生成符合印刷标准的条形码或二维码矢量图。', styleType: 'secondary' },
+        { id: 'color-converter', title: '色彩模式转换器', description: '在RGB、CMYK和PANTONE色值之间进行快速查询和转换。', styleType: 'secondary' },
+        { id: 'unit-converter', title: '单位换算工具', description: '覆盖长度、重量、克重等包装行业常用单位的快速互换。', styleType: 'secondary' },
+        // Priority 3
+        { id: 'dpi-calculator', title: '分辨率 (DPI) 计算器', description: '检查图像是否达到300 DPI印刷标准，避免后期返工。', styleType: 'tertiary' },
+        { id: 'pdf-checklist', title: 'PDF 印前检查清单', description: '交互式清单引导您规避常见印刷错误，减少沟通成本。', styleType: 'tertiary' }
     ]
 };
 
 document.addEventListener('DOMContentLoaded', function() {
 
     const renderToolCards = () => {
+        const container = document.getElementById('toolbox-grid');
+        if (!container) return;
+
         const buttonClasses = {
-            primary: 'bg-blue-600 text-white hover:bg-blue-700',
-            secondary: 'border border-gray-300 text-gray-600 hover:bg-gray-100 hover:border-gray-400',
+            primary: 'bg-blue-600 text-white hover:bg-blue-700 py-2 rounded-lg',
+            secondary: 'border border-gray-300 text-gray-600 hover:bg-gray-100 hover:border-gray-400 py-2 rounded-lg font-semibold',
             tertiary: 'font-semibold text-gray-500 hover:text-blue-600'
         };
 
@@ -66,42 +32,28 @@ document.addEventListener('DOMContentLoaded', function() {
             return '使用工具';
         };
 
-        const getButtonClass = (priority) => {
-            if (priority === 'priority1') return buttonClasses.primary + ' py-2 rounded-lg';
-            if (priority === 'priority2') return buttonClasses.secondary + ' py-2 rounded-lg font-semibold';
-            return buttonClasses.tertiary;
-        };
-
-        for (const priority in toolsData) {
-            const container = document.getElementById(`${priority}-tools`);
-            if (container) {
-                container.innerHTML = toolsData[priority].map(tool => `
-                    <div id="${tool.id}" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all tool-card">
-                        <div>
-                            <h5 class="text-md font-bold text-gray-800">${tool.title}</h5>
-                            <p class="mt-2 text-sm text-gray-600">${tool.description}</p>
-                        </div>
-                        <a href="#" data-tool-id="${tool.id}" class="mt-4 block w-full text-center transition-all duration-200 ${getButtonClass(priority)}">
-                            ${getButtonText(tool)}
-                        </a>
-                    </div>
-                `).join('');
-            }
-        }
+        container.innerHTML = toolsData.toolbox.map(tool => `
+            <div id="${tool.id}" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all tool-card">
+                <div>
+                    <h5 class="text-md font-bold text-gray-800">${tool.title}</h5>
+                    <p class="mt-2 text-sm text-gray-600">${tool.description}</p>
+                </div>
+                <a href="#" data-tool-id="${tool.id}" class="mt-4 block w-full text-center transition-all duration-200 ${buttonClasses[tool.styleType] || buttonClasses.secondary}">
+                    ${getButtonText(tool)}
+                </a>
+            </div>
+        `).join('');
     };
 
     const renderSidebar = () => {
         const navContainer = document.getElementById('quick-nav');
+        if (!navContainer) return;
+
         const mainLinks = [
             { id: 'toolbox', title: '核心工具', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>` },
             { id: 'resources', title: '资源库', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>` },
             { id: 'suppliers', title: '供应商', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>` }
         ];
-        const priorityHeadings = {
-            priority1: '第一优先级',
-            priority2: '第二优先级',
-            priority3: '第三优先级'
-        };
 
         let sidebarHTML = '<ul class="space-y-2">';
         mainLinks.forEach(link => {
@@ -112,15 +64,11 @@ document.addEventListener('DOMContentLoaded', function() {
                             <span class="flex items-center space-x-3">${link.icon}<span>${link.title}</span></span>
                             <svg class="w-4 h-4 transition-transform transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
                         </a>
-                        <ul id="sub-menu" class="mt-1 space-y-1 border-l border-gray-200 hidden">`;
+                        <ul id="sub-menu" class="ml-4 mt-1 space-y-1 border-l border-gray-200 hidden">`;
 
-                for (const priority in toolsData) {
-                    sidebarHTML += `<li><a href="#${priority}-heading" class="block py-1 px-3 text-sm text-gray-500 hover:text-blue-600 transition-all duration-200">${priorityHeadings[priority]}</a><ul class="ml-4 mt-1 space-y-1 border-l border-gray-200">`;
-                    toolsData[priority].forEach(tool => {
-                        sidebarHTML += `<li><a href="#${tool.id}" class="block py-1 px-3 text-xs text-gray-400 hover:text-blue-600 transition-all duration-200">${tool.title}</a></li>`;
-                    });
-                    sidebarHTML += `</ul></li>`;
-                }
+                toolsData.toolbox.forEach(tool => {
+                    sidebarHTML += `<li><a href="#${tool.id}" class="block py-1 px-3 text-sm text-gray-500 hover:text-blue-600 transition-all duration-200">${tool.title}</a></li>`;
+                });
 
                 sidebarHTML += `</ul></li>`;
             } else {
@@ -152,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const quickNav = document.getElementById('quick-nav');
         if (quickNav) {
             const navLinks = quickNav.querySelectorAll('a');
-            const sections = document.querySelectorAll('section[id], h4[id], div.tool-card[id]');
+            const sections = document.querySelectorAll('section[id], div.tool-card[id]');
             const observer = new IntersectionObserver(entries => {
                 let activeId = null;
                 const intersectingEntries = entries.filter(e => e.isIntersecting);
