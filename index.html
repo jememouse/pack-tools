@@ -23,7 +23,7 @@
             font-family: 'Inter', 'Helvetica Neue', 'Arial', 'sans-serif';
         }
         .gradient-text {
-            background: linear-gradient(to right, #1e3a8a, #3b82f6);
+            background: linear-gradient(to right, #38bdf8, #312e81);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -33,43 +33,43 @@
             justify-content: space-between;
         }
         #quick-nav a.active {
-            background-color: #2563eb; /* bg-blue-600 */
+            background-color: #0284c7; /* bg-sky-600 */
             color: white;
         }
         #quick-nav ul ul a.active {
-             background-color: #3b82f6; /* bg-blue-500 */
+             background-color: #0ea5e9; /* bg-sky-500 */
              color: white;
         }
     </style>
 </head>
-<body class="bg-gray-50 lg:flex">
+<body class="bg-slate-50 antialiased lg:flex">
 
     <!-- Quick Nav Sidebar -->
-    <nav id="quick-nav" class="hidden lg:block lg:w-64 flex-shrink-0 h-screen lg:sticky top-0 overflow-y-auto bg-white border-r border-gray-200 p-6">
-        <div class="font-bold text-lg text-gray-800 mb-8">导航</div>
+    <nav id="quick-nav" class="hidden lg:block lg:w-72 flex-shrink-0 h-screen lg:sticky top-0 overflow-y-auto bg-white border-r border-slate-200 p-6">
+        <div class="font-bold text-lg text-slate-800 mb-8">导航</div>
         <!-- Navigation links will be injected here by JavaScript -->
     </nav>
 
     <!-- Main Content Wrapper -->
     <div id="main-content-wrapper" class="flex-1 min-w-0">
         <!-- Header / Navigation -->
-        <header class="bg-white/95 backdrop-blur-sm sticky top-0 z-50 border-b border-gray-200/80">
+        <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 border-b border-slate-200/80">
             <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <svg class="w-8 h-8 text-blue-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <div class="flex items-center space-x-3">
+                <svg class="w-8 h-8 text-sky-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
                 </svg>
-                <h1 class="text-2xl font-bold text-gray-800">包装工具箱</h1>
+                <h1 class="text-2xl font-bold text-slate-800">包装工具箱</h1>
             </div>
             <nav id="mobile-menu" class="hidden md:flex items-center space-x-8">
-                <a href="#toolbox" class="text-gray-600 hover:text-blue-600 transition-colors">核心工具</a>
-                <a href="#resources" class="text-gray-600 hover:text-blue-600 transition-colors">资源库</a>
-                <a href="#suppliers" class="text-gray-600 hover:text-blue-600 transition-colors">供应商</a>
+                <a href="#toolbox" class="text-slate-600 hover:text-sky-600 transition-colors">核心工具</a>
+                <a href="#resources" class="text-slate-600 hover:text-sky-600 transition-colors">资源库</a>
+                <a href="#suppliers" class="text-slate-600 hover:text-sky-600 transition-colors">供应商</a>
             </nav>
-            <button class="hidden md:block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+            <button class="hidden md:block bg-sky-600 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors shadow-sm">
                 联系我们
             </button>
-            <button id="mobile-menu-button" class="md:hidden text-gray-600">
+            <button id="mobile-menu-button" class="md:hidden text-slate-600">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
                 </svg>
@@ -80,11 +80,11 @@
     <main class="container mx-auto px-6 py-12 md:py-20">
 
         <!-- Hero Section -->
-        <section class="text-center mb-12">
-            <h2 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
+        <section class="text-center mb-16">
+            <h2 class="text-4xl md:text-6xl font-bold text-slate-900 leading-tight">
                 一个<span class="gradient-text">小而精</span>的在线包装实用工具集
             </h2>
-            <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-600">
+            <p class="mt-6 max-w-3xl mx-auto text-lg text-slate-600">
                 我们专注于解决包装设计、生产和物流中的具体问题。即用即走，快速、准确地完成您的每一项任务。
             </p>
             <div class="mt-8">
@@ -94,46 +94,46 @@
 
         <!-- Core Toolbox Section -->
         <section id="toolbox" class="mb-12">
-            <div class="space-y-10">
+            <div class="space-y-12">
                 <!-- Core Calculators -->
                 <div>
-                    <h4 id="core-calculators-heading" class="text-xl font-semibold text-gray-700 mb-6 border-l-4 border-blue-500 pl-4">核心计算器</h4>
-                    <div id="coreCalculators-tools" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <h4 id="core-calculators-heading" class="text-xl font-semibold text-slate-700 mb-6 border-l-4 border-sky-500 pl-4">核心计算器</h4>
+                    <div id="coreCalculators-tools" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <!-- Tools will be injected here -->
                     </div>
                 </div>
                 <!-- Design Aids -->
                 <div>
-                    <h4 id="design-aids-heading" class="text-xl font-semibold text-gray-700 mb-6 border-l-4 border-green-500 pl-4">设计与生产辅助</h4>
-                    <div id="designAids-tools" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <h4 id="design-aids-heading" class="text-xl font-semibold text-slate-700 mb-6 border-l-4 border-sky-500 pl-4">设计与生产辅助</h4>
+                    <div id="designAids-tools" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                         <!-- Tools will be injected here -->
                     </div>
                 </div>
                 <!-- Pre-press Aids -->
                 <div>
-                    <h4 id="prepress-aids-heading" class="text-xl font-semibold text-gray-700 mb-6 border-l-4 border-yellow-500 pl-4">印前处理辅助</h4>
-                    <div id="prepressAids-tools" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <h4 id="prepress-aids-heading" class="text-xl font-semibold text-slate-700 mb-6 border-l-4 border-sky-500 pl-4">印前处理辅助</h4>
+                    <div id="prepressAids-tools" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                         <!-- Tools will be injected here -->
                     </div>
                 </div>
                 <!-- Warehousing & Logistics -->
                 <div>
-                    <h4 id="warehousing-logistics-heading" class="text-xl font-semibold text-gray-700 mb-6 border-l-4 border-purple-500 pl-4">仓储与物流</h4>
-                    <div id="warehousingLogistics-tools" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <h4 id="warehousing-logistics-heading" class="text-xl font-semibold text-slate-700 mb-6 border-l-4 border-sky-500 pl-4">仓储与物流</h4>
+                    <div id="warehousingLogistics-tools" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                         <!-- Tools will be injected here -->
                     </div>
                 </div>
                 <!-- Production Management -->
                 <div>
-                    <h4 id="production-management-heading" class="text-xl font-semibold text-gray-700 mb-6 border-l-4 border-red-500 pl-4">生产管理</h4>
-                    <div id="productionManagement-tools" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <h4 id="production-management-heading" class="text-xl font-semibold text-slate-700 mb-6 border-l-4 border-sky-500 pl-4">生产管理</h4>
+                    <div id="productionManagement-tools" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                         <!-- Tools will be injected here -->
                     </div>
                 </div>
                 <!-- Quality Control -->
                 <div>
-                    <h4 id="quality-control-heading" class="text-xl font-semibold text-gray-700 mb-6 border-l-4 border-indigo-500 pl-4">质量控制</h4>
-                    <div id="qualityControl-tools" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <h4 id="quality-control-heading" class="text-xl font-semibold text-slate-700 mb-6 border-l-4 border-sky-500 pl-4">质量控制</h4>
+                    <div id="qualityControl-tools" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                         <!-- Tools will be injected here -->
                     </div>
                 </div>

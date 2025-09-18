@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 container.innerHTML = toolsData[categoryKey].tools.map(tool => `
                     <div id="${tool.id}" class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all tool-card">
                         <div>
+                            <div class="text-blue-600 mb-3">${tool.icon || ''}</div>
                             <h5 class="text-md font-bold text-gray-800">${tool.title}</h5>
                             <p class="mt-2 text-sm text-gray-600">${tool.description}</p>
                         </div>
