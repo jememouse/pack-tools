@@ -1,3 +1,33 @@
+const resourcesData = {
+    guides: {
+        title: "设计与规范手册",
+        id: "guides-heading",
+        items: [
+            { title: "材料速查手册", href: "#" },
+            { title: "工艺速查手册", href: "#" },
+            { title: "包装结构指南", href: "tools/packaging-structure-guide.html" },
+            { title: "印刷色彩管理", href: "tools/print-color-management.html" }
+        ]
+    },
+    templates: {
+        title: "实用清单与模板",
+        id: "templates-heading",
+        items: [
+            { title: "印前检查清单", href: "tools/compliance-checklist.html" },
+            { title: "供应商考察清单", href: "tools/supplier-audit-checklist.html" },
+            { title: "报价请求(RFQ)模板", href: "tools/rfq-template.html" }
+        ]
+    },
+    insights: {
+        title: "行业洞察",
+        id: "insights-heading",
+        items: [
+            { title: "行业关键资讯", href: "#" },
+            { title: "可持续包装趋势", href: "tools/sustainable-packaging-trends.html" }
+        ]
+    }
+};
+
 const toolsData = {
     coreCalculators: {
         title: '核心计算器',
@@ -95,6 +125,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 sidebarHTML += `</ul></li>`;
+            } else if (link.id === 'resources') {
+                sidebarHTML += `
+                    <li>
+                        <a href="${linkHref}" data-toggle="sub-menu-resources" class="flex items-center justify-between w-full py-2 px-3 rounded-md font-semibold text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-all duration-200">
+                            <span class="flex items-center space-x-3">${link.icon}<span>${link.title}</span></span>
+                            <svg class="w-4 h-4 transition-transform transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                        </a>
+                        <ul id="sub-menu-resources" class="ml-4 mt-1 space-y-1 border-l border-gray-200 hidden">`;
+                for (const categoryKey in resourcesData) {
+                    const category = resourcesData[categoryKey];
+                    sidebarHTML += `<li><a href="/index.html#${category.id}" class="block py-1 px-3 text-sm text-gray-500 hover:text-blue-600 transition-all duration-200">${category.title}</a><ul class="ml-4 mt-1 space-y-1 border-l border-gray-200">`;
+                    category.items.forEach(item => {
+                        const itemHref = item.href.startsWith('#') ? `/index.html${item.href}` : item.href;
+                        sidebarHTML += `<li><a href="${itemHref}" class="block py-1 px-3 text-xs text-gray-400 hover:text-blue-600 transition-all duration-200">${item.title}</a></li>`;
+                    });
+                    sidebarHTML += `</ul></li>`;
+                }
+                sidebarHTML += `</ul></li>`;
             } else {
                  sidebarHTML += `
                     <li>
@@ -135,6 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         setupCollapsibleMenu('sub-menu-tools', 'sub-menu-tools');
+        setupCollapsibleMenu('sub-menu-resources', 'sub-menu-resources');
     };
 
     renderSidebar();
