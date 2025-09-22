@@ -1,0 +1,47 @@
+{
+<<<<<<< HEAD
+  "name": "packaging-toolbox-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm --test tests/calculators.test.ts"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2",
+    "vite": "^5.2.0"
+  },
+  "dependencies": {
+    "qrcode-generator": "^2.0.4"
+=======
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jememouse/pack-tools.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jememouse/pack-tools/issues"
+  },
+  "homepage": "https://github.com/jememouse/pack-tools#readme",
+  "devDependencies": {
+    "tailwindcss": "^4.1.13"
+>>>>>>> 84bdf434a837f85d10f8b83304e2a6c884308b2c
+  }
+}

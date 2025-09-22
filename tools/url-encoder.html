@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL 编码/解码 - 在线工具集</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="tool" id="url-encoder-tool">
+            <h2>10. URL 编码/解码 (URL Encoder/Decoder)</h2>
+            <p>用于编码或解码 URL 中的特殊字符 (RFC3986)。</p>
+            <textarea id="url-input" placeholder="输入字符串..." style="min-height: 100px;"></textarea>
+            <div style="margin-top: 10px;">
+                <button id="btn-url-encode">编码 (Encode)</button>
+                <button id="btn-url-decode">解码 (Decode)</button>
+            </div>
+            <textarea id="url-output" readonly placeholder="结果..." style="margin-top: 10px; min-height: 100px; background-color: #e9ecef;"></textarea>
+        </div>
+        <a href="../index.html" class="home-link">返回主菜单</a>
+    </div>
+
+    <script>
+        const urlInput = document.getElementById('url-input');
+        const urlOutput = document.getElementById('url-output');
+        const btnUrlEncode = document.getElementById('btn-url-encode');
+        const btnUrlDecode = document.getElementById('btn-url-decode');
+
+        btnUrlEncode.addEventListener('click', () => {
+            urlOutput.value = encodeURIComponent(urlInput.value);
+        });
+
+        btnUrlDecode.addEventListener('click', () => {
+            try {
+                urlOutput.value = decodeURIComponent(urlInput.value);
+            } catch (e) {
+                urlOutput.value = '解码失败: ' + e.message;
+                alert('解码失败：输入的字符串可能不是有效的编码。');
+            }
+        });
+    </script>
+</body>
+</html>

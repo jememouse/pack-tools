@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单位换算器 - 在线工具集</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        #unit-category { padding: 8px; font-size: 1rem; border-radius: 4px; border: 1px solid #ccc; }
+        .unit-converter-io { display: flex; align-items: center; gap: 15px; margin-top: 15px; flex-wrap: wrap; }
+        .unit-group { display: flex; flex-direction: column; gap: 5px; }
+        .unit-group input, .unit-group select { padding: 8px; font-size: 1rem; border-radius: 4px; border: 1px solid #ccc; }
+        .unit-converter-io span { font-size: 2rem; font-weight: bold; color: #555; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tool" id="unit-converter-tool">
+            <h2>8. 单位换算器 (Unit Converter)</h2>
+            <div class="unit-converter-controls">
+                <select id="unit-category">
+                    <option value="length">长度 (Length)</option>
+                    <option value="weight">重量 (Weight)</option>
+                    <option value="temperature">温度 (Temperature)</option>
+                </select>
+            </div>
+            <div class="unit-converter-io">
+                <div class="unit-group">
+                    <label for="unit-input">From:</label>
+                    <input type="number" id="unit-input" value="1">
+                    <select id="unit-from"></select>
+                </div>
+                <span>=</span>
+                <div class="unit-group">
+                    <label for="unit-output">To:</label>
+                    <input type="number" id="unit-output" readonly>
+                    <select id="unit-to"></select>
+                </div>
+            </div>
+        </div>
+        <a href="../index.html" class="home-link">返回主菜单</a>
+    </div>
+
+    <script>
+        const unitCategory = document.getElementById('unit-category');
+        const unitFrom = document.getElementById('unit-from');
+        const unitTo = document.getElementById('unit-to');
+        const unitInput = document.getElementById('unit-input');
+        const unitOutput = document.getElementById('unit-output');
+
+        const conversions = {
+            length: { meter: 1, kilometer: 1000, centimeter: 0.01, millimeter: 0.001, mile: 1609.34, yard: 0.9144, foot: 0.3048, inch: 0.0254 },
+            weight: { kilogram: 1, gram: 0.001, milligram: 1e-6, pound: 0.453592, ounce: 0.0283495 },
+            temperature: { celsius: 'celsius', fahrenheit: 'fahrenheit', kelvin: 'kelvin' }
+        };
+
+        function populateUnits() {
+            const category = unitCategory.value;
+            const units = Object.keys(conversions[category]);
+            unitFrom.innerHTML = '';
+            unitTo.innerHTML = '';
+            units.forEach(unit => {
+                unitFrom.innerHTML += `<option value="${unit}">${unit}</option>`;
+                unitTo.innerHTML += `<option value="${unit}">${unit}</option>`;
+            });
+            if (units.length > 1) {
+                unitTo.value = units[1];
+            }
+            convertUnits();
+        }
+
+        function convertUnits() {
+            const category = unitCategory.value;
+            const from = unitFrom.value;
+            const to = unitTo.value;
+            const input = parseFloat(unitInput.value);
+
+            if (isNaN(input)) {
+                unitOutput.value = '';
+                return;
+            }
+
+            let result;
+            if (category === 'temperature') {
+                let tempInC;
+                if (from === 'celsius') tempInC = input;
+                else if (from === 'fahrenheit') tempInC = (input - 32) * 5 / 9;
+                else if (from === 'kelvin') tempInC = input - 273.15;
+
+                if (to === 'celsius') result = tempInC;
+                else if (to === 'fahrenheit') result = (tempInC * 9 / 5) + 32;
+                else if (to === 'kelvin') result = tempInC + 273.15;
+            } else {
+                const baseValue = input * conversions[category][from];
+                result = baseValue / conversions[category][to];
+            }
+
+            unitOutput.value = parseFloat(result.toFixed(6));
+        }
+
+        unitCategory.addEventListener('change', populateUnits);
+        unitFrom.addEventListener('change', convertUnits);
+        unitTo.addEventListener('change', convertUnits);
+        unitInput.addEventListener('input', convertUnits);
+
+        populateUnits();
+    </script>
+</body>
+</html>

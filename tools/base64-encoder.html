@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64 编码/解码 - 在线工具集</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="tool" id="base64-encoder-tool">
+            <h2>11. Base64 编码/解码 (Base64 Encoder/Decoder)</h2>
+            <p>用于文本与 Base64 格式之间的相互转换，支持 UTF-8 字符。</p>
+            <textarea id="base64-input" placeholder="输入字符串..." style="min-height: 100px;"></textarea>
+            <div style="margin-top: 10px;">
+                <button id="btn-base64-encode">编码 (Encode)</button>
+                <button id="btn-base64-decode">解码 (Decode)</button>
+            </div>
+            <textarea id="base64-output" readonly placeholder="结果..." style="margin-top: 10px; min-height: 100px; background-color: #e9ecef;"></textarea>
+        </div>
+        <a href="../index.html" class="home-link">返回主菜单</a>
+    </div>
+
+    <script>
+        const base64Input = document.getElementById('base64-input');
+        const base64Output = document.getElementById('base64-output');
+        const btnBase64Encode = document.getElementById('btn-base64-encode');
+        const btnBase64Decode = document.getElementById('btn-base64-decode');
+
+        btnBase64Encode.addEventListener('click', () => {
+            try {
+                // Modern, robust way to handle UTF-8 for btoa
+                const utf8Bytes = new TextEncoder().encode(base64Input.value);
+                const binaryString = Array.from(utf8Bytes).map(byte => String.fromCharCode(byte)).join('');
+                base64Output.value = btoa(binaryString);
+            } catch (e) {
+                 base64Output.value = '编码失败: ' + e.message;
+            }
+        });
+
+        btnBase64Decode.addEventListener('click', () => {
+            try {
+                // Modern, robust way to handle UTF-8 for atob
+                const binaryString = atob(base64Input.value);
+                const len = binaryString.length;
+                const bytes = new Uint8Array(len);
+                for (let i = 0; i < len; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                }
+                base64Output.value = new TextDecoder().decode(bytes);
+            } catch (e) {
+                base64Output.value = '解码失败: ' + e.message;
+                alert('解码失败：输入的字符串可能不是有效的 Base64 编码。');
+            }
+        });
+    </script>
+</body>
+</html>

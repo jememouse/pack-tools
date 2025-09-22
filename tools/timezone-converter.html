@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时区转换器 - 在线工具集</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.4.4/luxon.min.js"></script>
+    <style>
+        .timezone-converter-io { display: flex; flex-direction: column; gap: 15px; margin-top: 15px; }
+        .timezone-group { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .timezone-group label { font-weight: bold; min-width: 130px; }
+        .timezone-group input, .timezone-group select { padding: 8px; font-size: 1rem; border-radius: 4px; border: 1px solid #ccc; }
+        #tz-output { font-size: 1.2rem; font-weight: bold; color: #0056b3; background-color: #f4f7f9; padding: 8px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tool" id="timezone-converter-tool">
+            <h2>9. 时区转换器 (Time Zone Converter)</h2>
+            <div class="timezone-converter-io">
+                <div class="timezone-group">
+                    <label for="tz-input-datetime">Source Time:</label>
+                    <input type="datetime-local" id="tz-input-datetime">
+                    <select id="tz-from"></select>
+                </div>
+                <div class="timezone-group">
+                    <label>Converted Time:</label>
+                    <span id="tz-output"></span>
+                </div>
+                <div class="timezone-group">
+                    <label for="tz-to">Target Timezone:</label>
+                    <select id="tz-to"></select>
+                </div>
+            </div>
+        </div>
+        <a href="../index.html" class="home-link">返回主菜单</a>
+    </div>
+
+    <script>
+        const tzInput = document.getElementById('tz-input-datetime');
+        const tzFromSelect = document.getElementById('tz-from');
+        const tzToSelect = document.getElementById('tz-to');
+        const tzOutput = document.getElementById('tz-output');
+        const DateTime = luxon.DateTime;
+
+        const commonTimezones = [
+            'UTC', 'America/New_York', 'America/Chicago', 'America/Denver', 'America/Los_Angeles',
+            'Europe/London', 'Europe/Paris', 'Europe/Berlin', 'Asia/Tokyo', 'Asia/Shanghai',
+            'Asia/Dubai', 'Australia/Sydney'
+        ];
+
+        function populateTimezones() {
+            commonTimezones.forEach(tz => {
+                tzFromSelect.innerHTML += `<option value="${tz}">${tz}</option>`;
+                tzToSelect.innerHTML += `<option value="${tz}">${tz}</option>`;
+            });
+            const localTimeZone = DateTime.local().zoneName;
+            if (commonTimezones.includes(localTimeZone)) {
+                tzFromSelect.value = localTimeZone;
+            } else {
+                // If local timezone is not in our common list, just default to first one.
+                tzFromSelect.value = commonTimezones[0];
+            }
+            tzToSelect.value = 'UTC';
+        }
+
+        function convertTimezone() {
+            if (!tzInput.value) return;
+
+            const fromZone = tzFromSelect.value;
+            const toZone = tzToSelect.value;
+
+            try {
+                const dt = DateTime.fromISO(tzInput.value, { zone: fromZone });
+                if (!dt.isValid) {
+                    tzOutput.textContent = 'Invalid Date/Time';
+                    return;
+                }
+                const convertedDt = dt.setZone(toZone);
+                tzOutput.textContent = convertedDt.toFormat("yyyy-LL-dd HH:mm:ss ZZZZ");
+            } catch (e) {
+                tzOutput.textContent = 'Error converting';
+            }
+        }
+
+        populateTimezones();
+        tzInput.value = DateTime.local().toFormat("yyyy-LL-dd'T'HH:mm");
+        convertTimezone();
+
+        tzInput.addEventListener('input', convertTimezone);
+        tzFromSelect.addEventListener('change', convertTimezone);
+        tzToSelect.addEventListener('change', convertTimezone);
+    </script>
+</body>
+</html>
