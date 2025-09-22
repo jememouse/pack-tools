@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>盒型刀线模板库｜包装工具箱</title>
+    <meta name="description" content="精选常用包装结构刀线，可按结构类型与关键词筛选并快速下载。">
+    <style>
+        :root {
+            color-scheme: light;
+            --emerald-600: #047857;
+            --emerald-500: #10b981;
+            --emerald-400: #34d399;
+            --slate-900: #0f172a;
+            --slate-800: #1e293b;
+            --slate-700: #334155;
+            --slate-600: #475569;
+            --slate-500: #64748b;
+            --surface: rgba(255, 255, 255, 0.94);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
+            background: linear-gradient(180deg, #f0fdfa 0%, #d1fae5 45%, #ecfdf5 100%);
+            color: var(--slate-700);
+        }
+
+        .skip-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateY(-120%);
+            background: var(--emerald-600);
+            color: #fff;
+            padding: 0.6rem 1.2rem;
+            border-radius: 0 0 1rem 1rem;
+            transition: transform 0.2s ease;
+            z-index: 1000;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .skip-link:focus { transform: translateY(0); outline: none; }
+
+        .page-header {
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            backdrop-filter: blur(18px);
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.28);
+        }
+        .page-header__inner {
+            max-width: 74rem;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--slate-700);
+            font-weight: 600;
+            font-size: 1.05rem;
+            text-decoration: none;
+        }
+        .brand svg { width: 2rem; height: 2rem; color: var(--emerald-600); }
+
+        .nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
+        .nav-link {
+            color: var(--slate-600);
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.45rem 0.85rem;
+            border-radius: 0.85rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .nav-link:hover { color: var(--emerald-600); background: rgba(16, 185, 129, 0.14); }
+        .nav-link[aria-current="page"] {
+            color: var(--emerald-600);
+            background: rgba(16, 185, 129, 0.2);
+            font-weight: 600;
+            box-shadow: 0 12px 22px rgba(16, 185, 129, 0.18);
+        }
+
+        .cta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-radius: 0.9rem;
+            background: var(--emerald-600);
+            color: #fff;
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.55rem 1.15rem;
+            text-decoration: none;
+            box-shadow: 0 18px 35px rgba(16, 185, 129, 0.25);
+            transition: background 0.2s ease, box-shadow 0.2s ease;
+        }
+        .cta-link:hover { background: #065f46; box-shadow: 0 22px 40px rgba(16, 185, 129, 0.28); }
+
+        .page-main {
+            max-width: 74rem;
+            margin: 0 auto;
+            padding: 3.5rem 1.5rem 5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .page-hero {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.8rem;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(4, 120, 87, 0.95) 0%, rgba(16, 185, 129, 0.82) 45%, rgba(110, 231, 183, 0.78) 100%);
+            color: #ecfdf5;
+            box-shadow: 0 35px 70px rgba(13, 148, 136, 0.24);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 18% 20%, rgba(255, 255, 255, 0.25), transparent 55%),
+                radial-gradient(circle at 80% 12%, rgba(255, 255, 255, 0.18), transparent 50%),
+                linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 60%);
+            opacity: 0.92;
+            pointer-events: none;
+        }
+        .page-hero__content { position: relative; z-index: 1; max-width: 52rem; }
+        .page-hero__eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.16);
+            color: #d1fae5;
+            border-radius: 999px;
+            padding: 0.45rem 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.6rem;
+        }
+        .page-hero__title { margin: 0; font-size: 2.5rem; line-height: 1.18; font-weight: 700; }
+        .page-hero__subtitle { margin-top: 1.5rem; font-size: 1.05rem; line-height: 1.75; color: rgba(236, 253, 245, 0.92); }
+
+        .filters-panel {
+            border-radius: 1.6rem;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            background: var(--surface);
+            padding: 2rem;
+            box-shadow: 0 24px 40px rgba(15, 118, 110, 0.1);
+        }
+        .filters-grid { display: grid; gap: 1.4rem; }
+        @media (min-width: 768px) { .filters-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        label span { display: block; font-size: 0.9rem; color: var(--slate-600); margin-bottom: 0.4rem; }
+        input[type='search'], select {
+            width: 100%;
+            border-radius: 0.9rem;
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            padding: 0.7rem 0.9rem;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: var(--slate-800);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        input[type='search']:focus, select:focus {
+            outline: none;
+            border-color: var(--emerald-500);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.22);
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 0.8rem;
+        }
+        .chip {
+            border-radius: 999px;
+            padding: 0.35rem 0.75rem;
+            font-size: 0.8rem;
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--emerald-600);
+        }
+
+        .templates-grid {
+            display: grid;
+            gap: 1.8rem;
+        }
+        @media (min-width: 768px) {
+            .templates-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        @media (min-width: 1100px) {
+            .templates-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        }
+
+        .template-card {
+            border-radius: 1.4rem;
+            border: 1px solid rgba(16, 185, 129, 0.16);
+            background: rgba(255, 255, 255, 0.92);
+            padding: 1.8rem;
+            box-shadow: 0 20px 40px rgba(13, 148, 136, 0.12);
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+        }
+        .template-card h3 { margin: 0; font-size: 1.15rem; color: var(--slate-800); }
+        .template-card p { margin: 0; font-size: 0.95rem; line-height: 1.6; color: var(--slate-600); }
+        .template-meta { font-size: 0.85rem; color: var(--slate-500); line-height: 1.6; }
+        .template-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+        .template-actions a {
+            border-radius: 0.85rem;
+            padding: 0.55rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .template-actions a.download {
+            background: var(--emerald-600);
+            color: #fff;
+            box-shadow: 0 12px 24px rgba(4, 120, 87, 0.25);
+        }
+        .template-actions a.download:hover { background: #046149; }
+        .template-actions a.preview {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--emerald-600);
+        }
+        .template-actions a.preview:hover {
+            background: rgba(16, 185, 129, 0.2);
+        }
+
+        .empty-state {
+            border-radius: 1.4rem;
+            border: 1px dashed rgba(16, 185, 129, 0.35);
+            padding: 2.4rem;
+            text-align: center;
+            color: var(--emerald-600);
+            background: rgba(236, 253, 245, 0.6);
+            font-size: 0.95rem;
+        }
+
+        footer {
+            background: rgba(4, 47, 46, 0.92);
+            color: rgba(224, 242, 241, 0.88);
+            text-align: center;
+            padding: 2.5rem 1rem;
+            font-size: 0.9rem;
+        }
+        footer a { color: #6ee7b7; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 640px) {
+            .page-header__inner { flex-direction: column; align-items: flex-start; }
+            .page-hero { padding: 2.4rem; }
+            .page-hero__title { font-size: 2.15rem; }
+            .page-hero__subtitle { font-size: 0.95rem; }
+            .filters-panel { padding: 1.6rem; }
+            .template-card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+
+    <header class="page-header">
+        <div class="page-header__inner">
+            <a href="index.html" class="brand">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>
+                <span>包装工具箱</span>
+            </a>
+            <nav class="nav-links" aria-label="主导航">
+                <a class="nav-link" href="index.html#toolbox">工具箱</a>
+                <a class="nav-link" href="index.html#resources">资源库</a>
+                <a class="nav-link" href="index.html#suppliers">供应商名录</a>
+                <a class="nav-link" href="dielines.html" aria-current="page">刀线模板库</a>
+            </nav>
+            <a href="mailto:contact@packaging-toolbox.site" class="cta-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" width="20" height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12a4.5 4.5 0 00-9 0 11.38 11.38 0 01-.401 3.004c-.102.327-.153.49-.145.564a.45.45 0 00.18.308C7.3 15.99 7.48 16 7.837 16h8.326c.357 0 .536-.01.703-.124a.45.45 0 00.18-.308c.008-.074-.043-.237-.145-.564A11.38 11.38 0 0116.5 12z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a1.5 1.5 0 001.5-1.5h-3a1.5 1.5 0 001.5 1.5z" />
+                </svg>
+                联系顾问
+            </a>
+        </div>
+    </header>
+
+    <main id="main-content" class="page-main">
+        <section class="page-hero">
+            <div class="page-hero__content">
+                <span class="page-hero__eyebrow">结构设计库</span>
+                <h1 class="page-hero__title">快速检索常用包装刀线模板</h1>
+                <p class="page-hero__subtitle">精选折叠盒、邮寄盒、展示架等行业常见结构，支持关键词搜索和类型筛选，下载后即可用于 CAD 或 AI 继续设计。</p>
+            </div>
+        </section>
+
+        <section class="filters-panel" aria-label="筛选条件">
+            <form id="dieline-filters" class="filters-grid" novalidate>
+                <label for="dieline-search">
+                    <span>关键词搜索</span>
+                    <input id="dieline-search" name="search" type="search" placeholder="输入结构名称、用途或标签">
+                </label>
+                <label for="dieline-category">
+                    <span>结构类型</span>
+                    <select id="dieline-category" name="category"></select>
+                </label>
+            </form>
+        </section>
+
+        <section aria-live="polite">
+            <div class="templates-grid" data-dieline-results></div>
+            <div class="empty-state" data-dieline-empty hidden>
+                未找到匹配的刀线模板，可尝试调整关键词或切换结构类型。
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 包装工具箱 · 盒型刀线模板库</p>
+        <p style="margin-top:0.5rem;"><a href="mailto:contact@packaging-toolbox.site">联系顾问团队</a></p>
+    </footer>
+
+    <script type="module" src="./src/pages/dielines.ts"></script>
+</body>
+</html>

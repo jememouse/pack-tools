@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>物流成本计算器｜包装工具箱</title>
+    <meta name="description" content="输入包裹尺寸、重量、距离与附加项，一键计算体积重、计费重量及全额运费拆解。">
+    <style>
+        :root {
+            color-scheme: light;
+            --brand-600: #1e3a8a;
+            --brand-500: #3b82f6;
+            --brand-400: #60a5fa;
+            --emerald-500: #10b981;
+            --slate-900: #0f172a;
+            --slate-800: #1e293b;
+            --slate-700: #334155;
+            --slate-600: #475569;
+            --slate-500: #64748b;
+            --slate-400: #94a3b8;
+            --surface: rgba(255, 255, 255, 0.96);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
+            background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 35%, #e0e7ff 100%);
+            color: var(--slate-700);
+        }
+
+        .skip-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateY(-120%);
+            background: var(--brand-600);
+            color: #fff;
+            padding: 0.6rem 1.2rem;
+            border-radius: 0 0 1rem 1rem;
+            transition: transform 0.2s ease;
+            z-index: 1000;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .skip-link:focus { transform: translateY(0); outline: none; }
+
+        .page-header {
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            backdrop-filter: blur(18px);
+            background: rgba(255, 255, 255, 0.88);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+        }
+        .page-header__inner {
+            max-width: 74rem;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--slate-700);
+            font-weight: 600;
+            font-size: 1.05rem;
+            text-decoration: none;
+        }
+        .brand svg { width: 2rem; height: 2rem; color: var(--brand-600); }
+
+        .nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
+        .nav-link {
+            color: var(--slate-600);
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.45rem 0.85rem;
+            border-radius: 0.85rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .nav-link:hover { color: var(--brand-600); background: rgba(30, 58, 138, 0.1); }
+        .nav-link[aria-current="page"] {
+            color: var(--brand-600);
+            background: rgba(30, 58, 138, 0.18);
+            font-weight: 600;
+            box-shadow: 0 12px 22px rgba(30, 58, 138, 0.18);
+        }
+
+        .cta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-radius: 0.9rem;
+            background: var(--brand-600);
+            color: #fff;
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.55rem 1.15rem;
+            text-decoration: none;
+            box-shadow: 0 18px 35px rgba(30, 58, 138, 0.25);
+            transition: background 0.2s ease, box-shadow 0.2s ease;
+        }
+        .cta-link:hover { background: #182861; box-shadow: 0 22px 40px rgba(30, 58, 138, 0.28); }
+
+        .page-main {
+            max-width: 74rem;
+            margin: 0 auto;
+            padding: 3.5rem 1.5rem 5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .page-hero {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.8rem;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.92) 0%, rgba(59, 130, 246, 0.82) 45%, rgba(59, 130, 246, 0.72) 100%);
+            color: #f8fafc;
+            box-shadow: 0 35px 70px rgba(30, 64, 175, 0.34);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.24), transparent 55%),
+                radial-gradient(circle at 82% 10%, rgba(255, 255, 255, 0.18), transparent 50%),
+                linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 60%);
+            opacity: 0.92;
+            pointer-events: none;
+        }
+        .page-hero__content { position: relative; z-index: 1; max-width: 52rem; }
+        .page-hero__eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.16);
+            color: #dbeafe;
+            border-radius: 999px;
+            padding: 0.45rem 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.6rem;
+        }
+        .page-hero__title { margin: 0; font-size: 2.5rem; line-height: 1.18; font-weight: 700; }
+        .page-hero__subtitle { margin-top: 1.5rem; font-size: 1.05rem; line-height: 1.75; color: rgba(248, 250, 252, 0.9); }
+
+        .calculator-layout {
+            display: grid;
+            gap: 2rem;
+        }
+        @media (min-width: 1024px) {
+            .calculator-layout { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
+        }
+
+        .panel {
+            border-radius: 1.6rem;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            background: var(--surface);
+            padding: 2.4rem;
+            box-shadow: 0 28px 50px rgba(15, 23, 42, 0.08);
+        }
+        .panel h2 {
+            margin: 0;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--slate-900);
+        }
+        .panel p.lead {
+            margin-top: 0.8rem;
+            font-size: 1rem;
+            color: var(--slate-600);
+            line-height: 1.6;
+        }
+
+        .panel form {
+            margin-top: 1.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .form-sections {
+            display: grid;
+            gap: 1.6rem;
+        }
+
+        .form-block {
+            border-radius: 1.2rem;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            background: rgba(248, 250, 252, 0.92);
+            padding: 1.4rem;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        }
+        .form-block header {
+            margin-bottom: 1.1rem;
+        }
+        .form-block header h3 {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--slate-800);
+        }
+        .form-block header p {
+            margin: 0.4rem 0 0;
+            font-size: 0.85rem;
+            color: var(--slate-500);
+            line-height: 1.5;
+        }
+
+        .form-grid {
+            display: grid;
+            gap: 1.1rem;
+        }
+        @media (min-width: 640px) {
+            .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        .form-block--dimensions .form-grid {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        @media (min-width: 640px) {
+            .form-block--dimensions .form-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        @media (min-width: 860px) {
+            .form-block--dimensions .form-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+        @media (min-width: 1024px) {
+            .form-block--dimensions .form-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
+        .form-block--dimensions .form-grid label:last-child {
+            grid-column: 1 / -1;
+        }
+
+        .form-grid label {
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+            font-size: 0.9rem;
+            color: var(--slate-600);
+        }
+        .form-grid label span {
+            font-weight: 600;
+            color: var(--slate-700);
+        }
+        .form-grid label input,
+        .form-grid label select {
+            width: 100%;
+            font-size: 0.95rem;
+            border-radius: 0.8rem;
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            padding: 0.65rem 0.85rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .form-grid label input:focus,
+        .form-grid label select:focus {
+            border-color: var(--brand-500);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        .form-grid label.checkbox {
+            flex-direction: row;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .form-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.9rem;
+            align-items: center;
+        }
+        .form-actions button {
+            border: none;
+            border-radius: 0.9rem;
+            background: var(--brand-600);
+            color: #fff;
+            font-weight: 600;
+            padding: 0.65rem 1.4rem;
+            cursor: pointer;
+            transition: background 0.2s ease, box-shadow 0.2s ease;
+        }
+        .form-actions button:hover {
+            background: #182861;
+            box-shadow: 0 16px 30px rgba(30, 58, 138, 0.25);
+        }
+        .form-actions a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--brand-600);
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .results-card ul {
+            margin: 1.8rem 0 0;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            gap: 0.9rem;
+        }
+        .results-card li {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-size: 0.95rem;
+            color: var(--slate-600);
+        }
+        .results-card li strong,
+        .results-card li span {
+            font-weight: 600;
+            color: var(--slate-800);
+        }
+        .results-card li.total {
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+            padding-top: 1rem;
+            font-size: 1.1rem;
+            color: var(--brand-600);
+        }
+
+        .tip-card {
+            border-radius: 1.4rem;
+            border: 1px dashed rgba(148, 163, 184, 0.5);
+            background: rgba(248, 250, 252, 0.92);
+            padding: 1.8rem;
+            color: var(--slate-600);
+        }
+        .tip-card ul { margin: 0.9rem 0 0; padding-left: 1.1rem; }
+        .tip-card li { margin-bottom: 0.4rem; }
+
+        footer {
+            background: rgba(15, 23, 42, 0.92);
+            color: rgba(226, 232, 240, 0.82);
+            text-align: center;
+            padding: 2.5rem 1rem;
+            font-size: 0.9rem;
+        }
+        footer a { color: #bfdbfe; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 640px) {
+            .page-header__inner { flex-direction: column; align-items: flex-start; }
+            .page-hero { padding: 2.4rem; }
+            .page-hero__title { font-size: 2.1rem; }
+            .page-hero__subtitle { font-size: 0.95rem; }
+            .panel { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+
+    <header class="page-header">
+        <div class="page-header__inner">
+            <a href="index.html" class="brand">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>
+                <span>包装工具箱</span>
+            </a>
+            <nav class="nav-links" aria-label="主导航">
+                <a class="nav-link" href="index.html#toolbox">工具箱</a>
+                <a class="nav-link" href="index.html#resources">资源库</a>
+                <a class="nav-link" href="index.html#suppliers">供应商名录</a>
+                <a class="nav-link" href="logistics.html" aria-current="page">物流成本计算器</a>
+            </nav>
+            <a href="mailto:contact@packaging-toolbox.site" class="cta-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" width="20" height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12a4.5 4.5 0 00-9 0 11.38 11.38 0 01-.401 3.004c-.102.327-.153.49-.145.564a.45.45 0 00.18.308C7.3 15.99 7.48 16 7.837 16h8.326c.357 0 .536-.01.703-.124a.45.45 0 00.18-.308c.008-.074-.043-.237-.145-.564A11.38 11.38 0 0116.5 12z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a1.5 1.5 0 001.5-1.5h-3a1.5 1.5 0 001.5 1.5z" />
+                </svg>
+                联系顾问
+            </a>
+        </div>
+    </header>
+
+    <main id="main-content" class="page-main">
+        <section class="page-hero">
+            <div class="page-hero__content">
+                <span class="page-hero__eyebrow">智能运费估算</span>
+                <h1 class="page-hero__title">快速拆解体积重、计费重量与全额运费</h1>
+                <p class="page-hero__subtitle">输入包裹尺寸、重量、里程以及燃油/偏远附加项，系统自动计算费用构成，帮助团队在报价、比价与预算阶段更精准地评估物流成本。</p>
+            </div>
+        </section>
+
+        <section class="calculator-layout">
+            <div class="panel">
+                <h2>填写包裹与报价参数</h2>
+                <p class="lead">可根据不同物流方案调整计费系数与附加费用，立即看到对总成本的影响。</p>
+
+                <form id="logistics-form" novalidate>
+                    <div class="form-sections">
+                        <section class="form-block form-block--dimensions">
+                            <header>
+                                <h3>包裹尺寸与重量</h3>
+                                <p>尺寸取外箱数值，建议与体积重系数配合使用。</p>
+                            </header>
+                            <div class="form-grid">
+                                <label for="lengthCm">
+                                    <span>长度 (cm)</span>
+                                    <input id="lengthCm" name="lengthCm" type="number" min="0" step="0.1" value="40" required>
+                                </label>
+                                <label for="widthCm">
+                                    <span>宽度 (cm)</span>
+                                    <input id="widthCm" name="widthCm" type="number" min="0" step="0.1" value="30" required>
+                                </label>
+                                <label for="heightCm">
+                                    <span>高度 (cm)</span>
+                                    <input id="heightCm" name="heightCm" type="number" min="0" step="0.1" value="20" required>
+                                </label>
+                                <label for="weightKg">
+                                    <span>实际重量 (kg)</span>
+                                    <input id="weightKg" name="weightKg" type="number" min="0" step="0.1" value="8" required>
+                                </label>
+                            </div>
+                        </section>
+
+                        <section class="form-block">
+                            <header>
+                                <h3>计费参数</h3>
+                                <p>输入承运商的重量与距离单价，可快速评估报价。</p>
+                            </header>
+                            <div class="form-grid">
+                                <label for="distanceKm">
+                                    <span>运输距离 (km)</span>
+                                    <input id="distanceKm" name="distanceKm" type="number" min="0" step="1" value="600" required>
+                                </label>
+                                <label for="baseFee">
+                                    <span>起步价 (元)</span>
+                                    <input id="baseFee" name="baseFee" type="number" min="0" step="0.1" value="8" required>
+                                </label>
+                                <label for="weightRate">
+                                    <span>计费重量单价 (元/kg)</span>
+                                    <input id="weightRate" name="weightRate" type="number" min="0" step="0.1" value="4.5" required>
+                                </label>
+                                <label for="distanceRate">
+                                    <span>距离单价 (元/100km)</span>
+                                    <input id="distanceRate" name="distanceRate" type="number" min="0" step="0.1" value="6" required>
+                                </label>
+                            </div>
+                        </section>
+
+                        <section class="form-block">
+                            <header>
+                                <h3>附加系数</h3>
+                                <p>选择体积重换算规则或额外附加费，模拟不同承运商。</p>
+                            </header>
+                            <div class="form-grid">
+                                <label for="volumetricDivisor">
+                                    <span>体积重换算系数</span>
+                                    <select id="volumetricDivisor" name="volumetricDivisor">
+                                        <option value="6000">国内快递 / 空运 (6000)</option>
+                                        <option value="5000">国际快递常用 (5000)</option>
+                                        <option value="4000">快船 / 特殊计费 (4000)</option>
+                                    </select>
+                                </label>
+                                <label for="fuelSurcharge">
+                                    <span>燃油附加费 (%)</span>
+                                    <input id="fuelSurcharge" name="fuelSurcharge" type="number" min="0" step="0.1" value="8">
+                                </label>
+                                <label for="remoteFee">
+                                    <span>偏远附加费 (元)</span>
+                                    <input id="remoteFee" name="remoteFee" type="number" min="0" step="0.1" value="0">
+                                </label>
+                                <label class="checkbox" for="fragile">
+                                    <input id="fragile" name="fragile" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                    <span>敏感/易碎品，启用 12% 安全系数</span>
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit">重新计算</button>
+                        <a href="#results" class="text-sm">
+                            查看费用拆解
+                            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+                        </a>
+                    </div>
+
+                    <div class="quick-fill">
+                        <span>便捷填充：</span>
+                        <button type="button" data-preset="domestic">国内标准快递</button>
+                        <button type="button" data-preset="express">国际快递</button>
+                        <button type="button" data-preset="heavy">重货干线</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="results" class="panel results-card">
+                <h2>费用拆解</h2>
+                <p class="lead">所有数值均按照当前输入即时计算，默认货币单位为人民币（元）。</p>
+                <ul>
+                    <li><span>起步价</span><strong data-logistics-base-fee>--</strong> 元</li>
+                    <li><span>体积重</span><strong data-logistics-volumetric>--</strong> kg</li>
+                    <li><span>计费重量</span><strong data-logistics-chargeable>--</strong> kg</li>
+                    <li><span>计费重量费用</span><strong data-logistics-weight-charge>--</strong> 元</li>
+                    <li><span>距离费用</span><strong data-logistics-distance>--</strong> 元</li>
+                    <li><span>燃油附加费</span><strong data-logistics-fuel>--</strong> 元</li>
+                    <li><span>偏远地区附加费</span><strong data-logistics-remote>--</strong> 元</li>
+                    <li><span>基础费用小计</span><strong data-logistics-subtotal-base>--</strong> 元</li>
+                    <li><span>附加费后小计</span><strong data-logistics-subtotal>--</strong> 元</li>
+                    <li class="total"><span>总费用</span><strong data-logistics-total>--</strong> 元</li>
+                </ul>
+                <p style="margin-top:1rem;font-size:0.85rem;color:var(--brand-600);" data-logistics-summary>输入参数后，将展示费用拆解与说明。</p>
+                <div style="margin-top:1.2rem;display:flex;flex-wrap:wrap;gap:0.75rem;">
+                    <button type="button" data-logistics-export style="border:none;border-radius:0.9rem;background:var(--brand-600);color:#fff;font-size:0.85rem;font-weight:600;padding:0.55rem 1.2rem;cursor:pointer;display:inline-flex;align-items:center;gap:0.4rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M9 8l4-4m0 0l4 4m-4-4v12" /><path stroke-linecap="round" stroke-linejoin="round" d="M5 16h14" /></svg>
+                        导出结果 (CSV)
+                    </button>
+                    <button type="button" data-logistics-copy style="border:1px solid var(--brand-500);border-radius:0.9rem;background:rgba(255,255,255,0.9);color:var(--brand-600);font-size:0.85rem;font-weight:600;padding:0.55rem 1.2rem;cursor:pointer;display:inline-flex;align-items:center;gap:0.4rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-3-3v6" /><path stroke-linecap="round" stroke-linejoin="round" d="M7 7v10a2 2 0 002 2h6a2 2 0 002-2V9.414a2 2 0 00-.586-1.414l-2.828-2.828A2 2 0 0012.172 4H9a2 2 0 00-2 2z" /></svg>
+                        复制结果
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="tip-card">
+            <h2 style="margin:0;font-size:1.1rem;font-weight:600;color:var(--slate-800);">使用提示</h2>
+            <ul>
+                <li>体积重系数支持常见的 6000 / 5000 / 4000 规则，可按合作承运商调整。</li>
+                <li>燃油附加费按百分比计算偏移，偏远附加费为固定金额，两者会纳入最终总价。</li>
+                <li>如使用阶梯式距离报价，可将行程拆分为多个区段分别计算后求和。</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 包装工具箱 · 物流成本计算器</p>
+        <p style="margin-top:0.5rem;"><a href="mailto:contact@packaging-toolbox.site">联系顾问团队</a></p>
+    </footer>
+
+    <script type="module" src="./src/pages/logistics.ts"></script>
+    <script>
+    (function () {
+        function ready(fn) {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', function () {
+                    setTimeout(fn, 200);
+                });
+            } else {
+                setTimeout(fn, 200);
+            }
+        }
+
+        function safeNumber(value, fallback) {
+            if (value === null || value === undefined || value === '') {
+                return fallback;
+            }
+            var parsed = parseFloat(value);
+            return isFinite(parsed) ? parsed : fallback;
+        }
+
+        function formatNumber(value) {
+            if (!isFinite(value)) {
+                return '--';
+            }
+            return (Math.round(value * 100) / 100).toString();
+        }
+
+        function init() {
+            if (window.__LOGISTICS_CALC_READY) {
+                return;
+            }
+            var form = document.getElementById('logistics-form');
+            if (!form) {
+                return;
+            }
+
+            var volumeEl = document.querySelector('[data-logistics-volumetric]');
+            var chargeEl = document.querySelector('[data-logistics-chargeable]');
+            var weightChargeEl = document.querySelector('[data-logistics-weight-charge]');
+            var distanceEl = document.querySelector('[data-logistics-distance]');
+            var fuelEl = document.querySelector('[data-logistics-fuel]');
+            var remoteEl = document.querySelector('[data-logistics-remote]');
+            var baseFeeEl = document.querySelector('[data-logistics-base-fee]');
+            var baseSubtotalEl = document.querySelector('[data-logistics-subtotal-base]');
+            var subtotalEl = document.querySelector('[data-logistics-subtotal]');
+            var totalEl = document.querySelector('[data-logistics-total]');
+            var summaryEl = document.querySelector('[data-logistics-summary]');
+            if (!volumeEl || !chargeEl || !weightChargeEl || !distanceEl || !fuelEl || !remoteEl || !baseFeeEl || !baseSubtotalEl || !subtotalEl || !totalEl || !summaryEl) {
+                return;
+            }
+
+            var exportButtons = document.querySelectorAll('[data-logistics-export]');
+            var copyButtons = document.querySelectorAll('[data-logistics-copy]');
+            var lastResult = null;
+            var lastSummary = '';
+            var resetTimer = null;
+
+            function scheduleSummary(message) {
+                if (!summaryEl) {
+                    return;
+                }
+                if (resetTimer !== null) {
+                    clearTimeout(resetTimer);
+                    resetTimer = null;
+                }
+                var fallback = lastSummary || summaryEl.textContent || '';
+                summaryEl.textContent = message;
+                resetTimer = window.setTimeout(function () {
+                    summaryEl.textContent = lastSummary || fallback;
+                    resetTimer = null;
+                }, 2200);
+            }
+
+            function calculate() {
+                var length = Math.max(0, safeNumber(form.lengthCm && form.lengthCm.value, 0));
+                var width = Math.max(0, safeNumber(form.widthCm && form.widthCm.value, 0));
+                var height = Math.max(0, safeNumber(form.heightCm && form.heightCm.value, 0));
+                var weight = Math.max(0, safeNumber(form.weightKg && form.weightKg.value, 0));
+                var distance = Math.max(0, safeNumber(form.distanceKm && form.distanceKm.value, 0));
+                var baseFee = Math.max(0, safeNumber(form.baseFee && form.baseFee.value, 0));
+                var weightRate = Math.max(0, safeNumber(form.weightRate && form.weightRate.value, 0));
+                var distanceRate = Math.max(0, safeNumber(form.distanceRate && form.distanceRate.value, 0));
+                var volumetricDivisor = Math.max(1, safeNumber(form.volumetricDivisor && form.volumetricDivisor.value, 6000));
+                var fuelPercent = Math.max(0, safeNumber(form.fuelSurcharge && form.fuelSurcharge.value, 0));
+                var remoteFee = Math.max(0, safeNumber(form.remoteFee && form.remoteFee.value, 0));
+                var fragileMultiplier = form.fragile && form.fragile.checked ? 1.12 : 1;
+
+                var volumetricWeight = (length * width * height) / volumetricDivisor;
+                var chargeableWeight = Math.max(weight, volumetricWeight);
+                var weightCharge = chargeableWeight * weightRate;
+                var distanceCharge = (distance / 100) * distanceRate;
+                var baseSubtotal = baseFee + weightCharge + distanceCharge;
+                var fuelSurcharge = baseSubtotal * (fuelPercent / 100);
+                var subtotalBeforeFragile = baseSubtotal + fuelSurcharge + remoteFee;
+                var totalCost = subtotalBeforeFragile * fragileMultiplier;
+
+                baseFeeEl.textContent = formatNumber(baseFee);
+                volumeEl.textContent = formatNumber(volumetricWeight);
+                chargeEl.textContent = formatNumber(chargeableWeight);
+                weightChargeEl.textContent = formatNumber(weightCharge);
+                distanceEl.textContent = formatNumber(distanceCharge);
+                fuelEl.textContent = formatNumber(fuelSurcharge);
+                remoteEl.textContent = formatNumber(remoteFee);
+                baseSubtotalEl.textContent = formatNumber(baseSubtotal);
+                subtotalEl.textContent = formatNumber(subtotalBeforeFragile);
+                totalEl.textContent = formatNumber(totalCost);
+
+                var parts = [
+                    '计费重量费用 ' + formatNumber(weightCharge) + ' 元',
+                    '距离费用 ' + formatNumber(distanceCharge) + ' 元'
+                ];
+                if (fuelSurcharge > 0) {
+                    parts.push('燃油附加 ' + formatNumber(fuelSurcharge) + ' 元');
+                }
+                if (remoteFee > 0) {
+                    parts.push('偏远附加 ' + formatNumber(remoteFee) + ' 元');
+                }
+                if (fragileMultiplier > 1) {
+                    parts.push('已包含易碎品安全系数');
+                }
+                var summaryText = '总费用约 ' + formatNumber(totalCost) + ' 元，其中 ' + parts.join('，') + '。';
+                summaryEl.textContent = summaryText;
+                lastSummary = summaryText;
+                lastResult = {
+                    baseFee: baseFee,
+                    volumetricWeight: volumetricWeight,
+                    chargeableWeight: chargeableWeight,
+                    weightCharge: weightCharge,
+                    distanceCharge: distanceCharge,
+                    fuelSurcharge: fuelSurcharge,
+                    remoteAreaFee: remoteFee,
+                    baseSubtotal: baseSubtotal,
+                    subtotalBeforeFragile: subtotalBeforeFragile,
+                    fragileMultiplier: fragileMultiplier,
+                    totalCost: totalCost
+                };
+            }
+
+            function buildCsv(result, summaryText) {
+                var rows = [
+                    ['字段', '数值', '附注'],
+                    ['起步价 (元)', formatNumber(result.baseFee), '固定费用'],
+                    ['体积重 (kg)', formatNumber(result.volumetricWeight), '按选定换算系数计算'],
+                    ['计费重量 (kg)', formatNumber(result.chargeableWeight), '取体积重与实际重量最大值'],
+                    ['计费重量费用 (元)', formatNumber(result.weightCharge), '计费重量 × 单价'],
+                    ['距离费用 (元)', formatNumber(result.distanceCharge), '运输距离/100 × 单价'],
+                    ['燃油附加费 (元)', formatNumber(result.fuelSurcharge), result.fuelSurcharge > 0 ? '按基础小计 × 百分比' : '无'],
+                    ['偏远附加费 (元)', formatNumber(result.remoteAreaFee), result.remoteAreaFee > 0 ? '偏远地区固定费用' : '无'],
+                    ['基础费用小计 (元)', formatNumber(result.baseSubtotal), '起步价 + 重量费 + 距离费'],
+                    ['附加费后小计 (元)', formatNumber(result.subtotalBeforeFragile), '基础小计 + 附加费'],
+                    ['易碎品系数', formatNumber(result.fragileMultiplier), result.fragileMultiplier > 1 ? '已启用易碎品安全系数' : '未启用'],
+                    ['总费用 (元)', formatNumber(result.totalCost), '最终计费金额']
+                ];
+                if (summaryText) {
+                    rows.push(['结果说明', summaryText, '']);
+                }
+                return rows.map(function (row) {
+                    return row.map(function (cell) {
+                        return '"' + String(cell).replace(/"/g, '""') + '"';
+                    }).join(',');
+                }).join('\r\n');
+            }
+
+            function buildTextReport(result, summaryText) {
+                var lines = [
+                    '物流成本计算结果',
+                    '------------------------------',
+                    '起步价：' + formatNumber(result.baseFee) + ' 元',
+                    '体积重：' + formatNumber(result.volumetricWeight) + ' kg',
+                    '计费重量：' + formatNumber(result.chargeableWeight) + ' kg',
+                    '计费重量费用：' + formatNumber(result.weightCharge) + ' 元',
+                    '距离费用：' + formatNumber(result.distanceCharge) + ' 元',
+                    '燃油附加费：' + formatNumber(result.fuelSurcharge) + ' 元',
+                    '偏远附加费：' + formatNumber(result.remoteAreaFee) + ' 元',
+                    '基础费用小计：' + formatNumber(result.baseSubtotal) + ' 元',
+                    '附加费后小计：' + formatNumber(result.subtotalBeforeFragile) + ' 元',
+                    '易碎品系数：' + formatNumber(result.fragileMultiplier),
+                    '总费用：' + formatNumber(result.totalCost) + ' 元'
+                ];
+                if (summaryText) {
+                    lines.push('', summaryText);
+                }
+                return lines.join('\n');
+            }
+
+            exportButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    if (!lastResult) {
+                        scheduleSummary('请先输入参数并完成计算。');
+                        return;
+                    }
+                    var csv = buildCsv(lastResult, lastSummary);
+                    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                    var url = URL.createObjectURL(blob);
+                    var anchor = document.createElement('a');
+                    anchor.href = url;
+                    anchor.download = 'logistics-cost-' + Date.now() + '.csv';
+                    document.body.append(anchor);
+                    anchor.click();
+                    anchor.remove();
+                    URL.revokeObjectURL(url);
+                    scheduleSummary('CSV 已导出，若未下载请检查浏览器权限。');
+                });
+            });
+
+            copyButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    if (!lastResult) {
+                        scheduleSummary('请先输入参数并完成计算。');
+                        return;
+                    }
+                    var report = buildTextReport(lastResult, lastSummary);
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(report).then(function () {
+                            scheduleSummary('结果已复制到剪贴板。');
+                        }).catch(function () {
+                            scheduleSummary('复制失败，请手动选择文本。');
+                        });
+                    } else {
+                        var textarea = document.createElement('textarea');
+                        textarea.value = report;
+                        textarea.style.position = 'fixed';
+                        textarea.style.opacity = '0';
+                        document.body.append(textarea);
+                        textarea.select();
+                        document.execCommand('copy');
+                        textarea.remove();
+                        scheduleSummary('结果已复制到剪贴板。');
+                    }
+                });
+            });
+
+            form.addEventListener('input', calculate);
+            form.addEventListener('change', calculate);
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                calculate();
+            });
+
+            window.__LOGISTICS_CALC_READY = true;
+            calculate();
+        }
+
+        ready(init);
+    })();
+    </script>
+</body>
+</html>

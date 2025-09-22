@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 140">
+  <style>
+    .outline { fill:none; stroke:#1f2937; stroke-width:1.4; }
+    .fold { fill:none; stroke:#9ca3af; stroke-width:1; stroke-dasharray:4 3; }
+    .note { font-family:Arial, sans-serif; font-size:8px; fill:#1f2937; }
+  </style>
+  <path class="outline" d="M30,40 Q130,10 230,40 L230,100 Q130,130 30,100 Z"/>
+  <line class="fold" x1="130" y1="32" x2="130" y2="108"/>
+  <text class="note" x="32" y="28">Pillow Box 180 × 60 × 40 mm</text>
+</svg>

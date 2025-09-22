@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>托盘堆码规划器｜包装工具箱</title>
+    <meta name="description" content="输入单箱尺寸与托盘限制，快速评估最佳摆放方向、装载数量与利用率。">
+    <style>
+        :root {
+            color-scheme: light;
+            --indigo-700: #4338ca;
+            --indigo-600: #4f46e5;
+            --violet-500: #8b5cf6;
+            --slate-900: #0f172a;
+            --slate-800: #1e293b;
+            --slate-700: #334155;
+            --slate-600: #475569;
+            --slate-500: #64748b;
+            --surface: rgba(255, 255, 255, 0.96);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
+            background: linear-gradient(180deg, #eef2ff 0%, #ede9fe 40%, #f5f3ff 100%);
+            color: var(--slate-700);
+        }
+
+        .skip-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateY(-120%);
+            background: var(--indigo-600);
+            color: #fff;
+            padding: 0.6rem 1.2rem;
+            border-radius: 0 0 1rem 1rem;
+            transition: transform 0.2s ease;
+            z-index: 1000;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .skip-link:focus { transform: translateY(0); outline: none; }
+
+        .page-header {
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            backdrop-filter: blur(18px);
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+        }
+        .page-header__inner {
+            max-width: 74rem;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--slate-700);
+            font-weight: 600;
+            font-size: 1.05rem;
+            text-decoration: none;
+        }
+        .brand svg { width: 2rem; height: 2rem; color: var(--indigo-600); }
+
+        .nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
+        .nav-link {
+            color: var(--slate-600);
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.45rem 0.85rem;
+            border-radius: 0.85rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .nav-link:hover { color: var(--indigo-600); background: rgba(79, 70, 229, 0.12); }
+        .nav-link[aria-current="page"] {
+            color: var(--indigo-600);
+            background: rgba(79, 70, 229, 0.2);
+            font-weight: 600;
+            box-shadow: 0 12px 22px rgba(79, 70, 229, 0.18);
+        }
+
+        .cta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-radius: 0.9rem;
+            background: var(--indigo-600);
+            color: #fff;
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.55rem 1.15rem;
+            text-decoration: none;
+            box-shadow: 0 18px 35px rgba(79, 70, 229, 0.25);
+            transition: background 0.2s ease, box-shadow 0.2s ease;
+        }
+        .cta-link:hover { background: #3730a3; box-shadow: 0 22px 40px rgba(79, 70, 229, 0.3); }
+
+        .page-main {
+            max-width: 74rem;
+            margin: 0 auto;
+            padding: 3.5rem 1.5rem 5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .page-hero {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.8rem;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.95) 0%, rgba(139, 92, 246, 0.85) 45%, rgba(196, 181, 253, 0.78) 100%);
+            color: #f5f3ff;
+            box-shadow: 0 35px 70px rgba(79, 70, 229, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.25), transparent 55%),
+                radial-gradient(circle at 82% 10%, rgba(255, 255, 255, 0.18), transparent 50%),
+                linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 60%);
+            opacity: 0.9;
+            pointer-events: none;
+        }
+        .page-hero__content { position: relative; z-index: 1; max-width: 52rem; }
+        .page-hero__eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.16);
+            color: #ede9fe;
+            border-radius: 999px;
+            padding: 0.45rem 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.6rem;
+        }
+        .page-hero__title { margin: 0; font-size: 2.5rem; line-height: 1.18; font-weight: 700; }
+        .page-hero__subtitle { margin-top: 1.5rem; font-size: 1.05rem; line-height: 1.75; color: rgba(237, 233, 254, 0.92); }
+
+        .calculator-layout {
+            display: grid;
+            gap: 2rem;
+        }
+        @media (min-width: 1024px) {
+            .calculator-layout { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
+        }
+
+        .panel {
+            border-radius: 1.6rem;
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            background: var(--surface);
+            padding: 2.4rem;
+            box-shadow: 0 28px 50px rgba(67, 56, 202, 0.1);
+        }
+        .panel h2 {
+            margin: 0;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--slate-900);
+        }
+        .panel p.lead {
+            margin-top: 0.8rem;
+            font-size: 1rem;
+            color: var(--slate-600);
+            line-height: 1.6;
+        }
+
+        .panel form { margin-top: 1.8rem; display: flex; flex-direction: column; gap: 2rem; }
+        .form-grid { display: grid; gap: 1.4rem; }
+        @media (min-width: 640px) { .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+        label span { display: block; font-size: 0.9rem; color: var(--slate-700); margin-bottom: 0.45rem; }
+        input[type='number'] {
+            width: 100%;
+            border-radius: 0.9rem;
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            padding: 0.7rem 0.9rem;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: var(--slate-800);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        input[type='number']:focus {
+            outline: none;
+            border-color: var(--indigo-600);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.18);
+        }
+
+        .form-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; justify-content: flex-start; }
+        .form-actions button {
+            border-radius: 9999px;
+            border: none;
+            background: var(--indigo-600);
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.6rem 1.4rem;
+            cursor: pointer;
+            transition: background 0.2s ease, box-shadow 0.2s ease;
+        }
+        .form-actions button:hover { background: #3730a3; box-shadow: 0 16px 28px rgba(79, 70, 229, 0.24); }
+
+        .result-grid { display: grid; gap: 1.5rem; }
+        @media (min-width: 768px) { .result-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+        .stat-card {
+            border-radius: 1.2rem;
+            border: 1px solid rgba(139, 92, 246, 0.22);
+            background: rgba(237, 233, 254, 0.6);
+            padding: 1.6rem;
+            color: #4c1d95;
+        }
+        .stat-card h3 { margin: 0; font-size: 1.05rem; font-weight: 600; }
+        .stat-card ul { margin: 1rem 0 0; padding: 0; list-style: none; display: grid; gap: 0.6rem; font-size: 0.95rem; }
+        .stat-card strong { font-size: 1.4rem; display: block; margin-top: 0.4rem; }
+
+        .insight-card {
+            border-radius: 1.4rem;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            background: rgba(255, 255, 255, 0.85);
+            padding: 2rem;
+            box-shadow: 0 18px 45px rgba(76, 29, 149, 0.12);
+        }
+        .insight-card h2 { margin: 0; font-size: 1.3rem; color: var(--slate-800); }
+        .insight-card ul { margin: 1rem 0 0; padding-left: 1.2rem; color: var(--slate-600); line-height: 1.6; }
+
+        footer {
+            background: rgba(49, 46, 129, 0.95);
+            color: rgba(224, 231, 255, 0.85);
+            text-align: center;
+            padding: 2.5rem 1rem;
+            font-size: 0.9rem;
+        }
+        footer a { color: #c7d2fe; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 640px) {
+            .page-header__inner { flex-direction: column; align-items: flex-start; }
+            .page-hero { padding: 2.4rem; }
+            .page-hero__title { font-size: 2.15rem; }
+            .page-hero__subtitle { font-size: 0.95rem; }
+            .panel { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+
+    <header class="page-header">
+        <div class="page-header__inner">
+            <a href="index.html" class="brand">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>
+                <span>包装工具箱</span>
+            </a>
+            <nav class="nav-links" aria-label="主导航">
+                <a class="nav-link" href="index.html#toolbox">工具箱</a>
+                <a class="nav-link" href="index.html#resources">资源库</a>
+                <a class="nav-link" href="index.html#suppliers">供应商名录</a>
+                <a class="nav-link" href="pallet.html" aria-current="page">托盘堆码规划器</a>
+            </nav>
+            <a href="mailto:contact@packaging-toolbox.site" class="cta-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" width="20" height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12a4.5 4.5 0 00-9 0 11.38 11.38 0 01-.401 3.004c-.102.327-.153.49-.145.564a.45.45 0 00.18.308C7.3 15.99 7.48 16 7.837 16h8.326c.357 0 .536-.01.703-.124a.45.45 0 00.18-.308c.008-.074-.043-.237-.145-.564A11.38 11.38 0 0116.5 12z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a1.5 1.5 0 001.5-1.5h-3a1.5 1.5 0 001.5 1.5z" />
+                </svg>
+                联系顾问
+            </a>
+        </div>
+    </header>
+
+    <main id="main-content" class="page-main">
+        <section class="page-hero">
+            <div class="page-hero__content">
+                <span class="page-hero__eyebrow">仓储布局助手</span>
+                <h1 class="page-hero__title">快速规划托盘堆码方式与装载数量</h1>
+                <p class="page-hero__subtitle">输入单箱尺寸与托盘限高，自动比较摆放方向、计算单层装载量与堆码层数，帮助运营团队提升仓储与运输效率。</p>
+            </div>
+        </section>
+
+        <section class="calculator-layout">
+            <div class="panel">
+                <h2>填写包装与托盘参数</h2>
+                <p class="lead">设定单箱外径、托盘尺寸与最大堆码高度，系统将自动推荐最佳排布并输出利用率数据。</p>
+
+                <form id="pallet-form" novalidate>
+                    <div class="form-grid">
+                        <label for="cartonLength">
+                            <span>单箱长度 (mm)</span>
+                            <input id="cartonLength" name="cartonLength" type="number" min="0" step="1" value="350" required>
+                        </label>
+                        <label for="cartonWidth">
+                            <span>单箱宽度 (mm)</span>
+                            <input id="cartonWidth" name="cartonWidth" type="number" min="0" step="1" value="250" required>
+                        </label>
+                        <label for="cartonHeight">
+                            <span>单箱高度 (mm)</span>
+                            <input id="cartonHeight" name="cartonHeight" type="number" min="0" step="1" value="220" required>
+                        </label>
+                        <label for="palletLength">
+                            <span>托盘长度 (mm)</span>
+                            <input id="palletLength" name="palletLength" type="number" min="0" step="1" value="1200" required>
+                        </label>
+                        <label for="palletWidth">
+                            <span>托盘宽度 (mm)</span>
+                            <input id="palletWidth" name="palletWidth" type="number" min="0" step="1" value="1000" required>
+                        </label>
+                        <label for="palletMaxHeight">
+                            <span>堆码最大高度 (mm)</span>
+                            <input id="palletMaxHeight" name="palletMaxHeight" type="number" min="0" step="1" value="1400" required>
+                        </label>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit">重新计算</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel">
+                <h2>推荐排布与利用率</h2>
+                <p class="lead">系统同时比较正放、错位与旋转排布，选出单层装载数量最多且利用率最优的方案。</p>
+
+                <div class="stat-card">
+                    <h3>推荐排布</h3>
+                    <ul>
+                        <li data-pallet-orientation>--</li>
+                        <li>单层装箱：<strong data-pallet-per-layer>--</strong>箱</li>
+                    </ul>
+                </div>
+
+                <div class="result-grid" style="margin-top: 1.6rem;">
+                    <div class="stat-card" style="background: rgba(237,233,254,0.7); color: #4338ca;">
+                        <h3>堆码规模</h3>
+                        <ul>
+                            <li>可堆层数：<strong data-pallet-layers>--</strong>层</li>
+                            <li>总装箱量：<strong data-pallet-total>--</strong>箱</li>
+                        </ul>
+                    </div>
+                    <div class="stat-card" style="background: rgba(224, 231, 255, 0.7); color: #3730a3;">
+                        <h3>利用率评估</h3>
+                        <ul>
+                            <li>底面积利用率：<strong data-pallet-footprint>--</strong>%</li>
+                            <li>高度利用率：<strong data-pallet-height>--</strong>%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="insight-card">
+            <h2>使用建议</h2>
+            <ul>
+                <li>如需错位交错摆放，可在单箱长度与宽度处尝试互换，以评估不同朝向的利用率。</li>
+                <li>堆码最大高度建议考虑托盘高度与防护材料厚度，避免超出运输标准限高。</li>
+                <li>若存在半层加垫板的装载方式，可将堆码高度稍作调整，重新计算出最接近的层数。</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 包装工具箱 · 托盘堆码规划器</p>
+        <p style="margin-top:0.5rem;"><a href="mailto:contact@packaging-toolbox.site">联系顾问团队</a></p>
+    </footer>
+
+    <script type="module" src="./src/pages/pallet.ts"></script>
+</body>
+</html>

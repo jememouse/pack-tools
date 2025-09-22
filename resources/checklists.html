@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实用清单与模板｜包装工具箱资源库</title>
+    <meta name="description" content="沉淀包装项目在印前、供应商评估与执行阶段的标准化清单，为跨部门协作提供可复制模板。">
+    <style>
+        :root {
+            color-scheme: light;
+            --brand-600: #1e3a8a;
+            --brand-500: #3b82f6;
+            --brand-400: #60a5fa;
+            --slate-900: #111827;
+            --slate-800: #1f2937;
+            --slate-700: #374151;
+            --slate-600: #4b5563;
+            --slate-500: #6b7280;
+            --slate-400: #9ca3af;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
+            background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 45%, #e0e7ff 100%);
+            color: var(--slate-700);
+        }
+
+        .skip-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateY(-120%);
+            background: var(--brand-600);
+            color: #fff;
+            padding: 0.6rem 1.2rem;
+            border-radius: 0 0 1rem 1rem;
+            transition: transform 0.2s ease;
+            z-index: 1000;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .skip-link:focus {
+            transform: translateY(0);
+            outline: none;
+        }
+
+        .page-header {
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            backdrop-filter: blur(18px);
+            background: rgba(255, 255, 255, 0.86);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+        }
+
+        .page-header__inner {
+            max-width: 74rem;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--slate-700);
+            font-weight: 600;
+            font-size: 1.05rem;
+            text-decoration: none;
+        }
+
+        .brand svg {
+            width: 2rem;
+            height: 2rem;
+            color: var(--brand-600);
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .nav-link {
+            color: var(--slate-600);
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.45rem 0.85rem;
+            border-radius: 0.85rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--brand-600);
+            background: rgba(30, 58, 138, 0.1);
+        }
+
+        .nav-link[aria-current="page"] {
+            color: var(--brand-600);
+            background: rgba(30, 58, 138, 0.18);
+            font-weight: 600;
+            box-shadow: 0 12px 22px rgba(30, 58, 138, 0.18);
+        }
+
+        .cta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-radius: 0.9rem;
+            background: var(--brand-600);
+            color: #fff;
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.55rem 1.15rem;
+            text-decoration: none;
+            box-shadow: 0 18px 35px rgba(30, 58, 138, 0.25);
+            transition: background 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cta-link:hover {
+            background: #182861;
+            box-shadow: 0 22px 40px rgba(30, 58, 138, 0.28);
+        }
+
+        .page-main {
+            max-width: 74rem;
+            margin: 0 auto;
+            padding: 3.5rem 1.5rem 5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .page-hero {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.8rem;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.94) 0%, rgba(37, 99, 235, 0.86) 42%, rgba(59, 130, 246, 0.75) 100%);
+            color: #f8fafc;
+            box-shadow: 0 35px 70px rgba(30, 64, 175, 0.36);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 18% 20%, rgba(255, 255, 255, 0.25), transparent 55%),
+                radial-gradient(circle at 82% 12%, rgba(255, 255, 255, 0.18), transparent 50%),
+                linear-gradient(120deg, rgba(255, 255, 255, 0.06), transparent 60%);
+            opacity: 0.95;
+            pointer-events: none;
+        }
+
+        .page-hero__content {
+            position: relative;
+            z-index: 1;
+            max-width: 52rem;
+        }
+
+        .page-hero__eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.16);
+            color: #dbeafe;
+            border-radius: 999px;
+            padding: 0.45rem 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.6rem;
+        }
+
+        .page-hero__title {
+            margin: 0;
+            font-size: 2.5rem;
+            line-height: 1.18;
+            font-weight: 700;
+        }
+
+        .page-hero__subtitle {
+            margin-top: 1.5rem;
+            font-size: 1.05rem;
+            line-height: 1.75;
+            color: rgba(248, 250, 252, 0.88);
+        }
+
+        .section-card {
+            border-radius: 1.6rem;
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            background: rgba(255, 255, 255, 0.96);
+            padding: 2.4rem;
+            box-shadow: 0 28px 50px rgba(15, 23, 42, 0.08);
+            backdrop-filter: blur(6px);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 32px 60px rgba(15, 23, 42, 0.12);
+        }
+
+        .section-card__title {
+            margin: 0;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--slate-900);
+        }
+
+        .section-card__lead {
+            margin-top: 1rem;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--slate-600);
+        }
+
+        .section-card__list {
+            margin: 1.4rem 0 0;
+            padding-left: 1.4rem;
+            color: var(--slate-600);
+            line-height: 1.7;
+        }
+
+        .section-card__list li + li {
+            margin-top: 0.5rem;
+        }
+
+        .section-card__grid {
+            margin-top: 1.6rem;
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .section-card__grid--three {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        .section-tile {
+            border-radius: 1.1rem;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            background: rgba(248, 250, 252, 0.85);
+            padding: 1.4rem;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        }
+
+        .section-tile__title {
+            margin: 0 0 0.6rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--slate-700);
+        }
+
+        .section-tile p {
+            margin: 0;
+            font-size: 0.94rem;
+            line-height: 1.6;
+            color: var(--slate-600);
+        }
+
+        .section-card--accent {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.14), rgba(191, 219, 254, 0.35));
+            border-color: rgba(59, 130, 246, 0.38);
+            box-shadow: 0 30px 55px rgba(59, 130, 246, 0.22);
+            color: var(--brand-600);
+        }
+
+        .section-card--accent p {
+            color: rgba(30, 64, 175, 0.85);
+        }
+
+        footer {
+            background: rgba(17, 24, 39, 0.92);
+            color: rgba(226, 232, 240, 0.82);
+            text-align: center;
+            padding: 2.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #bfdbfe;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (min-width: 768px) {
+            .page-hero {
+                padding: 3.5rem 3.75rem;
+            }
+
+            .section-card__grid--three {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 640px) {
+            .page-header__inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .page-hero {
+                padding: 2.4rem;
+            }
+
+            .page-hero__title {
+                font-size: 2.1rem;
+            }
+
+            .page-hero__subtitle {
+                font-size: 0.95rem;
+            }
+
+            .section-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+
+    <header class="page-header">
+        <div class="page-header__inner">
+            <a href="../index.html#resources" class="brand">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>
+                <span>包装工具箱资源库</span>
+            </a>
+            <nav class="nav-links" aria-label="资源导航">
+                <a class="nav-link" href="./library.html">资源库</a>
+                <a class="nav-link" href="./overview.html">概览</a>
+                <a class="nav-link" href="./design.html">设计与规范</a>
+                <a class="nav-link" href="./checklists.html" aria-current="page">清单与模板</a>
+                <a class="nav-link" href="./insights.html">行业洞察</a>
+            </nav>
+            <a href="../index.html#resources" class="cta-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" width="20" height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+                返回资源区
+            </a>
+        </div>
+    </header>
+
+    <main id="main-content" class="page-main">
+        <section class="page-hero">
+            <div class="page-hero__content">
+                <span class="page-hero__eyebrow">资源库 · 实用清单与模板</span>
+                <h1 class="page-hero__title">让每次协作都有标准可循</h1>
+                <p class="page-hero__subtitle">沉淀印前、供应商评估与项目执行阶段的流程模板，帮助设计、采购、运营等角色快速对齐信息，复用成功经验。</p>
+            </div>
+        </section>
+
+        <section id="prepress-checklist" class="section-card">
+            <h2 class="section-card__title">印前检查清单</h2>
+            <p class="section-card__lead">从文件尺寸、色彩模式到刀线层命名，逐项核对避免印前遗漏，适用于不同印刷方式的交付验证。</p>
+            <ul class="section-card__list">
+                <li>支持裁切、模切、烫金等特殊工艺的分层规范与命名规则。</li>
+                <li>包含客户签样要点，明确审批节点与回传资料。</li>
+                <li>可用于内部 QA 审核与供应商交付验收，形成闭环记录。</li>
+            </ul>
+        </section>
+
+        <section id="supplier-audit" class="section-card">
+            <h2 class="section-card__title">供应商考察清单</h2>
+            <p class="section-card__lead">围绕资质、设备、质量体系与交付保障四大模块梳理评估要点，帮助采购与运营团队高效完成现场与文档审核。</p>
+            <div class="section-card__grid section-card__grid--three">
+                <div class="section-tile">
+                    <p class="section-tile__title">现场调研</p>
+                    <p>覆盖生产流程、质检记录、仓储环境等关键观察指标。</p>
+                </div>
+                <div class="section-tile">
+                    <p class="section-tile__title">资质文档</p>
+                    <p>列出 ISO、FSC、BRC 等认证资料及产能报告的核查要求。</p>
+                </div>
+                <div class="section-tile">
+                    <p class="section-tile__title">交付能力</p>
+                    <p>评估交期、响应机制与售后支持，配套评分表与改进建议。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="rfq-template" class="section-card">
+            <h2 class="section-card__title">报价请求 (RFQ) 模板</h2>
+            <p class="section-card__lead">标准化收集材料、工艺、数量、交期等信息，确保多家供应商报价数据结构一致、可直接比对。</p>
+            <ul class="section-card__list">
+                <li>内置可复制字段与成本拆分表，支持多项目管理与版本记录。</li>
+                <li>提供异常备注与风险提示区，便于后续谈判及对账。</li>
+                <li>兼容导出为 Excel/PDF，方便与 ERP/PLM 系统对接。</li>
+            </ul>
+        </section>
+
+        <section class="section-card">
+            <h2 class="section-card__title">项目执行工具包</h2>
+            <p class="section-card__lead">聚焦项目从立项到上线的全过程，提供可落地的里程碑、风险与复盘模板，帮助团队提升透明度与交付质量。</p>
+            <div class="section-card__grid section-card__grid--three">
+                <div class="section-tile">
+                    <p class="section-tile__title">里程碑追踪表</p>
+                    <p>覆盖打样、试产、量产与上线节点，搭配责任人和交付物说明。</p>
+                </div>
+                <div class="section-tile">
+                    <p class="section-tile__title">风险登记册</p>
+                    <p>记录潜在风险、触发条件与缓解措施，实现透明跟踪与预警。</p>
+                </div>
+                <div class="section-tile">
+                    <p class="section-tile__title">复盘模板</p>
+                    <p>从交付指标、质量表现、成本节约与协作效率四维总结经验。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card">
+            <h2 class="section-card__title">沟通与协同指南</h2>
+            <p class="section-card__lead">统一跨部门会议、供应商沟通与结果展示的结构，确保关键信息被记录与追踪。</p>
+            <ul class="section-card__list">
+                <li>提供跨部门例会纪要模板，标准化信息同步与问题跟进。</li>
+                <li>附供应商沟通脚本，覆盖需求确认、变更通知与异常处理。</li>
+                <li>给出成果看板配置建议，可直接嵌入内部知识库或协同工具。</li>
+            </ul>
+        </section>
+
+        <section class="section-card section-card--accent">
+            <h2 class="section-card__title">即将上线</h2>
+            <p class="section-card__lead">印前任务分配表、供应商绩效评分卡与自动化看板正在制作中。欢迎通过 <a href="mailto:contact@packaging-toolbox.site" style="color:#1e3a8a;font-weight:600;text-decoration:none;">contact@packaging-toolbox.site</a> 提交场景需求，优先体验共创版本。</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 包装工具箱 · 实用清单与模板</p>
+    </footer>
+
+    <script type="module" src="../src/pages/resourcesChecklists.ts"></script>
+</body>
+</html>

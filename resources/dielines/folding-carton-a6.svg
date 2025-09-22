@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180">
+  <style>
+    .outline { fill:none; stroke:#1f2937; stroke-width:1.4; }
+    .fold { fill:none; stroke:#9ca3af; stroke-width:1; stroke-dasharray:4 3; }
+    .note { font-family:Arial, sans-serif; font-size:7px; fill:#1f2937; }
+  </style>
+  <rect class="outline" x="20" y="40" width="60" height="100"/>
+  <rect class="outline" x="80" y="40" width="60" height="100"/>
+  <rect class="outline" x="140" y="40" width="60" height="100"/>
+  <rect class="outline" x="200" y="40" width="20" height="100"/>
+  <line class="fold" x1="20" y1="60" x2="220" y2="60"/>
+  <line class="fold" x1="20" y1="120" x2="220" y2="120"/>
+  <line class="fold" x1="80" y1="40" x2="80" y2="140"/>
+  <line class="fold" x1="140" y1="40" x2="140" y2="140"/>
+  <text class="note" x="20" y="30">Folding Carton A6, 12pt C2S</text>
+</svg>

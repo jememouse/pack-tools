@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二维码生成器｜包装工具箱</title>
+    <meta name="description" content="输入内容并自定义容错等级、色彩与 Logo，生成高分辨率二维码并导出 PNG 图像。">
+    <style>
+        :root {
+            color-scheme: light;
+            --indigo-600: #4f46e5;
+            --violet-500: #8b5cf6;
+            --emerald-500: #10b981;
+            --slate-900: #0f172a;
+            --slate-800: #1e293b;
+            --slate-700: #334155;
+            --slate-600: #475569;
+            --slate-500: #64748b;
+            --surface: rgba(255, 255, 255, 0.94);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
+            background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 40%, #f5f3ff 100%);
+            color: var(--slate-700);
+        }
+
+        .skip-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateY(-120%);
+            background: var(--indigo-600);
+            color: #fff;
+            padding: 0.6rem 1.2rem;
+            border-radius: 0 0 1rem 1rem;
+            transition: transform 0.2s ease;
+            z-index: 1000;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .skip-link:focus { transform: translateY(0); outline: none; }
+
+        .page-header {
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            backdrop-filter: blur(18px);
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+        }
+        .page-header__inner {
+            max-width: 74rem;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--slate-700);
+            font-weight: 600;
+            font-size: 1.05rem;
+            text-decoration: none;
+        }
+        .brand svg { width: 2rem; height: 2rem; color: var(--indigo-600); }
+
+        .nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
+        .nav-link {
+            color: var(--slate-600);
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.45rem 0.85rem;
+            border-radius: 0.85rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .nav-link:hover { color: var(--indigo-600); background: rgba(79, 70, 229, 0.12); }
+        .nav-link[aria-current="page"] {
+            color: var(--indigo-600);
+            background: rgba(79, 70, 229, 0.2);
+            font-weight: 600;
+            box-shadow: 0 12px 22px rgba(79, 70, 229, 0.18);
+        }
+
+        .cta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-radius: 0.9rem;
+            background: var(--indigo-600);
+            color: #fff;
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 0.55rem 1.15rem;
+            text-decoration: none;
+            box-shadow: 0 18px 35px rgba(79, 70, 229, 0.25);
+            transition: background 0.2s ease, box-shadow 0.2s ease;
+        }
+        .cta-link:hover { background: #3730a3; box-shadow: 0 22px 40px rgba(79, 70, 229, 0.28); }
+
+        .page-main {
+            max-width: 74rem;
+            margin: 0 auto;
+            padding: 3.5rem 1.5rem 5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .page-hero {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.8rem;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.95) 0%, rgba(139, 92, 246, 0.85) 45%, rgba(196, 181, 253, 0.78) 100%);
+            color: #fef9ff;
+            box-shadow: 0 35px 70px rgba(79, 70, 229, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 18% 20%, rgba(255, 255, 255, 0.25), transparent 55%),
+                radial-gradient(circle at 80% 12%, rgba(255, 255, 255, 0.18), transparent 50%),
+                linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 60%);
+            opacity: 0.92;
+            pointer-events: none;
+        }
+        .page-hero__content { position: relative; z-index: 1; max-width: 52rem; }
+        .page-hero__eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, 0.16);
+            color: #ede9fe;
+            border-radius: 999px;
+            padding: 0.45rem 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.6rem;
+        }
+        .page-hero__title { margin: 0; font-size: 2.5rem; line-height: 1.18; font-weight: 700; }
+        .page-hero__subtitle { margin-top: 1.5rem; font-size: 1.05rem; line-height: 1.75; color: rgba(250, 245, 255, 0.92); }
+
+        .layout {
+            display: grid;
+            gap: 2rem;
+        }
+        @media (min-width: 1024px) {
+            .layout { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
+        }
+
+        .panel {
+            border-radius: 1.6rem;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            background: var(--surface);
+            padding: 2.4rem;
+            box-shadow: 0 28px 50px rgba(67, 56, 202, 0.12);
+        }
+        .panel h2 { margin: 0; font-size: 1.6rem; font-weight: 600; color: var(--slate-900); }
+        .panel p.lead { margin-top: 0.8rem; font-size: 1rem; color: var(--slate-600); line-length: 1.6; }
+
+        .form-grid { display: grid; gap: 1.4rem; }
+        @media (min-width: 768px) { .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        .form-grid label span { display: block; font-size: 0.9rem; color: var(--slate-600); margin-bottom: 0.4rem; }
+        .form-grid input[type='text'],
+        .form-grid input[type='number'],
+        .form-grid input[type='color'],
+        .form-grid textarea,
+        .form-grid select {
+            width: 100%;
+            border-radius: 0.9rem;
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            padding: 0.7rem 0.9rem;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: var(--slate-800);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            resize: vertical;
+        }
+        .form-grid textarea { min-height: 120px; grid-column: span 2; }
+        .form-grid input:focus,
+        .form-grid textarea:focus,
+        .form-grid select:focus {
+            outline: none;
+            border-color: var(--indigo-600);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.22);
+        }
+
+        .form-actions { margin-top: 1.2rem; display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+        .form-actions button {
+            border-radius: 9999px;
+            border: none;
+            background: var(--indigo-600);
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.6rem 1.4rem;
+            cursor: pointer;
+            transition: background 0.2s ease, box-shadow 0.2s ease;
+        }
+        .form-actions button:hover { background: #3730a3; box-shadow: 0 16px 28px rgba(79, 70, 229, 0.24); }
+
+        .preview-card {
+            border-radius: 1.4rem;
+            border: 1px solid rgba(79, 70, 229, 0.2);
+            background: rgba(255, 255, 255, 0.94);
+            padding: 2.2rem;
+            box-shadow: 0 26px 46px rgba(76, 29, 149, 0.12);
+            display: flex;
+            flex-direction: column;
+            gap: 1.4rem;
+        }
+        .preview-surface {
+            min-height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(248, 250, 252, 0.85);
+            border-radius: 1rem;
+            border: 1px dashed rgba(148, 163, 184, 0.4);
+            padding: 1.5rem;
+        }
+        .preview-surface svg,
+        .preview-surface img {
+            max-width: 100%;
+            height: auto;
+        }
+        .preview-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+        .preview-actions button,
+        .preview-actions a {
+            border-radius: 0.85rem;
+            padding: 0.55rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .preview-actions button.primary,
+        .preview-actions a.primary {
+            background: var(--indigo-600);
+            color: #fff;
+        }
+        .preview-actions button.secondary,
+        .preview-actions a.secondary {
+            background: rgba(79, 70, 229, 0.12);
+            color: var(--indigo-600);
+        }
+
+        .hint {
+            font-size: 0.85rem;
+            color: var(--slate-500);
+            line-height: 1.5;
+        }
+
+        footer {
+            background: rgba(67, 56, 202, 0.92);
+            color: rgba(224, 231, 255, 0.88);
+            text-align: center;
+            padding: 2.5rem 1rem;
+            font-size: 0.9rem;
+        }
+        footer a { color: #c7d2fe; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 640px) {
+            .page-header__inner { flex-direction: column; align-items: flex-start; }
+            .page-hero { padding: 2.4rem; }
+            .page-hero__title { font-size: 2.15rem; }
+            .page-hero__subtitle { font-size: 0.95rem; }
+            .panel { padding: 2rem; }
+            .preview-card { padding: 1.6rem; }
+            .form-grid textarea { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+
+    <header class="page-header">
+        <div class="page-header__inner">
+            <a href="index.html" class="brand">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>
+                <span>包装工具箱</span>
+            </a>
+            <nav class="nav-links" aria-label="主导航">
+                <a class="nav-link" href="index.html#toolbox">工具箱</a>
+                <a class="nav-link" href="index.html#resources">资源库</a>
+                <a class="nav-link" href="index.html#suppliers">供应商名录</a>
+                <a class="nav-link" href="qr-generator.html" aria-current="page">二维码生成器</a>
+            </nav>
+            <a href="mailto:contact@packaging-toolbox.site" class="cta-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" width="20" height="20">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12a4.5 4.5 0 00-9 0 11.38 11.38 0 01-.401 3.004c-.102.327-.153.49-.145.564a.45.45 0 00.18.308C7.3 15.99 7.48 16 7.837 16h8.326c.357 0 .536-.01.703-.124a.45.45 0 00.18-.308c.008-.074-.043-.237-.145-.564A11.38 11.38 0 0116.5 12z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a1.5 1.5 0 001.5-1.5h-3a1.5 1.5 0 001.5 1.5z" />
+                </svg>
+                联系顾问
+            </a>
+        </div>
+    </header>
+
+    <main id="main-content" class="page-main">
+        <section class="page-hero">
+            <div class="page-hero__content">
+                <span class="page-hero__eyebrow">编码标识工具</span>
+                <h1 class="page-hero__title">自定义二维码，适配多终端扫描需求</h1>
+                <p class="page-hero__subtitle">输入文本或链接，可按品牌需求调整容错等级、色彩与 Logo。生成结果支持导出为 SVG 与高清 PNG，方便用于包装设计稿或营销物料。</p>
+            </div>
+        </section>
+
+        <section class="layout">
+            <div class="panel">
+                <h2>自定义参数</h2>
+                <p class="lead">系统会根据容错等级和 Logo 尺寸给出提示，确保二维码既美观又可靠。</p>
+
+                <form id="qr-form" novalidate>
+                    <div class="form-grid">
+                        <label for="qr-text">
+                            <span>二维码内容</span>
+                            <textarea id="qr-text" name="qr-text" placeholder="输入网址、文本或多行信息"></textarea>
+                        </label>
+                        <label for="qr-ec">
+                            <span>容错等级</span>
+                            <select id="qr-ec" name="qr-ec">
+                                <option value="L" selected>L - 7% 容错</option>
+                                <option value="M">M - 15% 容错</option>
+                                <option value="Q">Q - 25% 容错</option>
+                                <option value="H">H - 30% 容错</option>
+                            </select>
+                        </label>
+                        <label for="qr-size">
+                            <span>二维码尺寸 (px)</span>
+                            <input id="qr-size" name="qr-size" type="number" min="160" max="600" value="320">
+                        </label>
+                        <label for="qr-margin">
+                            <span>边距 (模块)</span>
+                            <input id="qr-margin" name="qr-margin" type="number" min="0" max="12" value="4">
+                        </label>
+                        <label for="qr-foreground">
+                            <span>前景颜色</span>
+                            <input id="qr-foreground" name="qr-foreground" type="color" value="#111827">
+                        </label>
+                        <label for="qr-background">
+                            <span>背景颜色</span>
+                            <input id="qr-background" name="qr-background" type="color" value="#ffffff">
+                        </label>
+                        <label for="qr-logo" style="grid-column: span 2;">
+                            <span>Logo 图片 (可选)</span>
+                            <input id="qr-logo" name="qr-logo" type="file" accept="image/png,image/jpeg,image/svg+xml">
+                            <div style="margin-top:0.6rem; display:grid; gap:0.8rem; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); align-items: center;">
+                                <label style="display:flex; flex-direction:column; gap:0.35rem; font-size:0.85rem; color:var(--slate-500);">
+                                    <span>Logo 占比（二维码宽度 %）</span>
+                                    <input id="qr-logo-size" name="qr-logo-size" type="range" min="10" max="30" value="18">
+                                </label>
+                                <label style="display:flex; flex-direction:column; gap:0.35rem; font-size:0.85rem; color:var(--slate-500);">
+                                    <span>Logo 位置</span>
+                                    <select id="qr-logo-position" name="qr-logo-position">
+                                        <option value="center" selected>居中</option>
+                                        <option value="bottom-right">右下角</option>
+                                    </select>
+                                </label>
+                                <button type="button" id="qr-logo-remove" class="form-actions-button" style="border-radius:9999px; border:1px solid rgba(79, 70, 229, 0.2); background:rgba(79, 70, 229, 0.08); color:var(--indigo-600); padding:0.4rem 0.8rem; justify-self:start;">移除 Logo</button>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit">应用设置</button>
+                        <p class="hint" data-feedback>填写参数即可实时生成二维码。</p>
+                    </div>
+                </form>
+            </div>
+
+            <div class="preview-card">
+                <header>
+                    <h2 style="margin:0;font-size:1.3rem;font-weight:600;color:var(--slate-800);">实时预览与导出</h2>
+                    <p class="hint">Logo 建议搭配高容错等级使用，导出 PNG 后即可嵌入设计稿或线上物料。</p>
+                </header>
+                <div class="preview-surface" data-qr-preview>
+                    <p class="hint">输入内容后，将在此展示二维码预览。</p>
+                </div>
+                <div class="preview-actions">
+                    <button type="button" class="primary" data-download-svg disabled>下载 SVG</button>
+                    <button type="button" class="primary" data-download-png disabled>下载 PNG</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel" aria-label="使用建议">
+            <h2>使用提示</h2>
+            <ul class="hint" style="margin-top:1rem; line-height:1.7;">
+                <li>建议在屏幕上扫描测试二维码，确保在不同亮度、距离下都可识别。</li>
+                <li>若需嵌入 Logo，优先选择 Q / H 容错等级，并控制 Logo 占比不超过二维码宽度的 30%。</li>
+                <li>导出的 PNG 建议在 150% 以上尺寸缩放时保持清晰度，可放入设计软件或线上系统。</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 包装工具箱 · 二维码生成器</p>
+        <p style="margin-top:0.5rem;"><a href="mailto:contact@packaging-toolbox.site">联系顾问团队</a></p>
+    </footer>
+
+    <script src="resources/js/qrGenerator.js"></script>
+</body>
+</html>
