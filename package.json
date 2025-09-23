@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "npx vite",
     "build": "vite build",
     "preview": "vite preview",
     "test": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm --test tests/calculators.test.ts"

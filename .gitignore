@@ -5,3 +5,6 @@
 /dist
 
 .DS_Store
+
+# VSCode local history
+.history/
