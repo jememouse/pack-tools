@@ -660,7 +660,7 @@ function setupToolboxNavigation(): void {
     toggleButton.dataset.toolboxToggleInit = 'true';
   }
 
-  const ACTIVE_CLASSES = ['bg-blue-50', 'text-blue-700', 'font-semibold'];
+  const ACTIVE_CLASSES = ['bg-blue-600', 'text-white', 'font-semibold'];
 
   const setActive = (hash: string | null) => {
     links.forEach((link) => {
@@ -747,12 +747,30 @@ function setupToolboxNavigation(): void {
   setActive(defaultHash);
 }
 
+function setupToolboxAccordion(): void {
+  const accordions = document.querySelectorAll<HTMLButtonElement>('[data-accordion-toggle]');
+  accordions.forEach(button => {
+    const content = button.nextElementSibling as HTMLElement | null;
+    const icon = button.querySelector<HTMLElement>('[data-accordion-icon]');
+    if (!content || !icon) return;
+
+    button.addEventListener('click', () => {
+      content.classList.toggle('hidden');
+      icon.classList.toggle('rotate-180');
+      const isExpanded = !content.classList.contains('hidden');
+      button.setAttribute('aria-expanded', String(isExpanded));
+      content.setAttribute('aria-hidden', String(!isExpanded));
+    });
+  });
+}
+
 function initialise() {
   resourceStatusElement = document.querySelector('[data-resources-status]');
   supplierStatusElement = document.querySelector('[data-supplier-status]');
   renderModals();
   setupMenuToggle();
   setupToolboxNavigation();
+  setupToolboxAccordion(); // Initialize the new accordion
   bindModalTriggers();
   renderResources();
   setupSupplierDirectory();

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>色彩模式转换器 - 包装工具箱</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='48' height='48' x='8' y='8' rx='8' fill='%231e3a8a'/%3E%3Cpath d='M16 26l16-10 16 10v22H16z' fill='%23fff'/%3E%3Cpath d='M32 16v32' stroke='%233b82f6' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/input.css">
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+<a href="#main-content" class="skip-link">跳到主要内容</a>
+
+<div class="flex flex-col lg:flex-row">
+    <div id="main-content-wrapper" class="flex-1 min-w-0">
+        <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 border-b border-slate-200/80">
+            <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <svg class="w-8 h-8 text-sky-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" focusable="false">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                    </svg>
+                    <h1 class="text-2xl font-bold text-slate-800">包装工具箱</h1>
+                </div>
+                <nav id="mobile-menu" class="hidden md:flex items-center space-x-8">
+                    <a href="/#toolbox" class="text-slate-600 hover:text-sky-600 transition-colors">核心工具</a>
+                    <a href="/#resources" class="text-slate-600 hover:text-sky-600 transition-colors">资源库</a>
+                    <a href="/#suppliers" class="text-slate-600 hover:text-sky-600 transition-colors">供应商</a>
+                </nav>
+                <a href="mailto:contact@packaging-toolbox.site" class="hidden md:block bg-sky-600 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors shadow-sm">
+                    联系我们
+                </a>
+                <button id="mobile-menu-button" class="md:hidden text-slate-600" aria-label="打开主导航菜单">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </div>
+            <nav id="mobile-navigation" class="md:hidden hidden border-t border-gray-200 bg-white" aria-label="移动端导航">
+                <ul class="space-y-2 px-6 py-4">
+                    <li><a href="/#toolbox" class="block py-2 text-gray-700 hover:text-blue-600">核心工具</a></li>
+                    <li><a href="/#resources" class="block py-2 text-gray-700 hover:text-blue-600">资源库</a></li>
+                    <li><a href="/#suppliers" class="block py-2 text-gray-700 hover:text-blue-600">供应商</a></li>
+                    <li><a href="mailto:contact@packaging-toolbox.site" class="block py-2 text-blue-600 font-semibold">联系我们</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main id="main-content" class="container mx-auto px-6 py-12 md:py-20" tabindex="-1">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">色彩模式转换器</h1>
+            <p class="text-lg text-gray-600 mb-12">在 RGB、CMYK 和 PANTONE 之间快速转换颜色值，并提供标准油墨参考。</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <section class="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-6">颜色输入与转换</h2>
+                    <div class="space-y-8">
+                        <!-- RGB Input -->
+                        <div>
+                            <h3 class="text-xl font-medium text-gray-700 mb-4">RGB 模式</h3>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div>
+                                    <label for="rgb-r" class="block text-sm font-medium text-gray-700">R (0-255)</label>
+                                    <input type="number" id="rgb-r" min="0" max="255" value="0" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label for="rgb-g" class="block text-sm font-medium text-gray-700">G (0-255)</label>
+                                    <input type="number" id="rgb-g" min="0" max="255" value="0" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label for="rgb-b" class="block text-sm font-medium text-gray-700">B (0-255)</label>
+                                    <input type="number" id="rgb-b" min="0" max="255" value="0" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                </div>
+                            </div>
+                            <div class="mt-4 h-10 rounded-md border border-gray-300" id="rgb-preview" style="background-color: rgb(0,0,0);"></div>
+                        </div>
+
+                        <!-- CMYK Input -->
+                        <div>
+                            <h3 class="text-xl font-medium text-gray-700 mb-4">CMYK 模式</h3>
+                            <div class="grid grid-cols-4 gap-4">
+                                <div>
+                                    <label for="cmyk-c" class="block text-sm font-medium text-gray-700">C (0-100%)</label>
+                                    <input type="number" id="cmyk-c" min="0" max="100" value="0" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label for="cmyk-m" class="block text-sm font-medium text-gray-700">M (0-100%)</label>
+                                    <input type="number" id="cmyk-m" min="0" max="100" value="0" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label for="cmyk-y" class="block text-sm font-medium text-gray-700">Y (0-100%)</label>
+                                    <input type="number" id="cmyk-y" min="0" max="100" value="0" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label for="cmyk-k" class="block text-sm font-medium text-gray-700">K (0-100%)</label>
+                                    <input type="number" id="cmyk-k" min="0" max="100" value="100" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                </div>
+                            </div>
+                            <div class="mt-4 h-10 rounded-md border border-gray-300" id="cmyk-preview" style="background-color: rgb(0,0,0);"></div>
+                        </div>
+
+                        <!-- PANTONE Input -->
+                        <div>
+                            <h3 class="text-xl font-medium text-gray-700 mb-4">PANTONE 模式</h3>
+                            <div class="flex gap-4">
+                                <div class="flex-1">
+                                    <label for="pantone-input" class="block text-sm font-medium text-gray-700">PANTONE 色号 (如: 185 C)</label>
+                                    <input type="text" id="pantone-input" placeholder="输入 PANTONE 色号" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                </div>
+                                <button id="pantone-convert" class="mt-6 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">转换</button>
+                            </div>
+                            <div class="mt-4 h-10 rounded-md border border-gray-300" id="pantone-preview" style="background-color: rgb(0,0,0);"></div>
+                            <p id="pantone-info" class="mt-2 text-sm text-gray-500"></p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-6">转换结果与参考</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-xl font-medium text-gray-700 mb-2">RGB 结果</h3>
+                            <p id="result-rgb" class="text-gray-900 text-lg font-mono">RGB(0, 0, 0)</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-medium text-gray-700 mb-2">CMYK 结果</h3>
+                            <p id="result-cmyk" class="text-gray-900 text-lg font-mono">CMYK(0%, 0%, 0%, 100%)</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-medium text-gray-700 mb-2">PANTONE 近似值</h3>
+                            <p id="result-pantone" class="text-gray-900 text-lg font-mono">未找到近似 PANTONE 色号</p>
+                            <p class="text-sm text-gray-500 mt-2">
+                                PANTONE 色号为专有颜色系统，此处提供最接近的近似值。精确匹配请参考 PANTONE 官方色卡。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mt-12">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-6">标准油墨参考 (CMYK)</h2>
+                        <p class="text-gray-700 mb-4">以下是印刷中常用的四色油墨（CMYK）的理论标准值，用于帮助您理解颜色构成：</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600">
+                            <li>**C (Cyan - 青色)**: 纯青色油墨，理论上不含其他颜色。</li>
+                            <li>**M (Magenta - 品红色)**: 纯品红色油墨，理论上不含其他颜色。</li>
+                            <li>**Y (Yellow - 黄色)**: 纯黄色油墨，理论上不含其他颜色。</li>
+                            <li>**K (Key/Black - 黑色)**: 纯黑色油墨，用于增加深度和阴影。</li>
+                        </ul>
+                        <p class="text-sm text-gray-500 mt-4">
+                            实际印刷效果会受纸张类型、油墨品牌、印刷设备和环境等多种因素影响。
+                        </p>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer class="bg-gray-800 text-white mt-20">
+            <div class="container mx-auto px-6 py-12 grid md:grid-cols-3 gap-8">
+                <div>
+                    <h2 class="text-lg font-bold mb-4">关于包装工具箱</h2>
+                    <p class="text-gray-400">
+                        我们致力于为全球包装行业从业者提供最简洁、最高效的在线工具与资源，让包装变得更简单。
+                    </p>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold mb-4">快速链接</h2>
+                    <ul class="space-y-2">
+                        <li><a href="/#toolbox" class="text-gray-400 hover:text-white">核心工具</a></li>
+                        <li><a href="/#resources" class="text-gray-400 hover:text-white">资源库</a></li>
+                        <li><a href="/#suppliers" class="text-gray-400 hover:text-white">供应商名录</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold mb-4">保持联系</h2>
+                    <p class="text-gray-400 mb-4">订阅我们的资讯，获取最新的行业动态与工具更新。</p>
+                    <form class="flex" action="https://packaging-toolbox.site/api/newsletter" method="post" aria-label="订阅表单" data-newsletter-form>
+                        <label class="sr-only" for="newsletter-email">邮箱地址</label>
+                        <input id="newsletter-email" name="email" type="email" placeholder="您的邮箱" required class="w-full rounded-l-lg p-2 text-gray-800 focus:outline-none" autocomplete="email">
+                        <button type="submit" class="bg-blue-600 text-white px-4 rounded-r-lg hover:bg-blue-700">订阅</button>
+                    </form>
+                    <p class="mt-3 text-sm" data-newsletter-feedback aria-live="polite"></p>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-gray-700 pt-8 text-center text-gray-500">
+                <p>&copy; 2025 包装工具箱. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </div>
+</div>
+
+<script type="module" src="/tools/color-converter.js"></script>
+<script type="module" src="/tools/color-converter.js"></script>
+</body>
+</html>
